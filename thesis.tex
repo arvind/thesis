@@ -10,9 +10,45 @@
 \usepackage[online]{suthesis-2e}
 \usepackage{dblfloatfix}
 \usepackage{graphicx}
+\usepackage{todonotes}
+
+
+%% This turns references into clickable hyperlinks.
+\usepackage[bookmarks,backref=true,linkcolor=blue]{hyperref} %,colorlinks
+\hypersetup{
+  pdfauthor = {},
+  pdftitle = {},
+  pdfsubject = {},
+  pdfkeywords = {},
+  colorlinks=false,
+  linkcolor= blue,
+  citecolor= blue,
+  pageanchor=true,
+  urlcolor = blue,
+  plainpages = false,
+  linktocpage
+}
+
+% each of the following has two versions
+%   \crefname{environmentname}{singular}{plural}, to be used mid-sentence
+%   \Crefname{environmentname}{singular}{plural}, to be used at the beginning of a sentence
+\usepackage{cleveref}
+
+\crefname{table}{Table}{Tables}
+\Crefname{table}{Table}{Tables}
+\crefname{figure}{Fig.}{Figs.}
+\Crefname{figure}{Figure}{Figures}
+
 \dept{Computer Science}
 
-\newcommand{\signaturevspace}{\vspace{3pt}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% make complete reference clickable
+\newcommand{\figref}[1]{\hyperref[#1]{Fig.~\ref*{#1}}}
+\newcommand{\secref}[1]{\hyperref[#1]{\S\ref*{#1}}}
+\newcommand{\tabref}[1]{\hyperref[#1]{Table~\ref*{#1}}}
+\newcommand{\defref}[1]{\hyperref[#1]{Definition~\ref*{#1}}}
+\newcommand{\equref}[1]{\hyperref[#1]{Eq.~\ref*{#1}}}
+\newcommand{\lstref}[1]{\hyperref[#1]{Listing~\ref*{#1}}}
 
 \begin{document}
 \title{Declarative Interaction Design\\for Data Visualization}
@@ -34,5 +70,5 @@ I would like to thank...
 \input{lyra}
 
 \bibliographystyle{plain}
-\bibliography{mybib}
+\bibliography{thesis}
 \end{document}
