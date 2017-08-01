@@ -1,0 +1,38 @@
+% Stanford University PhD thesis style -- modifications to the report style
+% This is unofficial so you should always double check against the
+% Registrar's office rules
+% See http://library.stanford.edu/research/bibliography-management/latex-and-bibtex
+%
+% Example of use below
+% See the suthesis-2e.sty file for documentation
+%
+\documentclass[12pt]{report}
+\usepackage[online]{suthesis-2e}
+\usepackage{dblfloatfix}
+\usepackage{graphicx}
+\dept{Computer Science}
+
+\newcommand{\signaturevspace}{\vspace{3pt}}
+
+\begin{document}
+\title{Declarative Interaction Design\\for Data Visualization}
+\author{Arvind Satyanarayan}
+\principaladviser{Jeffrey Heer}
+\firstreader{Maneesh Agrawala}
+\secondreader{James Landay}
+
+\beforepreface
+\prefacesection{Abstract}
+This thesis tells you all you need to know about...
+\prefacesection{Acknowledgments}
+I would like to thank...
+\afterpreface
+
+\input{vega-lang}
+\input{vega-architecture}
+\input{vega-lite/index}
+\input{lyra}
+
+\bibliographystyle{plain}
+\bibliography{mybib}
+\end{document}

@@ -1,0 +1,27 @@
+Abstract
+
+Acknowledgements
+
+Introduction
+  Thesis Contributions and Outline
+  Prior Publications and Authorship
+
+Related Work
+  Grammar-Based Visual Encoding
+  Specifying Interactions in Visualization Systems
+    Interactive Selection and Querying
+  Alternate Paradigms for Imperative Callbacks
+    Constraint Programming
+    Functional Reactive Programming
+  Streaming Databases
+  Generative Models of UIs
+    Card, morphological analysis
+    Instrumental Interaction
+
+Declarative Primitives for Interaction Design
+
+A Streaming Dataflow Architecture
+
+A Grammar of Interactive Graphics
+
+An Interactive Visualization Design Environment
