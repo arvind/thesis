@@ -1,0 +1,72 @@
+% !TEX root = ../thesis.tex
+\section{Compilation}
+\label{sec:vl:compiler}
+
+The Vega-Lite compiler ingests a JSON specification and outputs a lower-level
+Reactive Vega specification (also expressed as JSON). However, there is no
+one-to-one correspondence between components of the Vega-Lite and Vega
+specifications. For instance, the compiler has to synthesize a single Vega data
+source, with transforms for binning and aggregation, from multiple Vega-Lite
+encoding definitions. Conversely, for a single definition of a Vega-Lite
+selection, the compiler might generate multiple Vega signals, data sources, and
+even parameterize scale extents. Moreover, to facilitate rapid authoring of
+visualizations, Vega-Lite specifications omit lower-level details including
+scale types and the properties of the visual elements such as the font size. The
+compiler must resolve the resulting ambiguities.
+
+To overcome these challenges, the compiler moves through four phases:
+
+\begin{enumerate}
+  \item \emph{Parse}\,---\,the compiler parses and disambiguates an input
+  specification. Hand-crafted rules are applied to produce perceptually
+  effective visualizations. For example, if the color channel is mapped to an
+nominal field, and the user has not specified a scale domain, a categorical
+color palette is inferred. If the color is mapped to a quantitative field, a
+sequential color palette is chosen instead.
+
+  \item \emph{Build}\,---\,the compiler builds an internal representation to map
+  between Vega-Lite and Vega primitives. A tree of \emph{models} is constructed;
+  each model corresponds to a unit or composite view, and stores a series of
+  \emph{components}. Components are data structures that loosely correspond to
+  Vega primitives (such as data sources, scales, and marks). For example, the
+  \texttt{DataComponent} details how the dataset should be loaded (e.g., is it
+  embedded directly in the specification, or should it be loaded from a URL, and
+  in what format), which fields should be aggregated or binned, and what filters
+  and calculations should be performed.
+
+  In this step, compile-time selection transforms (those not parameterized by
+  events) are applied to the requisite components. For example, the
+  \emph{project} transform overrides the \texttt{SelectionComponent}'s predicate
+  function, while the \emph{nearest} transform augments the
+  \texttt{MarkComponent} with a Voronoi diagram. This phase also constructs a
+  special \texttt{LayoutComponent} to calculate suitable spatial dimensions for
+  views. This component emits Vega data sources and transforms to calculate a
+  bottom-up view layout at runtime.
+
+  \item \emph{Merge}\,---\,once the necessary components have been built, the
+  compiler performs a bottom-up traversal of the model tree to merge redundant
+  components. This step is critical for ensuring that the resultant Vega
+  specification does not perform unnecessary computation that might hinder
+  interactive performance. To determine whether components can be merged, the
+  compiler computes a hash code and compares components of the same
+  type. For example, when a scatterplot matrix is specified using the
+  \emph{repeat} operator, merging ensures that we only produce one scale for
+  each row and column rather than two scales per cell ($2N$ versus $2N^2$
+  scales). Merging may introduce additional components if doing so results in a
+  more optimal representation. For example, if multiple units within a composite
+  specification load data from the same URL, a new \texttt{DataComponent} is
+  created to load the data and the units are updated to inherit from it instead.
+  This step also unions scale domains and resolves \texttt{SelectionComponents}.
+
+  \item \emph{Assemble}\,---\,the final phase assembles the requisite Vega
+  specification. In particular, \texttt{SelectionComponents} produce signals to
+  capture events and the necessary backing points, and list and intervals
+  construct data sources as well to hold multiple points. Each run-time
+  selection transform (i.e., those that are triggered by an event) generates
+  signals as well, and may augment the selection's data source with data
+  transformations. For example, the \emph{translate} transform adds a signal to
+  capture an ``anchor'' position, to determine where panning begins, and another
+  to calculate a ``delta'' from the anchor. These two signals then feed
+  transforms that offset the backing points stored in the selection's data
+  source, thereby moving the brush or panning the scales.
+\end{enumerate}

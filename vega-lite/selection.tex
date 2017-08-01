@@ -1,6 +1,6 @@
 % !TEX root = ../thesis.tex
 \section{Interactive Selections}
-\label{sec:vlgoi}
+\label{sec:vl:goi}
 
 To support specification of interaction techniques, we extend the definition of
 unit specifications to also include a set of \emph{selections}. Selections
@@ -30,14 +30,14 @@ removed as events fire. They express discrete selections, as their predicates
 test for an exact match with at least one value in the backing dataset. The
 order of points in a multi selection can be semantically meaningful, for example
 when a multi selection serves as an ordinal scale domain.
-\todo{PointSelectionFig} illustrates how points are highlighted in a scatterplot
+\cref{}\todo{PointSelectionFig} illustrates how points are highlighted in a scatterplot
 using point and list selections.
 
 Intervals are similar to multi selections. They are backed by datasets, but
 their predicates determine whether an argument falls within the minimum and
 maximum extent defined by the backing points. Thus, they express continuous
 selections. The compiler automatically adds a rectangle mark, as shown in
-\todo{IntervalSelections(a)}, to depict the selected interval. Users can
+\cref{}\todo{IntervalSelections(a)}, to depict the selected interval. Users can
 customize the appearance of this mark via the \texttt{mark} keyword, or disable
 it altogether when defining the selection.
 
@@ -69,7 +69,7 @@ Vega-Lite specification is compiled on, and the input modalities it
 supports. By default we use mouse events on desktops, and touch events on mobile
 and tablet devices. A user can specify alternate events using Vega's event
 selector syntax~\cite{reactive-vega-model}. For example,
-\todo{PointSelections(c)} demonstrates how \texttt{mouseover} events are used to
+\cref{}\todo{PointSelections(c)} demonstrates how \texttt{mouseover} events are used to
 populate a list selection. With the event selector syntax, multiple events are
 specified using a comma (e.g., \texttt{mousedown, mouseup} adds items to the
 selection when either event occurs). A sequence of events is denoted with the
@@ -112,10 +112,10 @@ determine inclusion by matching only the given \emph{fields}. Some fields,
 however, may be difficult for users to address directly (e.g., new fields
 introduced due to inline binning or aggregation transformations). For such
 cases, a list of \emph{channels} may also be specified (e.g., \texttt{color},
-\texttt{size}). \todo{PointSelections(d, e)} demonstrate how \emph{project} can
+\texttt{size}). \cref{}\todo{PointSelections(d, e)} demonstrate how \emph{project} can
 be used to select all points with matching \texttt{Origin} fields, for example.
 This transform is also used to restrict interval selections to a particular
-dimension (\todo{IntervalSelections(c)}).
+dimension (\cref{}\todo{IntervalSelections(c)}).
 
 \subsubsection{Toggle}
 
@@ -125,10 +125,10 @@ The \emph{toggle} transform is automatically instantiated for uninitialized
 multi selections. When the \emph{event} occurs, the corresponding data value is
 added or removed from the multi selection's backing dataset. By default, the
 toggle \emph{event} corresponds to the selection's triggering event, but with
-the shift key pressed. For example, in \todo{PointSelections(b)}, additional
+the shift key pressed. For example, in \cref{}\todo{PointSelections(b)}, additional
 points are added to the list selection on shift-click (where \texttt{click} is
 the default event for list selections). The selection in
-\todo{PointSelections(c)}, however, specifies a custom \texttt{mouseover} event.
+\cref{}\todo{PointSelections(c)}, however, specifies a custom \texttt{mouseover} event.
 Thus, additional points are inserted when the shift key is pressed and the mouse
 cursor hovers over a point.
 
@@ -170,9 +170,9 @@ to the difference between where the \texttt{mousedown} and subsequent
 keyboard events), a \emph{by} argument should be specified. This transform
 respects the \emph{project} transform as well, restricting movement to the
 specified dimensions. This transform is automatically instantiated for interval
-transforms, enabling movement of brushed regions (\todo{IntervalSelections(b)})
+transforms, enabling movement of brushed regions (\cref{}\todo{IntervalSelections(b)})
 or panning of the visualization when bound to scale functions
-(\todo{PanZoomGrid}).
+(\cref{}\todo{PanZoomGrid}).
 
 \subsubsection{Zoom}
 
@@ -182,7 +182,7 @@ The \emph{zoom} transform applies a scale factor, determined by the \emph{event}
 to the spatial properties (or corresponding data fields) of backing points. A
 \emph{factor} must be specified if it cannot be determined from the events
 (e.g., when arrow keys are pressed). As with the \emph{translate} transform, the
-\emph{project} transform is respected, allowing for single-dimensional zooming.
+\emph{project} transform is respected, allowing for uni-dimensional zooming.
 
 \subsubsection{Nearest}
 
@@ -202,7 +202,7 @@ interactive\,---\,visual encodings are automatically reevaluated as selections
 change. First, selections can be used to drive \emph{conditional} encoding
 rules. Each data tuple participating in the encoding is evaluated against the
 selection's predicate, and properties are set based on whether it belongs to the
-selection or not. For example, as shown in \todo{PointSelections}, the fill
+selection or not. For example, as shown in \cref{}\todo{PointSelections}, the fill
 color of the scatterplot circles is determined by a data field if they fall
 within the \texttt{id} selection, or set to grey otherwise.
 
@@ -219,8 +219,8 @@ extents. Initializing a selection with scale extents offers a concise way of
 specifying this behavior within the same unit specification. For multi-view
 displays, selection names can be specified as the domain or range of a
 particular channel's scale. Doing so constructs interactions that manipulate
-viewports, including panning \& zooming (\todo{PanZoomGrid}) and
-overview\,+\,detail (\todo{ODIndexChart(a)}).
+viewports, including panning \& zooming (\cref{}\todo{PanZoomGrid}) and
+overview\,+\,detail (\cref{}\todo{ODIndexChart(a)}).
 
 In all three cases, selections can be composed using logical \texttt{OR},
 \texttt{AND}, and \texttt{NOT} operators. As previously discussed, single
@@ -228,7 +228,7 @@ selections offer an additional mechanism for parameterizing encodings.
 Properties of the backing point can be directly referenced within  the
 specification, for example as part of a filter or calculate expression, or to
 determine a visual encoding channel without the overhead of a conditional rule.
-For example, the position of the red rule in \todo{ODIndexChart(b)} is set to
+For example, the position of the red rule in \cref{}\todo{ODIndexChart(b)} is set to
 the \texttt{date} value of the \texttt{indexPt} selection.
 
 \subsection{Disambiguating Composite Selections}
@@ -239,7 +239,7 @@ and materializing a selection applies its predicate against the unit's input
 data by default. When units are composed, however, selection definitions and
 applications become ambiguous.
 
-Consider \todo{ResolveSelections(a)}, which illustrates how a scatterplot matrix
+Consider \cref{}\todo{ResolveSelections(a)}, which illustrates how a scatterplot matrix
 (SPLOM) is constructed by repeating a unit specification. To brush, we define an
 interval selection (\texttt{region}) within the unit, and use it to perform a
 linking operation by parameterizing the color of the circle marks. However,
@@ -260,7 +260,7 @@ These schemes all construct one instance of the selection per view, and define
 which instances are used in determining inclusion. For example, setting a
 selection to resolve to \emph{independent} creates one instance per view, and
 each unit uses only its own selection to determine inclusion. With our SPLOM
-example, this would produce the interaction shown in \todo{ResolveSelections
+example, this would produce the interaction shown in \cref{}\todo{ResolveSelections
 (b)}.Each cell would display its own brush, which would determine how only its points
 would be highlighted.
 
@@ -270,7 +270,7 @@ within the overall selection if it is included in, respectively, at least one of
 the constituents or all of them. More concretely, with the SPLOM example, these
 settings would continue to produce one brush per cell, and points would
 highlight when they lie within at least one brush (\emph{union}) or if they are
-within every brush (\emph{intersect}) as shown in \todo{ResolveSelections(c,
+within every brush (\emph{intersect}) as shown in \cref{}\todo{ResolveSelections(c,
 d)}.We also support \emph{union others} and \emph{intersect others} resolutions,
 which function like their full counterparts except that a unit's own selection
 is not part of the inclusion determination. These latter methods support
