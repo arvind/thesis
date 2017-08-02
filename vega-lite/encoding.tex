@@ -82,7 +82,7 @@ instantiated in a JSON (JavaScript Object Notation) syntax, as shown in
 Given multiple \emph{unit} specifications, \emph{composite} views can be
 constructed using the following operators. Each operator provides default
 strategies to \emph{resolve} scales, axes, and legends across views. A user can
-choose to override these default behaviours by specifying tuples of the form
+choose to override these default behaviors by specifying tuples of the form
 \emph{(channel, scale$|$axis$|$legend, union$|$independent)}. We use \emph{view}
 to refer to any Vega-Lite specification, be it a \emph{unit} or \emph{composite}
 specification.
@@ -158,6 +158,15 @@ operator. When faceting by fiscal quarter and visualizing per-month data in
 each cell, one likely wishes to see three months per quarter, not twelve
 months of which nine are empty.
 
+\begin{figure*}[h!]
+  \centering
+  \includegraphics[width=\columnwidth]{facet}
+  \caption{The line chart from \cref{fig:unit1} \emph{faceted}
+  vertically by location; the x-axis is shared, and the underlying scale domains
+  unioned, to facilitate easier comparison.}
+  \label{fig:facet}
+\end{figure*}
+
 \subsection{Repeat}
 
 \centerline{
@@ -178,6 +187,14 @@ the \emph{channel} indicates if plots should divide by \emph{row} or
 \emph{column}, with further customization possible via the \emph{scale} and
 \emph{axis} components. By default, scales and axes are independent, but
 legends are shared when data fields coincide.
+
+\begin{figure*}[h!]
+  \centering
+  \includegraphics[width=\columnwidth]{repeat}
+  \caption{\emph{Repetition} of different measures across rows; the y-channel
+  references the \texttt{row} template parameter to vary the encoding.}
+  \label{fig:repeat}
+\end{figure*}
 
 \subsection{Dashboards and Nested Views}
 

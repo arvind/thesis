@@ -21,27 +21,26 @@ varied to explore alternate points in the design space.
 
 \subsection{Selection: Click/Shift-Click and Brushing}
 
-\cref{}\todo{PointSelections(a)} provides the full Vega-Lite specification for a
+\cref{fig:singleSelection} provides the full Vega-Lite specification for a
 scatterplot where users can mark individual points of interest. It includes the
 simplest definition of a selection\,---\,a name and type\,---\,and illustrates
-how the mark color is parameterized with conditional encoding logic.
+how the mark color is determined conditionally.
 
-Modifying a single property, \emph{type}, as in
-\cref{}\todo{PointSelections(b)}, allows users to mark multiple points
-(\emph{toggle} is automatically instantiated by the compiler, but we explicitly
-specify it in the figure for clarity). We can instead add \emph{project}
-(\cref{}\todo{PointSelections(d)}) such that marking a single point of interest
-highlights all other points that share particular data values\,---\,a
-\emph{connect}-type interaction. Such changes to the specification are not
-mutually exclusive, and can be composed as shown in
-\cref{}\todo{PointSelections(e)}.
+Modifying a single property, \emph{type}, as in \cref{fig:multiSelection},
+allows users to mark multiple points (\emph{toggle} is automatically
+instantiated by the compiler, but we explicitly specify it in the figure for
+clarity). We can instead add \emph{project} (\cref{fig:projectSingle})
+such that marking a single point of interest highlights all other points that
+share particular data values\,---\,a \emph{connect}-type interaction. Such
+changes to the specification are not mutually exclusive, and can be composed as
+shown in \cref{fig:projectMulti}.
 
 By using the \emph{interval} type, users can mark items of interest within a
-continuous region. As shown in \cref{}\todo{IntervalSelections(a)}, the compiler
+continuous region. As shown in \cref{fig:intervalSelection}, the compiler
 automatically adds a rectangle mark to depict the selection, and instantiates
-\emph{translate} to allow it to be repositioned (\cref{}\todo{IntervalSelections
-(b)}). In this context, \emph{project} restricts the interval to a single
-dimension (\cref{}\todo{IntervalSelections(c)}).
+\emph{translate} to allow it to be repositioned (\cref{fig:translate}). In this
+context, \emph{project} restricts the interval to a single dimension
+(\cref{fig:projectInterval}).
 
 These specifications are an order of magnitude more concise than their Vega
 counterparts. With Vega-Lite, users need only specify the semantics of their
@@ -50,28 +49,26 @@ by default, individual points are selected on click and multiple points on
 shift-click. Users can override these defaults, sometimes producing a
 qualitatively different user experience. For example, one can instead update
 selections on \texttt{mouseover} to produce a ``paint brush'' interaction, as in
-\cref{}\todo{PointSelections(c)}. In contrast, with Vega, users need to manually
-author all the components of an interaction technique \todo{refer back},
-including determining whether event properties need to be passed through scale
-inversions, creating necessary backing data structures, and adding marks to
-represent a brush component.
+\cref{fig:paintbrush}. In contrast, with Vega, users need to manually author all
+the components of an interaction technique, including determining whether event
+properties need to be passed through scale inversions, creating necessary
+backing data structures, and adding marks to represent a brush component.
 
 \subsection{Explore \& Encode: Panning \& Zooming}
 
 Vega-Lite's selections also enable accretive design of interactions. Consider
 our previous example of brushing a scatterplot. We can define an additional
-interval selection and \emph{bind} it to the unit's scale functions (\cref{}
-\todo{PanZoomGrid}). The compiler populates the selection with the x and
-y scale domains, parameterizes them to use it, and instantiates the
+interval selection and \emph{bind} it to the unit's scale functions
+(\cref{fig:bindScales}). The compiler populates the selection with the x and y
+scale domains, parameterizes them to use it, and instantiates the
 \emph{translate} and \emph{zoom} transforms. Users can now brush, pan, and zoom
 the scatterplot. However, the default definitions of the two interval selections
 collide: dragging produces a brush and pans the plot. This example illustrates
 that concise methods for overriding defaults can not only be useful (as in
-\cref{}\todo{PointSelections(c)}) but also necessary. We override the default
-events that trigger the two interactions using Vega's event selector
-syntax~\cite{reactive-vega-model}. As \cref{}\todo{PanZoomGrid} shows, we
-specify that brushing only occurs when the user drags with the shift key
-pressed.
+\cref{fig:paintbrush}) but also necessary. We override the default events that
+trigger the two interactions using Vega's event selector
+syntax~\cite{reactive-vega-model}. As \cref{fig:bindScales} shows, we specify
+that brushing only occurs when the user drags with the shift key pressed.
 
 The Vega-Lite specification for panning and zooming is, once again, more
 succinct than the corresponding Vega example. However, it is more interesting to
@@ -104,25 +101,26 @@ scale.
 
 \subsection{Connect: Brushing \& Linking}
 
-We can wrap our previous example, from \cref{}\todo{PanZoomGrid}, in a
-\emph{repeat} operator to construct a scatterplot matrix (SPLOM) as shown in
-\cref{}\todo{ResolveSelections}. With no further modifications, all our previous
+We can wrap our previous example, from \cref{fig:bindScales}, in a \emph{repeat}
+operator to construct a scatterplot matrix (SPLOM) as shown in
+\cref{fig:resolveGlobal}. With no further modifications, all our previous
 interactions now work within each cell of the SPLOM and are synchronized across
 the others. For example, dragging pans not only the particular cell the user is
 in, but related cells along shared axes. Similarly, dragging with the shift key
-pressed produces a brush in the current cell, and highlights points across
-all cells that fall within it.
+pressed produces a brush in the current cell, and highlights points across all
+cells that fall within it.
 
 As its name suggests, the repeat operator creates one instance of the child
 specification for the given parameters. By default, to provide a consistent
 experience when moving from a unit to a composite specification, Vega-Lite
 creates a \emph{global} instance of the selection that is populated and shared
-between all repeated instances (\cref{}\todo{ResolveSelections(a)}). With the
+between all repeated instances (\cref{fig:resolveGlobal}). With the
 \emph{resolve} property, users can specify alternate disambiguation methods
 including creating an independent brush for each cell, unioning the brushes, or
-intersecting them (\cref{}\todo{ResolveSelections(b, c, d)} respectively). If
-selections are bound to scales or parameterize them, only a global selection is
-supported for consistency with the composition algebra.
+intersecting them
+(\cref{fig:resolveIndependent,fig:resolveUnion,fig:resolveIntersect}
+respectively). If selections are bound to scales or parameterize them, only a
+global selection is supported for consistency with the composition algebra.
 
 With this example, it is more instructive to compare the amount of effort
 required, with Vega-Lite and Vega, to move from a single interactive scatterplot
@@ -141,12 +139,20 @@ determined by data.
 
 Thus far, selections have parameterized scale extents through the \emph{bind}
 transform and previous examples have demonstrated how visualized data can be
-abstracted/elaborated via zooming. \cref{}\todo{ODIndexChart} shows how a
-selection defined in one unit specification can be explicitly given as the scale
-domain of another in a concatenated display. Doing so creates an
-overview\,+\,detail interaction: brushing in the bottom (overview) chart
-displays only selected items at a higher resolution in the larger (detail) chart
-at the top.
+abstracted/elaborated via zooming. The figure below shows how a selection
+defined in one unit specification can be explicitly given as the scale domain of
+another in a concatenated display. Doing so creates an overview\,+\,detail
+interaction: brushing in the bottom (overview) chart displays only selected
+items at a higher resolution in the larger (detail) chart at the top.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\columnwidth]{overviewDetail}
+  \caption{An overview\,+\,detail visualization concatenates two unit
+  specifications, with a selection in the second one parameterizing the x-scale
+  domain in the first.}
+  \label{fig:overviewDetail}
+\end{figure}
 
 \subsection{Reconfigure: Index Chart}
 

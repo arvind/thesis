@@ -60,13 +60,13 @@ sequential color palette is chosen instead.
 
   \item \emph{Assemble}\,---\,the final phase assembles the requisite Vega
   specification. In particular, \texttt{SelectionComponents} produce signals to
-  capture events and the necessary backing points, and list and intervals
-  construct data sources as well to hold multiple points. Each run-time
-  selection transform (i.e., those that are triggered by an event) generates
-  signals as well, and may augment the selection's data source with data
-  transformations. For example, the \emph{translate} transform adds a signal to
-  capture an ``anchor'' position, to determine where panning begins, and another
-  to calculate a ``delta'' from the anchor. These two signals then feed
-  transforms that offset the backing points stored in the selection's data
+  capture events and the necessary backing points, and multi and interval
+  selections construct data sources as well to hold multiple points. Each
+  run-time selection transform (i.e., those that are triggered by an event)
+  generates signals as well, and may augment the selection's data source with
+  data transformations. For example, the \emph{translate} transform adds a
+  signal to capture an ``anchor'' position, to determine where panning begins,
+  and another to calculate a ``delta'' from the anchor. These two signals then
+  feed transforms that offset the backing points stored in the selection's data
   source, thereby moving the brush or panning the scales.
 \end{enumerate}
