@@ -18,13 +18,12 @@ primitives, supports the accretive design of richer interactions.
 
 \subsection{Selection: Click/Shift-Click and Brushing}
 
-\cref{}\todo{Figure} provides a snippet of Reactive Vega JSON to highlight
-points that a user clicks. A signal constructed over a click stream feeds a data
-transform that toggles values in a data source (named \texttt{selected\_pts}).
-An intensional predicate test whether the shift key is pressed and, if not,
-clears the data source prior to inserting the clicked values. An extensional
-predicate is used within a production rule to set the fill colour selected
-points.
+\cref{}\todo{Figure} provides a snippet of Reactive Vega JSON for a basic
+click-to-highlight interaction. A signal constructed over a click stream feeds a
+data transform that toggles values in the \texttt{selected\_pts} data source. An
+intensional predicate test whether the shift key is pressed and, if not, clears
+the data source prior to inserting the clicked values. A production rule sets
+the fill color of selected points using an extensional predicate.
 
 Similarly, \cref{}\todo{Figure} demonstrates the Reactive Vega JSON necessary to
 enable brush selections. Signals are registered to capture the start and end
@@ -32,7 +31,7 @@ positions of the brush, by default \texttt{mousedown} and \texttt{[mousedown,
 mouseup] > mousemove}, respectively. Scale inversions are invoked to calculate
 the data extents of the brush, which are used to define an intensional predicate
 to express the brushed data range. As before, the predicate is used within a
-production rule to set the fill colour of selected points.
+production rule to set the fill color of selected points.
 
 \subsection{Connect: Brushing \& Linking}
 
@@ -51,7 +50,7 @@ performs the linking operation across scatterplots.
 
 \subsection{Abstract/Elaborate: Overview\,+\,Detail}
 
-With our brush interactor, we can also create the overview + detail
+With our brush interactor, we can also create the overview\,+\,detail
 visualization shown in Figure~\ref{fig:range_predicate}. In this case, brushing
 is restricted to the horizontal dimension. In our visualization, we override the
 \texttt{height} property of the visual brush added by the interactor, and ignore
@@ -63,7 +62,122 @@ scale functions and re-renders the detail view.
 
 \subsection{Explore \& Encode: Panning \& Zooming}
 
+Figure~\ref{fig:panzoom} (left) shows pan and zoom interactions for a scatter
+plot. By default, scale functions calculate their domain automatically from a
+data source. For this interaction, however, we must parameterize the domain
+using reactive signals. For panning, a \texttt{start} signal captures an initial
+\texttt{(x,y)} position on \texttt{mousedown}, and subsequent \texttt{pan}
+signals calculate a delta on drag (\texttt{[mousedown, mouseup] > mousemove}).
+This delta is used to offset the scale domains. Similarly, when \texttt{wheel}
+events occur, a \texttt{zoom} signal applies a scale factor to the domains
+depending on the zoom direction.
+
+If we were to also add a brushing interaction to this visualization, a na\"ive
+application would produce a conflicting interaction: on drag, both panning and
+brushing would occur. One option to resolve this conflict is to begin brushing
+only when the shift key is pressed. If we try combining these interactions using
+D3~\cite{bostock:d3}, which offers brushing and panning as part of its
+interactor typology, the process can be onerous. Additional callbacks must be
+registered that either instantiate or destroy a particular interaction depending
+on the state of the shift key.
+
+With Reactive Vega, the brush and pan signals can be rebound without modifying
+the interactor definitions. Instead, we provide alternate source event streams
+when instantiating the interactor\,---\,\texttt{mousedown[event.shiftKey]} for
+brushing, and \texttt{mousedown[!event.shiftKey]} for panning.
+
+Moreover, by extracting panning \& zooming into a standalone interactor, we can
+repurpose the behavior to instead trigger semantic zooming~\cite{perlin:pad}, an
+\emph{encoding} interaction technique shown in Figure~\ref{fig:panzoom} (right).
+At the top-level, the visualization shows a choropleth map of state-level
+unemployment. After crossing a specified zoom threshold, states subdivide to
+show a choropleth map of country-level unemployment. Here, the pan signals drive
+the geographic projection's translation and the zoom signals drive the
+projection's scale parameter. By default, both maps are drawn with states
+overlaying counties. A production rule uses a predicate to test whether the zoom
+signal is above a specified threshold; if it is, the state-level map is rendered
+transparently, displaying the county-level map underneath it.
+
 \subsection{Reconfigure: Index Chart}
+
+Figure~\ref{fig:job_voyager_index_chart} (left) shows an index chart: a line
+chart that interactively normalizes time series to show percentage change based
+on the current index point. To calculate the index point, we construct a signal
+over \texttt{mousemove} events and then drive the \texttt{x} coordinate through
+a scale inversion. As it is a quantitative scale, scale inversion results in a
+value from a continuous domain (i.e., any date/time from Jan 1 2000--Dec 31
+2010). However, our dataset only contains stock prices for the start of every
+month, with the line interpolating between these points. We use a predicate to
+``snap to'' the closest value for each time series, and use this as our index
+point. Using Vega's data transformations, we join the index point against the
+original data set and normalize the data values. Scale functions are defined in
+terms of the normalized data.
+
+\subsection{Reconfigure: Reordering Columns of a Matrix}
+
+Figure~\ref{fig:cooccurrence} shows a co-occurrence matrix of Les Mis\'{e}rables
+characters. To reorder the columns of the matrix, we first construct a data
+source that computes the sort order of characters and initialize it to an
+alphabetical ordering. A signal on \texttt{@col\_label:mousedown} captures the
+source column to be reordered, while a signal on \texttt{[@col\_label:mousedown,
+mouseup] > mousemove} updates the target column location. On \texttt{mouseup},
+the data source is updated to swap the sorting indices of the two columns.
 
 \subsection{Filter: Control Widgets}
 
+Figure~\ref{fig:job_voyager_index_chart} (right) shows the Job
+Voyager~\cite{heer:voyagers} visualization with control widgets to filter the
+visualized data. A textbox allows users to enter search terms to filter job
+titles, while the radio buttons allow users to filter by gender. We bind signals
+to the value of these control widgets, and then construct predicates attached to
+filter data transformations. For the textbox signal, a match predicate tests
+search terms against job titles, while an equality predicate filters by gender
+based on the radio button signal. This example illustrates how external query
+widgets can easily be bound into our reactive interaction model.
+
+\subsection{DimpVis: Touch Navigation with Time-Series Data}
+
+DimpVis~\cite{kondo:dimpvis} is a recently introduced interaction technique that
+allows direct manipulation navigation of time-series data. Starting with a
+scatterplot depicting data at a particular time slice, users can touch plotted
+points to reveal a ``hint path'': a line graph that displays the trajectory of
+the selected element over time. Dragging the selected point along this path
+triggers temporal navigation, with the rest of the points updating to reflect
+the new time. In evaluation studies, users reported feeling more engaged when
+exploring their data using DimpVis~\cite{kondo:dimpvis}.
+
+We can recreate this technique with Reactive Vega's declarative interaction
+primitives and the GapMinder country-fertility-life-expectancy dataset used by
+the original. Input data is passed through a \texttt{Window} transform, such
+that every tuple contains references to the tuples that come before and after it
+in time, and filtered to remove triplets that span multiple countries. Signals
+constructed over mouse and touch events capture the selected point, and
+downstream signals calculate distances between the user's current position and
+the previous and next points. A scalar projection over these distances gives us
+scoring functions that determine whether the user is moving forwards or
+backwards in time. Scores feed a signal that is used in a derived data source to
+calculate new interpolated properties for the remaining points in the dataset.
+These interpolated properties determine the position of plotted points,
+producing smooth transitions as the user drags back-and-forth. To draw the hint
+map, a derived data source filters data tuples for the selected country across
+all years.
+
+\subsection{Reusable Touch Interaction Abstractions}
+
+With the proliferation of touch-enabled devices, particularly smartphones and
+tablets, supporting touch-based interaction has become an increasingly important
+part of interactive visualization design. However, HTML5 only provides a
+low-level API for touch events, with three event types broadly
+supported\,---\,\texttt{touchstart}, \texttt{touchmove}, and \texttt{touchend}.
+On multitouch devices these events contain an array of touch points. The
+application developer is responsible for the bookkeeping involved with tracking
+multiple points across interactions, a cumbersome and difficult process.
+
+Declarative interaction design enables us to abstract low-level details away,
+building reusable interactors that expose higher-level, semantic events as
+signals instead. For example, an interactor could define signals that perform
+the necessary logic for common multitouch gestures. When included in a host
+visualization, the visualization designer can then safely ignore lower-level
+events, and instead build interactions driven by the interactor's
+signals\,---\,for instance, using \texttt{twotouchmove} and \texttt{pinchDelta}
+signals to drive panning and zooming behaviors.

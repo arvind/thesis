@@ -1,0 +1,87 @@
+% !TEX root = ./thesis.tex
+\section{Discussion: Cognitive Dimensions of Notation}
+\label{sec:vg:discussion}
+
+The previous section demonstrated the expressivity of Reactive Vega's model of
+declarative interaction design. Here, we evaluate it from the perspective of a
+visualization designer using the Cognitive Dimensions of Notation~
+\cite{blackwell:cogdim}, a set of heuristics for evaluating the efficacy of
+notational systems such as programming languages and interfaces. Of the 14
+dimensions, we evaluate Reactive Vega against a relevant subset and compare it
+against current common practice: declarative specification of visual encodings
+using D3~\cite{bostock:d3} and imperative event handling callbacks for
+interaction.
+
+\textbf{Abstractions} (types and availability of abstraction mechanisms) and
+\textbf{Viscosity} (resistance to change). Streams and signals abstract the
+low-level events that trigger interactions and decouple them from downstream
+logic. This approach can facilitate rapid iteration: the result of an
+interaction can be designed (for example, highlighting points), and then a
+variety of different event triggers can be prototyped by simply rebinding the
+appropriate signals. As our examples demonstrate, rebinding signals reduces the
+burden for resolving conflicting interactions or retargeting to different
+platforms. By comparison, iterating with event callbacks can be more difficult.
+A particular sequence of events may require a specific ordering of callbacks,
+and coordinating the visualization state across these functions falls to the
+designer.
+
+\textbf{Premature Commitment} (constraints on the order of doing things).
+Abstracting streams into signals does impose a premature commitment. Users must
+define them before they are able to use any lower-level events to trigger state
+changes. This requirement could be relaxed: users could use event streams
+inline, for example within a predicate or production rule. However, we believe
+such inline references are a poor design pattern as they make an interaction
+technique dependent on a specific set of events\,---\,a common problem with
+existing interactor typologies. Moreover, reuse would be hampered as it would
+become more difficult to resolve conflicting interactions (e.g., brushing and
+panning) or retarget techniques across input modalities.
+
+\textbf{Hidden Dependencies} (important links between entities are not visible).
+Signals do introduce hidden dependencies as they obscure which input events
+trigger particular changes to the state of the visualization. However, we
+believe that the gains in viscosity outweigh the complexities of these hidden
+dependencies, particularly as the latter can be ameliorated by naming signals
+appropriately. Furthermore, as our code examples illustrate, all the factors
+that directly affect a particular state are captured within a single Reactive
+Vega specification. For example, a signal definition specifies all events or
+signals that may affect its value; similarly, a visual property may use a rule
+which enumerates all the values it may take. With D3, the visual encoding
+specification may not completely define all states. Instead, the user must trace
+a flow through event callbacks, a process further exacerbated by an
+unpredictable execution order. The user is forced to coordinate interleaved
+callbacks, introducing \textbf{hard mental operations} and
+\textbf{error-proneness}.
+
+\textbf{Consistency} (similar semantics are expressed in similar syntactic
+forms). Our interaction model is best suited for systems that declaratively
+specify visual encodings, and would feel foreign in imperative systems. However,
+given the widespread adoption of D3, and Vega's increasing integration in
+systems~\cite{lyra, voyager, wikipedia:graph} we believe this is not a
+significant liability. By contrast, registering event callbacks on D3
+visualizations breaks consistency: visual design is declarative while
+interaction design is imperative. It requires users to think in terms of
+different notational systems, and exposes underlying implementation and
+execution concerns.
+
+\textbf{Visibility} (ability to view components easily). One of the primary
+advantages of using D3, and registering event callbacks, is being able to debug
+code directly within a web browser~\cite{bostock:d3}: the generated
+visualization can be inspected, while the JavaScript console can be used to
+interactively debug event callbacks. Reusing such existing scaffolding is more
+difficult with Reactive Vega as its runtime, which parses and renders a
+specification, introduces its own stack of abstractions. However, we believe
+this gap offers a promising avenue for future work in new development
+environments that can leverage Vega's reactive semantics. For instance, initial
+work by Hoffswell et al.~\cite{hoffswell:debugging} has devised a
+``time-travelling'' debugger for Reactive Vega specifications. In particular,
+the authors note that signals are a critical abstraction barrier, providing a
+meaningful entry-point into an interaction specification. To construct a similar
+debugger for imperative event handling callbacks would require complex state
+analysis to identify and surface relevant program state.
+
+In summary, Reactive Vega introduces hidden dependencies between state changes
+and their triggering input events and, without additional tooling, decreases
+visibility into runtime execution. However, we believe these drawbacks are
+outweighed by the increase in specification consistency between visual encodings
+and interaction, and a decrease in viscosity, allowing users to iterate more
+quickly over interaction design.
