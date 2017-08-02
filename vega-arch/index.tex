@@ -1,0 +1,57 @@
+% !TEX root = ./thesis.tex
+\graphicspath{{./figures/vega-arch/}}
+\chapter{A Streaming Dataflow Architecture}
+\label{sec:vg:arch}
+
+While the previous chapter describes the design of Reactive Vega's declarative
+interaction design model, we now turn to the system architecture needed to
+support it. Our architecture design is motivated by four primary goals:
+
+\begin{enumerate}
+  \item \textbf{A Unified Data Model}. Existing reactive visualization
+toolkits (e.g., Model.js~\cite{kelleher:modeljs}) feature fragmented
+architectures where only interaction events are modeled as time-varying. Other
+input datasets remain static and batch-processed. This artificial disconnect
+restricts expressivity and can result in wasteful computation. For example,
+interaction events that manipulate only a subset of input tuples may trigger
+recomputation over the entire dataset. In contrast, Reactive Vega features a
+unified data model in which input data, scene graph elements, and interaction
+events are all treated as first-class streaming data sources.
+
+  \item \textbf{Streaming Relational Data}. Modeling input relational data with
+Event-Driven Functional Reactive Programming (E-FRP)~\cite{wan:efrp} semantics
+alone does not supply sufficient granularity for targeted recomputation. As
+E-FRP semantics consider only time-varying scalar values, operators would
+observe an entire relation as having changed and so would need to reprocess all
+tuples. Instead, Reactive Vega integrates techniques from streaming
+databases~\cite{abadi:borealis, abadi:aurora, arasu:stream, avnur:eddies,
+chandrasekaran:telegraphcq} alongside E-FRP, including tracking state at the
+tuple-level and only propagating modified tuples through the dataflow graph.
+
+  \item \textbf{Streaming Nested Data}. Interactive visualizations, particularly
+those involving small multiples, often require hierarchical structures.
+Processing such data poses an additional challenge not faced by prior reactive
+or streaming database systems. To support streaming nested data, Reactive Vega's
+dataflow graph rewrites itself in a data-driven fashion at runtime: new branches
+are extended, or existing branches pruned, in response to observed hierarchies.
+Each dataflow branch models its corresponding part of the hierarchy as a
+standard relation, enabling operators to remain agnostic to higher-level
+structure.
+
+  \item \textbf{Interactive Performance}. Reactive Vega performs both compile-
+and run-time optimizations to increase throughput and reduce memory footprint,
+including tracking metadata to prune unnecessary computation, and optimizing
+scheduling by inlining linear chains of operators. We conduct benchmark
+studies of streaming and interactive visualizations and find that Reactive
+Vega meets or exceeds the performance of both D3 and the original, unreactive
+Vega system.
+\end{enumerate}
+
+Reactive Vega is implemented in the JavaScript programming language, and is
+intended to run either in a web browser or server-side using Node.js. By
+default, Reactive Vega renders to an HTML5 Canvas element; however, it also
+supports Scalable Vector Graphics (SVG) and server-side image rendering.
+
+\input{vega-arch/dataflow}
+\input{vega-arch/optimizations}
+\input{vega-arch/performance}
