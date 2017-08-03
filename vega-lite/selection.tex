@@ -30,7 +30,7 @@ removed as events fire. They express discrete selections, as their predicates
 test for an exact match with at least one value in the backing dataset. The
 order of points in a multi selection can be semantically meaningful, for example
 when a multi selection serves as an ordinal scale domain.
-\Cref{fig:singleSelection,fig:multiSelection} illustrate how points are
+\Cref{fig:vl:singleSelection,fig:vl:multiSelection} illustrate how points are
 highlighted in a scatterplot using single and multi selections.
 
 \begin{figure*}[h!]
@@ -38,7 +38,7 @@ highlighted in a scatterplot using single and multi selections.
   \includegraphics[width=\columnwidth]{singleSelection}
   \caption{Adding a \emph{single} selection to parameterize the fill color
   of a scatterplot's circle mark.}
-  \label{fig:singleSelection}
+  \label{fig:vl:singleSelection}
 \end{figure*}
 
 \begin{figure*}[h!]
@@ -46,14 +46,14 @@ highlighted in a scatterplot using single and multi selections.
   \includegraphics[width=\columnwidth]{multiSelection}
   \caption{Switching from a \emph{single} to \emph{multi} selection. The first
   value is selected on click, and additional values on shift-click.}
-  \label{fig:multiSelection}
+  \label{fig:vl:multiSelection}
 \end{figure*}
 
 Intervals are similar to multi selections. They are backed by datasets, but
 their predicates determine whether an argument falls within the minimum and
 maximum extent defined by the backing points. Thus, they express continuous
 selections. The compiler automatically adds a rectangle mark, as shown in
-\cref{fig:intervalSelection}, to depict the selected interval. Users can
+\cref{fig:vl:intervalSelection}, to depict the selected interval. Users can
 customize the appearance of this mark via the \texttt{mark} keyword, or disable
 it altogether when defining the selection.
 
@@ -63,7 +63,7 @@ it altogether when defining the selection.
   \caption{Highlight a continuous range of points using an \emph{interval}
   selection. A rectangle mark is automatically added to depict the interval
   extents.}
-  \label{fig:intervalSelection}
+  \label{fig:vl:intervalSelection}
 \end{figure*}
 
 Predicate functions enable a minimal set of backing points to represent the full
@@ -93,7 +93,7 @@ The particular events that update a selection are determined by the platform a
 Vega-Lite specification is compiled on, and the input modalities it supports. By
 default we use mouse events on desktops, and touch events on mobile and tablet
 devices. A user can specify alternate events using Vega's event selector
-syntax~\cite{reactive-vega-model}. For example, \cref{fig:paintbrush}
+syntax~\cite{reactive-vega-model}. For example, \cref{fig:vl:paintbrush}
 demonstrates how \texttt{mouseover} events are used to populate a multi
 selection. With the event selector syntax, multiple events are specified using a
 comma (e.g., \texttt{mousedown, mouseup} adds items to the selection when either
@@ -112,7 +112,7 @@ milliseconds).
   \caption{Specifying a custom event trigger for a \emph{multi} selection: the
   first point is selected on \texttt{mouseover} and subsequent points when the
   shift key is pressed.}
-  \label{fig:paintbrush}
+  \label{fig:vl:paintbrush}
 \end{figure*}
 
 \subsection{Selection Transforms}
@@ -152,7 +152,7 @@ introduced due to inline binning or aggregation). For such cases, a list of
   \includegraphics[width=\columnwidth]{projectSingle}
   \caption{Using the \emph{project} transform to highlight a \emph{single}
   \texttt{Origin}.}
-  \label{fig:projectSingle}
+  \label{fig:vl:projectSingle}
 \end{figure}
 
 \begin{figure}[h!]
@@ -160,7 +160,7 @@ introduced due to inline binning or aggregation). For such cases, a list of
   \includegraphics[width=\columnwidth]{projectMulti}
   \caption{Using the \emph{project} transform to highlight \emph{multiple}
   \texttt{Origin}s.}
-  \label{fig:projectMulti}
+  \label{fig:vl:projectMulti}
 \end{figure}
 
 \begin{figure}[h!]
@@ -168,7 +168,7 @@ introduced due to inline binning or aggregation). For such cases, a list of
   \includegraphics[width=\columnwidth]{projectInterval}
   \caption{\emph{Projecting} an interval selection to restrict it to a
   single dimension.}
-  \label{fig:projectInterval}
+  \label{fig:vl:projectInterval}
 \end{figure}
 
 \subsubsection{Toggle}
@@ -179,9 +179,9 @@ The \emph{toggle} transform is automatically instantiated for uninitialized
 multi selections. When the \emph{event} occurs, the corresponding data value is
 added or removed from the multi selection's backing dataset. By default, the
 toggle \emph{event} corresponds to the selection's triggering event, but with
-the shift key pressed. For example, in \cref{fig:multiSelection}, additional
+the shift key pressed. For example, in \cref{fig:vl:multiSelection}, additional
 points are added to the multi selection on shift-click (where \texttt{click} is
-the default event for multi selections). The selection in \cref{fig:paintbrush},
+the default event for multi selections). The selection in \cref{fig:vl:paintbrush},
 however, specifies a custom \texttt{mouseover} event. Thus, additional points
 are inserted when the shift key is pressed and the mouse cursor hovers over a
 point.
@@ -207,7 +207,7 @@ selections.
   \caption{The \emph{translate} transform enables movement of the brushed
   region. It is automatically invoked for interval selections but is
   explicitly depicted here for clarity.}
-  \label{fig:translate}
+  \label{fig:vl:translate}
 \end{figure}
 
 \subsubsection{Zoom}
@@ -252,7 +252,7 @@ scales are specified by \emph{projecting} over the corresponding channels.
 \emph{binding} an interval selection to the x- and y-scale domains, and then
 applying the \emph{translate} and \emph{zoom} transforms. Alternate events
 prevent collision with the brushing interaction, previously defined in
-\cref{fig:intervalSelection}}\label{fig:bindScales}}
+\cref{fig:vl:intervalSelection}}\label{fig:vl:bindScales}}
 {\includegraphics[width=0.65\textwidth]{bindScales}}
 \end{figure}
 
@@ -275,7 +275,7 @@ change. First, selections can be used to drive \emph{conditional} encoding
 rules. Each data tuple participating in the encoding is evaluated against the
 selection's predicate, and properties are set based on whether it belongs to the
 selection or not. For example, as shown in
-\cref{fig:singleSelection,fig:multiSelection}, the fill color of the scatterplot
+\cref{fig:vl:singleSelection,fig:vl:multiSelection}, the fill color of the scatterplot
 circles is determined by a data field if they fall within the \texttt{id}
 selection, or set to grey otherwise.
 
@@ -292,8 +292,8 @@ extents. Initializing a selection with scale extents offers a concise way of
 specifying this behavior within the same unit specification. For multi-view
 displays, selection names can be specified as the domain or range of a
 particular channel's scale. Doing so constructs interactions that manipulate
-viewports, including panning \& zooming (\cref{fig:bindScales}) and
-overview\,+\,detail (\cref{fig:overviewDetail}).
+viewports, including panning \& zooming (\cref{fig:vl:bindScales}) and
+overview\,+\,detail (\cref{fig:vl:overviewDetail}).
 
 In all three cases, selections can be composed using logical \texttt{OR},
 \texttt{AND}, and \texttt{NOT} operators. As previously discussed, single
@@ -312,7 +312,7 @@ and materializing a selection applies its predicate against the unit's input
 data by default. When units are composed, however, selection definitions and
 applications become ambiguous.
 
-Consider \cref{fig:resolveGlobal}, which illustrates how a scatterplot matrix
+Consider \cref{fig:vl:resolveGlobal}, which illustrates how a scatterplot matrix
 (SPLOM) is constructed by repeating a unit specification. To brush, we define an
 interval selection (\texttt{region}) within the unit, and use it to perform a
 linking operation by parameterizing the color of the circle marks. However,
@@ -326,11 +326,11 @@ the same name across a layered or concatenated views.
   \centering
   \includegraphics[width=\columnwidth]{resolveGlobal}
   \caption{By adding a \emph{repeat} operator, we compose the encodings and
-  interactions from \cref{fig:bindScales} into a scatterplot matrix. Users can
+  interactions from \cref{fig:vl:bindScales} into a scatterplot matrix. Users can
   brush, pan, and zoom within each cell, and the others update in concert. By
   default, a \emph{global} composite selection is created: brushing in a cell
   replaces previous brushes.}
-  \label{fig:resolveGlobal}
+  \label{fig:vl:resolveGlobal}
 \end{figure}
 
 Several strategies exist for resolving this ambiguity. By default, a
@@ -353,7 +353,7 @@ its own brush, which would determine how only its points would be highlighted.
   \caption{Resolving the \texttt{region} selection to \emph{independent}
 produces a brush in each cell, and points only highlight based on the selection
 in their own cell.}
-  \label{fig:resolveIndependent}
+  \label{fig:vl:resolveIndependent}
 \end{figure}
 
 Selections can also be resolved to \emph{union} or \emph{intersect}. In these
@@ -362,12 +362,12 @@ within the overall selection if it is included in, respectively, at least one of
 the constituents or all of them. More concretely, with the SPLOM example, these
 settings would continue to produce one brush per cell, and points would
 highlight when they lie within at least one brush (\emph{union}) or if they are
-within every brush (\emph{intersect}) as shown in \cref{fig:resolveUnion} and
-\cref{fig:resolveIntersect} respectively. We also support \emph{union others}
+within every brush (\emph{intersect}) as shown in \cref{fig:vl:resolveUnion} and
+\cref{fig:vl:resolveIntersect} respectively. We also support \emph{union others}
 and \emph{intersect others} resolutions, which function like their full
 counterparts except that a unit's own selection is not part of the inclusion
 determination. These latter methods support cross-filtering interactions, as in
-Figs.~\ref{fig:SimpleCrossFilter} \& ~\ref{fig:LayeredCrossFilter}, where
+Figs.~\ref{fig:vl:SimpleCrossFilter} \& ~\ref{fig:vl:LayeredCrossFilter}, where
 interactions within a view should not filter itself.
 
 \begin{figure}[h!]
@@ -376,7 +376,7 @@ interactions within a view should not filter itself.
   \caption{Resolving the \texttt{region} selection to \emph{union}
 produces a brush in each cell, and points highlight if they fall within any of
 the selections.}
-  \label{fig:resolveUnion}
+  \label{fig:vl:resolveUnion}
 \end{figure}
 
 \begin{figure}[h!]
@@ -385,5 +385,5 @@ the selections.}
   \caption{Resolving the \texttt{region} selection to \emph{intersect}
 produces a brush in each cell, and points only highlight if they lie within all
 of the selections.}
-  \label{fig:resolveIntersect}
+  \label{fig:vl:resolveIntersect}
 \end{figure}

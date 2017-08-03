@@ -50,14 +50,14 @@ Unit specifications are capable of expressing a variety of common, useful plots
 of both raw and aggregated data. Examples include bar charts, histograms, dot
 plots, scatter plots, line graphs, and area graphs. Our formal definitions are
 instantiated in a JSON (JavaScript Object Notation) syntax, as shown in
-\cref{fig:unit1,fig:unit2,fig:unit3}.
+\cref{fig:vl:unit1,fig:vl:unit2,fig:vl:unit3}.
 
 \begin{figure}[h!]
 \centering
   \includegraphics[width=\textwidth]{unit-1}
   \caption{A unit specification that uses a \emph{line} mark to visualize the
   \emph{mean} temperature for every \emph{month}.}
-  \label{fig:unit1}
+  \label{fig:vl:unit1}
 \end{figure}
 
 \begin{figure}[h!]
@@ -65,7 +65,7 @@ instantiated in a JSON (JavaScript Object Notation) syntax, as shown in
   \includegraphics[width=\textwidth]{unit-2}
   \caption{A \emph{binned} scatterplot visualizes correlation between wind
   and temperature.}
-  \label{fig:unit2}
+  \label{fig:vl:unit2}
 \end{figure}
 
 \begin{figure}[h!]
@@ -73,7 +73,7 @@ instantiated in a JSON (JavaScript Object Notation) syntax, as shown in
   \includegraphics[width=\textwidth]{unit-3}
   \caption{A \emph{stacked} bar chart that sums the various weather types by
   location.}
-  \label{fig:unit3}
+  \label{fig:vl:unit3}
 \end{figure}
 
 \newpage
@@ -108,7 +108,7 @@ its operands to be \emph{unit} views.
   \caption{A dual axis chart that \emph{layers} a line for the monthly mean
   temperature on top of bars for monthly mean precipitation. Each layer uses an
   \emph{independent} y-scale.}
-  \label{fig:layer}
+  \label{fig:vl:layer}
 \end{figure*}
 
 \subsection{Concatenation}
@@ -129,10 +129,10 @@ comparison across views and optimizes the underlying implementation.
 \begin{figure*}[h!]
   \centering
   \includegraphics[width=\columnwidth]{concat}
-  \caption{The \cref{fig:unit1,fig:unit2} unit specifications
+  \caption{The \cref{fig:vl:unit1,fig:vl:unit2} unit specifications
   \emph{concatenated} vertically; scales and guides for each
   plot are independent by default.}
-  \label{fig:concat}
+  \label{fig:vl:concat}
 \end{figure*}
 
 \subsection{Facet}
@@ -161,10 +161,10 @@ months of which nine are empty.
 \begin{figure*}[h!]
   \centering
   \includegraphics[width=\columnwidth]{facet}
-  \caption{The line chart from \cref{fig:unit1} \emph{faceted}
+  \caption{The line chart from \cref{fig:vl:unit1} \emph{faceted}
   vertically by location; the x-axis is shared, and the underlying scale domains
   unioned, to facilitate easier comparison.}
-  \label{fig:facet}
+  \label{fig:vl:facet}
 \end{figure*}
 
 \subsection{Repeat}
@@ -193,7 +193,7 @@ legends are shared when data fields coincide.
   \includegraphics[width=\columnwidth]{repeat}
   \caption{\emph{Repetition} of different measures across rows; the y-channel
   references the \texttt{row} template parameter to vary the encoding.}
-  \label{fig:repeat}
+  \label{fig:vl:repeat}
 \end{figure*}
 
 \subsection{Dashboards and Nested Views}

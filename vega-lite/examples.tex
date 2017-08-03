@@ -21,26 +21,26 @@ varied to explore alternate points in the design space.
 
 \subsection{Selection: Click/Shift-Click and Brushing}
 
-\cref{fig:singleSelection} provides the full Vega-Lite specification for a
+\cref{fig:vl:singleSelection} provides the full Vega-Lite specification for a
 scatterplot where users can mark individual points of interest. It includes the
 simplest definition of a selection\,---\,a name and type\,---\,and illustrates
 how the mark color is determined conditionally.
 
-Modifying a single property, \emph{type}, as in \cref{fig:multiSelection},
+Modifying a single property, \emph{type}, as in \cref{fig:vl:multiSelection},
 allows users to mark multiple points (\emph{toggle} is automatically
 instantiated by the compiler, but we explicitly specify it in the figure for
-clarity). We can instead add \emph{project} (\cref{fig:projectSingle})
+clarity). We can instead add \emph{project} (\cref{fig:vl:projectSingle})
 such that marking a single point of interest highlights all other points that
 share particular data values\,---\,a \emph{connect}-type interaction. Such
 changes to the specification are not mutually exclusive, and can be composed as
-shown in \cref{fig:projectMulti}.
+shown in \cref{fig:vl:projectMulti}.
 
 By using the \emph{interval} type, users can mark items of interest within a
-continuous region. As shown in \cref{fig:intervalSelection}, the compiler
+continuous region. As shown in \cref{fig:vl:intervalSelection}, the compiler
 automatically adds a rectangle mark to depict the selection, and instantiates
-\emph{translate} to allow it to be repositioned (\cref{fig:translate}). In this
+\emph{translate} to allow it to be repositioned (\cref{fig:vl:translate}). In this
 context, \emph{project} restricts the interval to a single dimension
-(\cref{fig:projectInterval}).
+(\cref{fig:vl:projectInterval}).
 
 These specifications are an order of magnitude more concise than their Vega
 counterparts. With Vega-Lite, users need only specify the semantics of their
@@ -49,7 +49,7 @@ by default, individual points are selected on click and multiple points on
 shift-click. Users can override these defaults, sometimes producing a
 qualitatively different user experience. For example, one can instead update
 selections on \texttt{mouseover} to produce a ``paint brush'' interaction, as in
-\cref{fig:paintbrush}. In contrast, with Vega, users need to manually author all
+\cref{fig:vl:paintbrush}. In contrast, with Vega, users need to manually author all
 the components of an interaction technique, including determining whether event
 properties need to be passed through scale inversions, creating necessary
 backing data structures, and adding marks to represent a brush component.
@@ -59,15 +59,15 @@ backing data structures, and adding marks to represent a brush component.
 Vega-Lite's selections also enable accretive design of interactions. Consider
 our previous example of brushing a scatterplot. We can define an additional
 interval selection and \emph{bind} it to the unit's scale functions
-(\cref{fig:bindScales}). The compiler populates the selection with the x and y
+(\cref{fig:vl:bindScales}). The compiler populates the selection with the x and y
 scale domains, parameterizes them to use it, and instantiates the
 \emph{translate} and \emph{zoom} transforms. Users can now brush, pan, and zoom
 the scatterplot. However, the default definitions of the two interval selections
 collide: dragging produces a brush and pans the plot. This example illustrates
 that concise methods for overriding defaults can not only be useful (as in
-\cref{fig:paintbrush}) but also necessary. We override the default events that
+\cref{fig:vl:paintbrush}) but also necessary. We override the default events that
 trigger the two interactions using Vega's event selector
-syntax~\cite{reactive-vega-model}. As \cref{fig:bindScales} shows, we specify
+syntax~\cite{reactive-vega-model}. As \cref{fig:vl:bindScales} shows, we specify
 that brushing only occurs when the user drags with the shift key pressed.
 
 The Vega-Lite specification for panning and zooming is, once again, more
@@ -101,9 +101,9 @@ scale.
 
 \subsection{Connect: Brushing \& Linking}
 
-We can wrap our previous example, from \cref{fig:bindScales}, in a \emph{repeat}
+We can wrap our previous example, from \cref{fig:vl:bindScales}, in a \emph{repeat}
 operator to construct a scatterplot matrix (SPLOM) as shown in
-\cref{fig:resolveGlobal}. With no further modifications, all our previous
+\cref{fig:vl:resolveGlobal}. With no further modifications, all our previous
 interactions now work within each cell of the SPLOM and are synchronized across
 the others. For example, dragging pans not only the particular cell the user is
 in, but related cells along shared axes. Similarly, dragging with the shift key
@@ -114,11 +114,11 @@ As its name suggests, the repeat operator creates one instance of the child
 specification for the given parameters. By default, to provide a consistent
 experience when moving from a unit to a composite specification, Vega-Lite
 creates a \emph{global} instance of the selection that is populated and shared
-between all repeated instances (\cref{fig:resolveGlobal}). With the
+between all repeated instances (\cref{fig:vl:resolveGlobal}). With the
 \emph{resolve} property, users can specify alternate disambiguation methods
 including creating an independent brush for each cell, unioning the brushes, or
 intersecting them
-(\cref{fig:resolveIndependent,fig:resolveUnion,fig:resolveIntersect}
+(\cref{fig:vl:resolveIndependent,fig:vl:resolveUnion,fig:vl:resolveIntersect}
 respectively). If selections are bound to scales or parameterize them, only a
 global selection is supported for consistency with the composition algebra.
 
@@ -151,12 +151,12 @@ items at a higher resolution in the larger (detail) chart at the top.
   \caption{An overview\,+\,detail visualization concatenates two unit
   specifications, with a selection in the second one parameterizing the x-scale
   domain in the first.}
-  \label{fig:overviewDetail}
+  \label{fig:vl:overviewDetail}
 \end{figure}
 
 \subsection{Reconfigure: Index Chart}
 
-\cref{}\todo{IndexChart} uses a single selection to interactively normalize
+\Cref{fig:vl:indexChart} uses a single selection to interactively normalize
 stock price time series data as the user moves their mouse across the chart. We
 apply the \emph{nearest} transform to accelerate the selection using an
 invisible Voronoi diagram. By projecting over the \texttt{date} field, the
@@ -165,10 +165,18 @@ the selected \texttt{date}. Thus, we can reference the single selection
 directly, to position the red vertical rule, and also materialize it as part of
 the \emph{lookup} data transform.
 
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\columnwidth]{indexChart}
+  \caption{An index chart uses a single selection to renormalize data based on
+  the index point nearest the mouse cursor.}
+  \label{fig:vl:indexChart}
+\end{figure}
+
 \subsection{Filter: Cross Filtering}
 
 As selections provide a predicate function, it is trivial to use them to filter
-a dataset. \todo{SimpleCrossFilter}, for example, presents a concise
+a dataset. \Cref{fig:vl:crossfilter}, for example, presents a concise
 specification to enable filtering across three distinct binned histograms. It
 uses a \emph{repeat} operator with a uni-dimensional interval selection over the
 bins set to \emph{intersect others}. The \emph{filter} data transform applies
@@ -180,13 +188,33 @@ the Vega-Lite compiler automatically instantiates the \emph{translate}
 transform, allowing users to drag brushes around rather than having to reselect
 them from scratch.
 
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\columnwidth]{crossfilter}
+  \caption{An interval selection, resolved to \emph{intersect others}, drives a
+  cross filtering interaction. Brushing in one histogram filters and
+  reaggregates the data in the others, observable by the varying y-axis labels
+  in the screenshots.}
+  \label{fig:vl:crossfilter}
+\end{figure}
+
 The \emph{filter} data transform can also be used to materialize the selection
 as an input dataset for secondary views. For instance, one drawback of
-cross-filtering as in \todo{SimpleCrossFilter} is that users only see the
+cross-filtering as in \cref{fig:vl:crossfilter} is that users only see the
 selected values, and lose the context of the overall dataset. Instead of
 applying the selection back onto the input dataset, we can instead materialize
-it as an overlay (\todo{LayeredCrossFilter}). Now, as the user brushes in one
-histogram, bars highlight to visualize the proportion of the overall
+it as an overlay (\cref{fig:vl:layeredCrossfilter}). Now, as the user brushes in
+one histogram, bars highlight to visualize the proportion of the overall
 distribution that falls within the brushed region(s). With this setup, it is
 necessary to change the selection's resolution to simply \emph{intersect}, such
 that bars in the brushed plot also highlight during the interaction.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\columnwidth]{layeredCrossfilter}
+  \caption{A layered cross filtering interaction is constructed by resolving
+  the interval selection to \emph{intersect}, and then materializing it to
+  serve as the input data for a second layer. Highlights indicate changes to
+  the specification from~\cref{fig:vl:crossfilter}.}
+  \label{fig:vl:layeredCrossfilter}
+\end{figure}
