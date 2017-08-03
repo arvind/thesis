@@ -2,6 +2,47 @@
 \graphicspath{{./vega-lite/figures/}}
 \chapter{A Grammar of Interactive Graphics}
 
+\begin{figure}[h!]
+  \vspace{-30pt}
+  \centering
+  \includegraphics[width=\columnwidth]{teaser}
+  % \vspace{-30pt}
+\end{figure}
+
+% Reactive Vega demonstrates that the advantages of declarative specification
+% extend to interaction design as well\,---\,decoupling specification from
+% execution frees designers to iterate more quickly, facilitates retargeting
+% across platforms, and allows for language-level optimizations.
+
+Reactive Vega demonstrates that declarative interaction design is an expressive
+and performant alternative to imperative event handling callbacks. However, as
+its abstractions are relatively low-level, it would be apt to describe it as an
+``assembly language'' for interactive visualization most suited for
+\emph{explanatory} visualization. In contrast, for \emph{exploratory}
+visualization, higher-level grammars such as ggplot2~\cite{wickham:layered}, and
+grammar-based systems such as Tableau (n\'ee Polaris~\cite{stolte:polaris}), are
+typically preferred as they favor conciseness over expressiveness. Analysts
+rapidly author partial specifications of visualizations; the grammar applies
+default values to resolve ambiguities, and synthesizes low-level details to
+produce visualizations.
+
+High-level languages can also enable search and inference over the space of
+visualizations. For example, Wongsuphasawat et~al. introduced Vega-Lite to power
+the Voyager visualization browser~\cite{voyager}. By providing a smaller surface
+area than Vega, Vega-Lite makes systematic enumeration and ranking of data
+transformations and visual encodings more tractable.
+
+However, existing high-level languages provide limited support for
+interactivity. An analyst can, at most, enable a predefined set of common
+techniques (linked selections, panning \& zooming, etc.) or parameterize their
+visualization with dynamic query widgets~\cite{shiny}. For custom,
+direct-manipulation interaction they must, once again, turn to imperative event
+handling callbacks.
+
+In this chapter, we extend Vega-Lite with a \emph{multi-view} grammar of
+graphics alongside a novel \emph{grammar of interaction} to enable concise,
+high-level specification of interactive data visualizations.
+
 \input{vega-lite/encoding}
 \input{vega-lite/selection}
 \input{vega-lite/compiler}

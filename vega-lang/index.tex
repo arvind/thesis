@@ -31,9 +31,34 @@ details, such as interleaved events and coordinating external state, which can
 be complex and error\--prone~\cite{cooper:embedding, edwards:coherent,
 myers:callbacks}.
 
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\columnwidth]{barChart}
+  \caption{A JSON specification for a bar chart, demonstrating Vega's
+  abstractions for visual encoding. Data is imported from a URL. Scales
+  transform data values to visual values. Properties of graphical marks (in
+  this case rectangles) are determined by scale mappings. Guides (here, axes)
+  can be instantiated as well.}
+  \label{fig:vg:barChart}
+\end{figure}
+
 In response, Reactive Vega introduces a model for \emph{declarative} interaction
 design.
 
 \input{vega-lang/primitives}
 \input{vega-lang/examples}
 \input{vega-lang/discussion}
+
+\section{Summary}
+\label{sec:vg:lang-summary}
+
+In this chapter, we demonstrate that the advantages of declarative specification
+extend to interaction design as well. With event streams and signals, users need
+only describe the relationship between input events and interactive state
+respectively. Reactive semantics ensure that this state no longer needs to be
+manually maintained by users, but is automatically updated when new events
+occur. Moreover, signals provide a powerful abstraction barrier that simplifies
+retargeting and has spurred development of a new ``time-traveling''
+debugger~\cite{hoffswell:debugging}. Reusing and repurposing interactive
+behaviors is also supported by passing predicates through scale inversions, and
+extracting declarative specifications to standalone interactors.

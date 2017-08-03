@@ -1,4 +1,4 @@
-\section{Language Design}
+\section{Interaction Language Design}
 \label{sec:vg:primitives}
 \subsection{Event Streams and Signals}
 
@@ -8,10 +8,18 @@ and keystrokes) are captured as time-varying \emph{streaming data}, rather than
 event callbacks. This abstraction reduces the burden of composing and sequencing
 events\,---\,operations that would require several callbacks and some external
 state under an imperative paradigm. To this end, we introduce a syntax for
-specifying event streams (\cref{}\todo{EventStreams}) inspired by CSS selectors.
-While prior work has formulated regex-based symbols for event
-selection~\cite{kin:proton++}, we believe our approach yields operators that
-will be more familiar to visualization designers.
+specifying event streams (\cref{fig:vg:eventStreams}). While prior work has
+formulated regex-based symbols for event selection~\cite{kin:proton++} we
+believe our approach, by drawing on CSS selectors for inspiration, will be more
+familiar to designers.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\columnwidth]{eventStreams}
+  \caption{Reactive Vega provides an event stream selector syntax, inspired by
+  CSS selectors, to compose, filter, and sequence input events.}
+  \label{fig:vg:eventStreams}
+\end{figure}
 
 A basic event stream selector is specified by a particular event type (e.g.,
 \texttt{mousemove}), optionally prepended with the source of the
@@ -25,9 +33,9 @@ is a single stream of \texttt{mousemove} events that occur between a
 \texttt{mousedown} and \texttt{mouseup} (i.e., ``drag'' events). To throttle or
 debounce an event stream, timing information can be specified between curly
 braces (e.g., \texttt{\{100, 200\}} throttles a stream by 100 milliseconds and
-debounces it by 2000 milliseconds).  All operators are composable. For instance,
-\texttt{[mousedown[event.shiftKey], window:mouseup] > window:mousemove{100,
-200}} specifies a stream of throttled and debounced drag events that are only
+debounces it by 200 milliseconds).  All operators are composable. For instance,
+\texttt{[mousedown[event.shiftKey], window:mouseup] > window:mousemove\{100,
+200\}} specifies a stream of throttled and debounced drag events that are only
 triggered when the shift key is pressed.
 
 With Reactive Vega, interaction events are a first-class data source. They can
@@ -68,7 +76,14 @@ definition\,---\,specifying conditions over properties of selected
 members\,---\,or an \emph{extensional} one\,---\,explicitly enumerating all
 members of a selection.
 
-\todo{IntensionalExtensionalPredicate}
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.9\columnwidth]{predicates}
+  \caption{Points are highlighted using (left) an intensional predicate
+  \texttt{50 $\leq$ Horsepower $\leq$ 100} or (right) an extensional predicate
+  with members \texttt{\#56, \#110, \#79, \#95, \#40, \#120, ...}.}
+  \label{fig:vg:predicates}
+\end{figure}
 
 Predicate operands are typically signals and, as signals drawn from input event
 streams, predicates express interactive selections at the visual (or pixel)
@@ -81,6 +96,17 @@ component in visualization design~ \cite{wilkinson:grammar} as they transform
 data values into visual values such as pixels or colors. By applying an
 \emph{inverted} scale function to predicate operands, we can lift a predicate to
 the data domain~\cite{derthick:vqe}.
+
+\begin{figure}[h!]
+  \floatbox[{\capbeside\thisfloatsetup{capbesideposition=
+  {right,center},capbesidewidth=0.3\columnwidth}}]{figure}[\FBwidth]
+  {\caption{\emph{Predicates} use signal values to define interactive selections
+of elements. Using \emph{scale inversions}, predicates can be generalized to
+define interactive queries, and thus operate across different coordinate spaces:
+overview (bottom) and detail (top).}
+  \label{fig:vl:scaleInversion}}
+  {\includegraphics[width=0.7\textwidth]{scaleInversion}}
+\end{figure}
 
 \subsection{Production Rules}
 

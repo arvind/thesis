@@ -1,57 +1,32 @@
 % !TEX root = ../thesis.tex
-\section{Limitations \& Future Work}
+\section{Conclusion}
 \label{sec:vl:conclusion}
 
-The previous section demonstrates that Vega-Lite specifications are more concise
-than those of the lower-level Vega language, and yet are sufficiently expressive
-to cover an interactive visualization taxonomy. Moreover, we have shown how
-primitives can be systematically enumerated to facilitate exploration of
-alternative designs. Nevertheless, we identify two classes of limitations that
-currently exist.
+To our knowledge, Vega-Lite is the first high-level visualization language to
+offer a multi-view grammar of graphics tightly integrated with a grammar of
+interaction. The resulting concise specifications facilitate rapid exploration
+of design variations. Vega-Lite is an open source system available at
+\url{http://vega.github.io/vega-lite/}, and we hope it will enable analysts to
+produce and modify interactive graphics with the same ease at which they
+currently construct static plots.
 
-First, there are limitations that are a result of how our formal model has been
-reified in the current Vega-Lite implementation. In particular, components that
-are determined at compile-time cannot be interactively manipulated. For example,
-a selection cannot specify alternate fields to bin or aggregate over. Similarly,
-more complex selection types (e.g., lasso selections) cannot be expressed as the
-Vega-Lite system does not support arbitrary path marks. Such limitations can be
-addressed with future versions of Vega-Lite, or alternate systems that
-instantiate its grammar. For example, rather than a \emph{compiler},
-interactions could parameterize the entirety of a specification within a
-Vega-Lite \emph{interpreter}.
+An early version of Vega-Lite has already been well-received by the broader
+community. Third-party bindings have been created for a number of environments
+including Python~\cite{vega-lite:altair}, R~\cite{vega-lite:hrbrmstr,
+vega-lite:timelyportfolio}, Scala~\cite{vega-lite:scala},
+Julia~\cite{vega-lite:julia}, and a REPL client for
+Clojure~\cite{vega-lite:clojure}. In a widely-shared review of Python
+visualization libraries, community member Dan Saber noted that \emph{``it is
+this type of 1:1:1 mapping between thinking, code, and visualization that is my
+favourite thing about [Vega-Lite].''} Members of the Jupyter team have called
+Vega and Vega-Lite \emph{``perhaps the best existing candidates for a principled
+\emph{lingua franca} of data visualization.''}
 
-The second class of limitations are inherent to the model itself. As a
-higher-level grammar, our model favors conciseness over expressivity. The
-available primitives ensure that common methods can be rapidly specified, with
-sufficient composition to enable more custom behaviors as well. However, highly
-specialized techniques, such as querying time-series data via relaxed
-selections~\cite{holz:relaxed}, cannot be expressed by default. Fortunately, our
-formulation of selections, which decouple backing points from selected points
-via a predicate function, provide a useful abstraction for extending our base
-semantics with new, custom transforms. For example, the aforementioned technique
-could be encapsulated in a \emph{relax} transform applicable to multi
-selections.
-
-While our selection abstraction supports \emph{interactive} linking of marks,
-our view algebra does not yet provide means of \emph{visually} linking marks
-across views (e.g., as in the Domino system~\cite{gratzl:domino}). Our view
-algebra might be extended with support for connecting corresponding marks. For
-example, points in repeated dot plots could be visually linked using line
-segments to produce a parallel coordinates display.
-
-An early version of Vega-Lite is used to automatically recommend static plots as
-part of the Voyager browser~\cite{voyager}. Voyager leverages perceptual
-\emph{effectiveness criteria}~\cite{bertin:semiology, cleveland:perception,
-mackinlay:apt} to rank candidate visual encodings. One promising avenue for
-future work is to develop models and techniques to analogously recommend
-suitable interaction methods for given visualizations and underlying data types.
-Here, the human-computer interaction literature~\cite{beaudouin:instrumental}
-may offer insights on when and why users benefit from certain interaction
-techniques.
-
-Vega-Lite is an open source system available at
-\url{http://vega.github.io/vega-lite/}. By offering a multi-view grammar of
-graphics tightly integrated with a grammar of interaction, Vega-Lite facilitates
-rapid exploration of design variations. Ultimately, we hope that it enables
-analysts to produce and modify interactive graphics with the same ease with
-which they currently construct static plots.
+Vega-Lite has also had an impact in the research community. It has been used to
+reverse-engineer visualizations from chart images~\cite{poco:reverse}, build a
+model for sequencing visualizations~\cite{kim:graphscape}, and powers the
+CompassQL recommendation engine~\cite{voyager, compassql}. Such work is
+possible, in part, due to well-tested \emph{effectiveness
+criteria}~\cite{bertin:semiology, cleveland:perception, mackinlay:apt} for
+visual encodings. One promising avenue for future work is to use Vega-Lite to
+derive analogous criteria for interaction techniques.

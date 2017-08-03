@@ -252,7 +252,8 @@ scales are specified by \emph{projecting} over the corresponding channels.
 \emph{binding} an interval selection to the x- and y-scale domains, and then
 applying the \emph{translate} and \emph{zoom} transforms. Alternate events
 prevent collision with the brushing interaction, previously defined in
-\cref{fig:vl:intervalSelection}}\label{fig:vl:bindScales}}
+\cref{fig:vl:intervalSelection}}
+\label{fig:vl:bindScales}}
 {\includegraphics[width=0.65\textwidth]{bindScales}}
 \end{figure}
 
@@ -297,12 +298,12 @@ overview\,+\,detail (\cref{fig:vl:overviewDetail}).
 
 In all three cases, selections can be composed using logical \texttt{OR},
 \texttt{AND}, and \texttt{NOT} operators. As previously discussed, single
-selections offer an additional mechanism for parameterizing encodings.
-Properties of the backing point can be directly referenced within  the
-specification, for example as part of a filter or calculate expression, or to
-determine a visual encoding channel without the overhead of a conditional rule.
-For example, the position of the red rule in \cref{}\todo{ODIndexChart(b)} is set to
-the \texttt{date} value of the \texttt{indexPt} selection.
+selections offer an additional mechanism for parameterizing encodings. The
+backing point can be directly referenced within the specification, for example
+as part of a filter or calculate expression, or to determine a visual encoding
+channel without the overhead of a conditional rule. In \cref{fig:vl:indexChart},
+for instance, the red rule is positioned using the \texttt{date} value of the
+\texttt{indexPt} selection.
 
 \subsection{Disambiguating Composite Selections}
 
