@@ -18,17 +18,16 @@ processing, interaction handling, or scene graph construction.
 \subsubsection{Processing Input Data}
 
 Reactive Vega parses each dataset definition and constructs a corresponding
-branch in the dataflow graph, as shown in
-Figure~\ref{fig:inputDataProcessing}. These branches comprise input and output
-nodes connected by a pipeline of data transformation operators. Input nodes
-receive raw tuples as a linear stream (tree and graph structures are supported
-via parent-child or neighbor pointers, respectively). Upon data source
-updates, tuples are flagged as either \emph{added}, \emph{modified}, or
-\emph{removed}, and each tuple is given a unique identifier. Data
-transformation operators use this metadata to perform targeted computation
-and, in the process, may derive new tuples from existing ones. Derived tuples
-retain access to their ``parent'' via prototypal inheritance. This relieves
-operators of the burden of propagating unrelated upstream changes.
+branch in the dataflow graph. These branches comprise input and output nodes
+connected by a pipeline of data transformation operators. Input nodes receive
+raw tuples as a linear stream (tree and graph structures are supported via
+parent-child or neighbor pointers, respectively). Upon data source updates,
+tuples are flagged as either \emph{added}, \emph{modified}, or \emph{removed},
+and each tuple is given a unique identifier. Data transformation operators use
+this metadata to perform targeted computation and, in the process, may derive
+new tuples from existing ones. Derived tuples retain access to their ``parent''
+via prototypal inheritance\,---\,operators need not propagate unrelated upstream
+changes.
 
 Some operators require additional inspection of tuple state. Consider an
 aggregate operator that calculates running statistics over a dataset (e.g.,
@@ -54,6 +53,29 @@ signals, and value propagation follows E-FRP's two-phase update~\cite{wan:efrp}
 as described in~\secref{sec:propagation}.
 
 \subsubsection{Constructing the Scene Graph}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.8\columnwidth]{groupedBar}
+  \caption{A grouped bar chart (top), with the underlying scene graph (bottom),
+  and corresponding portion of the dataflow graph (right).}
+  \label{fig:vg:groupedBar}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\columnwidth]{scenegraph}
+  \caption{Dataflow operators responsible for scene graph construction are
+dynamically instantiated at run-time, a process that results in the graph seen
+in Fig.~\ref{fig:vg:groupedBar}. (a) At compile-time, a branch corresponding  to
+the root scene graph node is instantiated. (b-c) As the changeset (in blue)
+propagates through nodes, group-mark builders instantiate builders for their
+children. Parent and child builders are temporarily connected (dotted lines) to
+ensure children are built in the same timecycle. (d-e) When the changeset
+propagates to the children, the temporary connection is replaced with a
+connection to the mark's backing data source (also in blue).}
+  \label{fig:vg:scenegraph}
+\end{figure}
 
 To construct the scene graph, Reactive Vega follows a process akin to the
 Protovis bind-build-evaluate pipeline~\cite{heer:protovisjava}. When a
@@ -122,7 +144,7 @@ computation or momentary inconsistencies, known as
 \emph{glitches}~\cite{cooper:embedding}. Centralizing this responsibility,
 rather than delegating it to operators, enables more aggressive pruning of
 unnecessary computation as described in~\secref{sec:pruning}. The scheduler has
-access to the full graph structure and, thus, has more insight into the state of
+access to the full graph structure and, thus, more insight into the state of
 individual operators and propagation progress.
 
 When an interaction event occurs, however, an initial non-topological update of
@@ -158,15 +180,14 @@ Reflow changesets still flow along these edges but, as they operate in scalar
 data space, they are not mediated by \texttt{Collectors}.
 
 This hybrid push/pull system enables a complex web of interdependent operators
-while reducing the implementation complexity of individual elements. For
-example, regardless of whether a signal parameterizes data transforms or visual
-encoding primitives, it simply needs to output a reflow changeset. Without such
-a system in place, the signal would instead have to construct a different
-changeset for each dependency edge it was a part of, and determine the correct
-dataset to supply.
-Figures~\cref{fig:teaser,fig:inputDataProcessing,fig:groupedBarEx,fig:scenegraph,fig:dimpvis}
-use filled and unfilled arrows for internal and external connections,
-respectively.
+while reducing the complexity of individual elements. For example, regardless of
+whether a signal parameterizes data transforms or visual encoding primitives, it
+simply needs to output a reflow changeset. Without such a system in place, the
+signal would instead have to construct a different changeset for each dependency
+edge it was a part of, and determine the correct dataset to supply. \Cref
+{fig:vg:teaser,} use
+filled and unfilled arrows for internal and external
+connections, respectively.
 
 \subsection{Dynamically Restructuring the Graph}
 
@@ -202,6 +223,6 @@ additional branches are created to build and encode corresponding nested marks.
 To ensure their marks are rendered in the same propagation cycle, new branches
 are temporarily connected to their parents. These connections are subsequently
 removed so that children marks will only be rebuilt and re-encoded when their
-backing data source updates. Figure~\ref{fig:scenegraph} provides a step-by-step
-illustration of how scene graph operators are constructed during a propagation
-cycle for the grouped bar chart in Figure~\ref{fig:groupedBarEx}.
+backing data source updates. Figure~\ref{fig:vg:scenegraph} provides a
+step-by-step illustration of how scene graph operators are constructed during a
+propagation cycle for the grouped bar chart in Figure~\ref{fig:vg:groupedBar}.

@@ -15,6 +15,17 @@ conducted on a MacBook Pro system running Mac OS X 10.10.2, with a quad-core
 
 \subsection{On-Demand Tuple Revision Tracking}
 
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\columnwidth]{prev-lines.pdf}
+  \caption{Effects of tuple revision optimizations on average
+processing speed (top) and memory footprint (bottom). Left-hand figures show
+relative changes using no-tracking as a baseline (closer to 1.0 are better),
+and right-hand figures show the absolute values on a log$_{10}$ scale
+(lower is better).}
+  \label{fig:vg:prev_benchmark}
+\end{figure}
+
 Some operators (e.g., statistical aggregates) require both a tuple's current and
 previous values. Tracking prior values can affect both running time and memory
 consumption. One strategy to minimize this cost is to track tuple revisions only
@@ -33,7 +44,7 @@ tuples. The scatterplot features two symbol marks fed by two distinct dataflows,
 include operators that derive new attributes. However, \texttt{B} includes
 additional aggregation operators that require revision tracking.
 
-The results are shown in Figure~\ref{fig:prev_benchmark}, with the effects of
+The results are shown in Figure~\ref{fig:vg:prev_benchmark}, with the effects of
 revision tracking most salient at larger dataset sizes. Always tracking
 revisions can require 20-40\% more memory, and can take up to 50\% longer to
 initialize a visualization due to object instantiation overhead for storing
@@ -43,6 +54,15 @@ requiring only 5-10\% more memory and taking 5\% longer to initialize than the
 
 \subsection{Pruning Unnecessary Recomputation}
 \label{sec:pruning}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\columnwidth]{skips-lines.pdf}
+  \caption{The effects of pruning unnecessary computation on average processing
+speed. (a) A relative difference between conditions (higher is better). (b)
+Absolute values for time taken, plotted on a log$_{10}$ scale (lower is better).}
+  \label{fig:vg:skips_benchmark}
+\end{figure}
 
 By centralizing responsibility for operator scheduling and changeset dispatch,
 we can aggressively prune unnecessary recomputation. The dataflow graph
@@ -73,7 +93,7 @@ reflows only, skipping unchanged operators only, and applying both
 optimizations) across four tasks (initializing the visualization, updating each
 signal in turn, and updating both signals together).
 
-Results are shown in Figure~\ref{fig:skips_benchmark}. Preventing multiple
+Results are shown in Figure~\ref{fig:vg:skips_benchmark}. Preventing multiple
 reflows is the most effective strategy, increasing throughput 1.4 times on
 average. Skipping unchanged operators sees little benefit by itself as, in our
 benchmark setup, only the two operators following a fold are skipped when
@@ -86,6 +106,15 @@ runtime is able to perform just-in-time optimizations that it is unable to apply
 to the other conditions.
 
 \subsection{Inlining Sequential Operators}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\columnwidth]{inlined-lines.pdf}
+  \caption{The effects of inlining sequential operators on average processing
+speed. (a) A relative difference between conditions (higher is better). (b)
+Absolute values for time taken, plotted on a log$_{10}$ scale (lower is better).}
+  \label{fig:vg:inline_benchmark}
+\end{figure}
 
 To propagate changesets through the dataflow graph, the scheduler adds operators
 to a priority queue, backed by a binary heap sorted in topological order. This
@@ -107,11 +136,11 @@ graph operators here. Mark builders directly call evaluators and bounders, and
 group mark builders directly call new child mark builders rather than forming a
 temporary connection.
 
-Figure~\ref{fig:inline_benchmark} shows the results of this optimization applied
-to a parallel coordinates plot. The plot uses a nested scene graph in which each
-line segment is built by a dedicated build-evaluate-bound branch. As we can see,
-inlining does not have much impact on the initialization time. This is
-unsurprising, as the largest initialization cost is due to unavoidable graph
+Figure~\ref{fig:vg:inline_benchmark} shows the results of this optimization
+applied to a parallel coordinates plot. The plot uses a nested scene graph in
+which each line segment is built by a dedicated build-evaluate-bound branch. As
+we can see, inlining does not have much impact on the initialization time. This
+is unsurprising, as the largest initialization cost is due to unavoidable graph
 restructuring. However, inlining improves streaming operations by a 1.9x factor
 on average. As streaming updates only propagate down specific branches of the
 dataflow graph, inline evaluation results in at least 4 fewer queuing operations

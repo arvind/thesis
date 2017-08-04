@@ -1,7 +1,19 @@
 % !TEX root = ./thesis.tex
-\graphicspath{{./figures/vega-arch/}}
+\graphicspath{{./vega-arch/figures/}}
 \chapter{A Streaming Dataflow Architecture}
 \label{sec:vg:arch}
+
+\begin{figure}[h!]
+  \vspace{-40pt}
+  \centering
+  \includegraphics[width=\columnwidth]{teaser}
+  \caption{The Reactive Vega dataflow graph created for a interactive index
+  chart of streaming financial data. As streaming data arrives from the Yahoo!
+  Finance API, or as a user moves their mouse pointer across the chart, an
+  update cycle propagates through the graph and triggers an efficient update and
+  re-render of the visualization.}
+  \label{fig:vg:teaser}
+\end{figure}
 
 While the previous chapter describes the design of Reactive Vega's declarative
 interaction design model, we now turn to the system architecture needed to

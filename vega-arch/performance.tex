@@ -8,10 +8,20 @@ in the previous section.
 
 \subsection{Streaming Visualizations}
 
-Figure~\ref{fig:static_benchmark} shows the average performance of
-(non\--interactive) streaming scatter plots, parallel coordinates plots, and
-trellis plots. We first measured the average time to initially parse and render
-the visualizations. To gauge streaming performance, we next measured the average
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\columnwidth]{streaming-lines.pdf}
+  \caption{Average performance of rendering (non-interactive) streaming visualizations:
+(top-bottom) scatterplot, parallel coordinates, and trellis plot; (left-right)
+initialization time, average frame time, and average frame rate. Dashed lines
+indicate the threshold of interactive updates~\cite{card:modelhuman}.}
+  \label{fig:vg:static_benchmark}
+\end{figure}
+
+Figure~\ref{fig:vg:static_benchmark} shows the average performance of
+uninteractive streaming scatter plots, parallel coordinates plots, and trellis
+plots. We first measured the average time to initially parse and render the
+visualizations. To gauge streaming performance, we next measured the average
 time taken to update and re-render upon adding, modifying, or removing 1\% of
 tuples. We ran 10 trials per dataset, sized 100--100,000 tuples.
 
@@ -34,6 +44,16 @@ makes up the difference in a single update cycle.
 
 \subsection{Interactive Visualizations}
 
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\columnwidth]{interaction-lines.pdf}
+  \caption{Average frame rates for three interactive visualizations: (left-right)
+  brushing and linking on a scatterplot matrix; brushing and linking on an
+  overview+detail visualization; panning and zooming on a scatterplot. Dashed
+  lines indicate the threshold of interactive updates~\cite{card:modelhuman}.}
+  \label{fig:vg:interactive_benchmark}
+\end{figure}
+
 We evaluated the performance of interactive visualizations (measured in terms of
 interactive frame rate) using three common examples: brushing \& linking a
 scatterplot matrix, a time-series overview+detail visualization, and panning \&
@@ -49,7 +69,7 @@ behavior of the fragmented reactive approach used in prior
 work~\cite{satyanarayan:declarative}. We tested these visualizations with
 datasets sized between 100 and 10,000 tuples.
 
-Figure~\ref{fig:interactive_benchmark} shows the results\,---\,on average, and
+Figure~\ref{fig:vg:interactive_benchmark} shows the results\,---\,on average, and
 across both Canvas and SVG renderers, Reactive Vega offers superior interactive
 performance to custom D3 and Vega event handling callbacks. This effect
 primarily stems from Reactive Vega's unified data model, and is most noticeable
