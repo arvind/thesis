@@ -12,6 +12,7 @@
 \usepackage{graphicx}
 \usepackage{todonotes}
 \usepackage{floatrow}
+\usepackage{wrapfig}
 
 
 %% This turns references into clickable hyperlinks.
@@ -29,6 +30,9 @@
   plainpages = false,
   linktocpage
 }
+
+\usepackage[square,numbers,sort]{natbib}
+\bibliographystyle{plain}
 
 % each of the following has two versions
 %   \crefname{environmentname}{singular}{plural}, to be used mid-sentence
@@ -73,6 +77,5 @@ I would like to thank...
 \input{vega-lite/index}
 \input{lyra}
 
-\bibliographystyle{plain}
 \bibliography{thesis}
 \end{document}

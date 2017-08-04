@@ -16,16 +16,25 @@ example interactive visualizations to demonstrate that our model can express
 interactions across all seven categories and how, through composition of its
 primitives, supports the accretive design of richer interactions.
 
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\columnwidth]{shiftClick}
+  \caption{Reactive Vega JSON for a click-to-highlight interaction. Signals over
+  a click stream feed data transform to toggle values in a data source. A
+  production rule uses a predicate to set marks' fill color.}
+  \label{fig:vg:shiftClick}
+\end{figure}
+
 \subsection{Selection: Click/Shift-Click and Brushing}
 
-\cref{}\todo{Figure} provides a snippet of Reactive Vega JSON for a basic
-click-to-highlight interaction. A signal constructed over a click stream feeds a
-data transform that toggles values in the \texttt{selected\_pts} data source. An
-intensional predicate test whether the shift key is pressed and, if not, clears
+\Cref{fig:vg:shiftClick} provides a snippet of Reactive Vega JSON for a
+click-to-highlight interaction. Signals constructed over a click stream feed
+data transforms that toggle values in the \texttt{selected\_pts} data source. An
+intensional predicate tests whether the shift key is pressed and, if not, clears
 the data source prior to inserting the clicked values. A production rule sets
 the fill color of selected points using an extensional predicate.
 
-Similarly, \cref{}\todo{Figure} demonstrates the Reactive Vega JSON necessary to
+Similarly, \cref{fig:vg:brush} demonstrates the Reactive Vega JSON necessary to
 enable brush selections. Signals are registered to capture the start and end
 positions of the brush, by default \texttt{mousedown} and \texttt{[mousedown,
 mouseup] > mousemove}, respectively. Scale inversions are invoked to calculate
@@ -33,44 +42,79 @@ the data extents of the brush, which are used to define an intensional predicate
 to express the brushed data range. As before, the predicate is used within a
 production rule to set the fill color of selected points.
 
+\newpage
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\columnwidth]{brush}
+  \caption{A JSON snippet for one-dimensional brushing. Signals over drag
+  events are inverted through the x-scale to construct a data query over the
+  \texttt{Horsepower} field.}
+  \label{fig:vg:brush}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\columnwidth]{splomInteractor}
+  \caption{We can extract the brushing interaction from \cref{fig:vg:brush}
+  into a standalone interactor, and reapply it to a scatterplot matrix to
+  perform brushing \& linking.}
+  \label{fig:vg:splomInteractor}
+\end{figure}
+
+\newpage
+
 \subsection{Connect: Brushing \& Linking}
+
+\begin{wrapfigure}{l}{0pt}
+  \includegraphics[width=0.3\textwidth]{splomPixel}
+\end{wrapfigure}
 
 We can extract the interaction from the previous example into a standalone
 ``brushing'' interactor, and then apply it to brush \& link a scatterplot matrix
-as shown in \cref{}\todo{SPLOM}. Each cell of the matrix is an instance of a
-group mark with its own coordinate space. The plotting symbol and necessary
-spatial scale functions are defined within this group. Had the interactor's
-predicates defined selections over pixel space, the production rule would
-highlight points that fall along the same horizontal and vertical pixel
-regions\,---\,as shown in \cref{}\todo{}, brushing over orange
-(\texttt{versicolor}) points would also highlight red (\texttt{virginica}) and
-blue (\texttt{setosa}) points. Instead, the interactor uses scale inversions to
-lift the predicate to the data domain. Thus, the production rule correctly
-performs the linking operation across scatterplots.
+as shown in \cref{fig:vg:splomInteractor}. Each cell of the matrix is an
+instance of a group mark with its own coordinate space. The plotting symbol and
+necessary spatial scale functions are defined within this group. Had the
+interactor's predicates defined selections over pixel space, the production rule
+would highlight points that fall along the same horizontal and vertical pixel
+regions\,---\,for example, in the inset figure, brushing over red points would
+highlight no or blue points in the other cells. Instead, the interactor uses
+scale inversions to lift the predicate to the data domain. Thus, the production
+rule correctly performs the linking operation across scatterplots.
 
 \subsection{Abstract/Elaborate: Overview\,+\,Detail}
 
 With our brush interactor, we can also create the overview\,+\,detail
-visualization shown in Figure~\ref{fig:range_predicate}. In this case, brushing
-is restricted to the horizontal dimension. In our visualization, we override the
+visualization shown in \cref{fig:vl:scaleInversion}. In this case, brushing is
+restricted to the horizontal dimension. In our visualization, we override the
 \texttt{height} property of the visual brush added by the interactor, and ignore
 the vertical range predicates it populates. We use the horizontal range
 predicate with a filter transformation, to filter points for display in the
-detail plot. As a user draws a brush, signals update the horizontal range
-predicate, which in turn reactively filters points in the data source, updates
-scale functions and re-renders the detail view.
+detail plot. As a user brushes, signals update the range predicate, which in
+turn filters points in the data source, updates scale functions and re-renders
+the detail view.
 
 \subsection{Explore \& Encode: Panning \& Zooming}
 
-Figure~\ref{fig:panzoom} (left) shows pan and zoom interactions for a scatter
-plot. By default, scale functions calculate their domain automatically from a
-data source. For this interaction, however, we must parameterize the domain
-using reactive signals. For panning, a \texttt{start} signal captures an initial
+\Cref{fig:vg:panzoom} shows pan and zoom interactions for a scatter plot. By
+default, scale functions calculate their domain automatically from a data
+source. For this interaction, however, we must parameterize the domain using
+reactive signals. For panning, a \texttt{start} signal captures an initial
 \texttt{(x,y)} position on \texttt{mousedown}, and subsequent \texttt{pan}
 signals calculate a delta on drag (\texttt{[mousedown, mouseup] > mousemove}).
 This delta is used to offset the scale domains. Similarly, when \texttt{wheel}
 events occur, a \texttt{zoom} signal applies a scale factor to the domains
 depending on the zoom direction.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\columnwidth]{panzoom}
+  \caption{Panning \& zooming a scatterplot. Brushing can be added accretively
+  by including the brush interactor (\cref{fig:vg:brush,fig:vg:splomInteractor},
+  and rebinding event streams (indicated with strikethroughs) to resolve
+  conflicting events.}
+  \label{fig:vg:panzoom}
+\end{figure}
 
 If we were to also add a brushing interaction to this visualization, a na\"ive
 application would produce a conflicting interaction: on drag, both panning and
@@ -86,10 +130,21 @@ the interactor definitions. Instead, we provide alternate source event streams
 when instantiating the interactor\,---\,\texttt{mousedown[event.shiftKey]} for
 brushing, and \texttt{mousedown[!event.shiftKey]} for panning.
 
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\columnwidth]{semanticZoom}
+  \caption{By extracting the pan \& zoom interaction from \cref{fig:vg:panzoom}
+  into an interactor, we can repurpose it to perform semantic zooming on a
+  geographic map. A map of the United States shows a choropleth of state-level
+  unemployment. Zooming past a threshold, states break up into counties, and
+  show county-level unemployment.}
+  \label{fig:vg:semanticZoom}
+\end{figure}
+
 Moreover, by extracting panning \& zooming into a standalone interactor, we can
 repurpose the behavior to instead trigger semantic zooming~\cite{perlin:pad}, an
-\emph{encoding} interaction technique shown in Figure~\ref{fig:panzoom} (right).
-At the top-level, the visualization shows a choropleth map of state-level
+\emph{encoding} interaction technique shown in \cref{fig:vg:semanticZoom}. At
+the top-level, the visualization shows a choropleth map of state-level
 unemployment. After crossing a specified zoom threshold, states subdivide to
 show a choropleth map of country-level unemployment. Here, the pan signals drive
 the geographic projection's translation and the zoom signals drive the
@@ -100,11 +155,21 @@ transparently, displaying the county-level map underneath it.
 
 \subsection{Reconfigure: Index Chart}
 
-Figure~\ref{fig:job_voyager_index_chart} (left) shows an index chart: a line
-chart that interactively normalizes time series to show percentage change based
-on the current index point. To calculate the index point, we construct a signal
-over \texttt{mousemove} events and then drive the \texttt{x} coordinate through
-a scale inversion. As it is a quantitative scale, scale inversion results in a
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.9\columnwidth]{indexChart}
+  \caption{An index chart that shows the percentage changes for a collection of
+  time-series. The index point (red vertical line) is determined by the x
+  position of a \texttt{mousemove} signal, which feeds a predicate within a
+  filter data transform.}
+  \label{fig:vg:indexChart}
+\end{figure}
+
+\Cref{fig:vg:indexChart} shows an index chart: a line chart that interactively
+normalizes time series to show percentage change based on the current index
+point. To calculate the index point, we construct a signal over
+\texttt{mousemove} events and then drive the \texttt{x} coordinate through a
+scale inversion. As it is a quantitative scale, scale inversion results in a
 value from a continuous domain (i.e., any date/time from Jan 1 2000--Dec 31
 2010). However, our dataset only contains stock prices for the start of every
 month, with the line interpolating between these points. We use a predicate to
@@ -115,7 +180,11 @@ terms of the normalized data.
 
 \subsection{Reconfigure: Reordering Columns of a Matrix}
 
-Figure~\ref{fig:cooccurrence} shows a co-occurrence matrix of Les Mis\'{e}rables
+\begin{wrapfigure}{l}{0pt}
+  \includegraphics[width=0.6\textwidth]{cooccurrence}
+\end{wrapfigure}
+
+The figure to the left shows a co-occurrence matrix of Les Mis\'{e}rables
 characters. To reorder the columns of the matrix, we first construct a data
 source that computes the sort order of characters and initialize it to an
 alphabetical ordering. A signal on \texttt{@col\_label:mousedown} captures the
@@ -125,17 +194,31 @@ the data source is updated to swap the sorting indices of the two columns.
 
 \subsection{Filter: Control Widgets}
 
-Figure~\ref{fig:job_voyager_index_chart} (right) shows the Job
-Voyager~\cite{heer:voyagers} visualization with control widgets to filter the
-visualized data. A textbox allows users to enter search terms to filter job
-titles, while the radio buttons allow users to filter by gender. We bind signals
-to the value of these control widgets, and then construct predicates attached to
-filter data transformations. For the textbox signal, a match predicate tests
-search terms against job titles, while an equality predicate filters by gender
-based on the radio button signal. This example illustrates how external query
-widgets can easily be bound into our reactive interaction model.
+\Cref{fig:vg:jobVoyager} shows the Job Voyager~\cite{heer:voyagers}
+visualization with control widgets to filter the visualized data. A textbox
+allows users to enter search terms to filter job titles, while the radio buttons
+allow users to filter by gender. We bind signals to the value of these control
+widgets, and then construct predicates attached to filter data transformations.
+For the textbox signal, a regular expression tests terms against job titles,
+while an equality test filters by gender based on the radio button signal. This
+example illustrates how external widgets can easily be bound to our reactive
+model.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\columnwidth]{jobVoyager}
+  \caption{The job voyager can be filtered using signals bound to the state of
+  control widgets. A textbox allows for pattern-based filtering of job titles
+  while radio buttons allow gender-based filtering.}
+  \label{fig:vg:jobVoyager}
+\end{figure}
 
 \subsection{DimpVis: Touch Navigation with Time-Series Data}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\columnwidth]{dimpvis}
+\end{figure}
 
 DimpVis~\cite{kondo:dimpvis} is a recently introduced interaction technique that
 allows direct manipulation navigation of time-series data. Starting with a

@@ -134,10 +134,9 @@ operations.
 \subsection{Encapsulated Interactors}
 
 To allow reuse of custom interaction techniques, Reactive Vega's interaction
-primitives can be parameterized and encapsulated as named \emph{interactors}.
-An interactor can subsequently be applied to a visualization and functions like
+primitives can be parameterized and encapsulated as named \emph{interactors}. An
+interactor can subsequently be applied to a visualization and functions like
 mixin. Its specification is merged into the host's and, to prevent conflicts,
-its components are addressable only under its namespace. \cref{}
-\todo{BrushingSPLOM} illustrates how a brush interaction, extracted from
-\cref{}\todo{SelectionSnippet} can be applied to a scatterplot matrix to produce
-a brushing \& linking interaction.
+its components are addressable only under its namespace.
+\Cref{fig:vg:splomInteractor} illustrates how a brush interaction, extracted
+from \cref{fig:vg:brush}, can be applied to brush \& link a scatterplot matrix.
