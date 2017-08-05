@@ -1,4 +1,4 @@
-% !TEX root = ./thesis.tex
+% !TEX root = ../thesis.tex
 \section{The Dataflow Graph Design}
 \label{sec:vg:dataflow}
 
@@ -56,7 +56,7 @@ as described in~\secref{sec:propagation}.
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=0.8\columnwidth]{groupedBar}
+  \includegraphics[width=0.9\columnwidth]{groupedBar}
   \caption{A grouped bar chart (top), with the underlying scene graph (bottom),
   and corresponding portion of the dataflow graph (right).}
   \label{fig:vg:groupedBar}
@@ -91,8 +91,8 @@ correctly, the order of operations is critical: parent marks must be built and
 encoded before their children, but the bounds of the children must be calculated
 before their parents. The resultant scene graph exhibits an alternating
 structure, with individual mark elements grouped under a sentinel mark
-specification node. Figure~\Cref{fig:groupedBarEx} illustrates this process for
-a grouped bar chart.
+specification node. \Cref{fig:vg:scenegraph} illustrates this process for a
+grouped bar chart.
 
 Scene graph elements are also modeled as data tuples and can serve as the input
 data for downstream visual encoding primitives. This establishes a

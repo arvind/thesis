@@ -1,0 +1,27 @@
+% !TEX root = ../thesis.tex
+\section{Implementation Details}
+
+Lyra is a web-based HTML5 application built using
+AngularJS\footnote{http://angularjs.org}. Vega is used extensively throughout
+the system both to parse data transformations and to represent and generate
+visualizations. While close, the mapping between Lyra and Vega abstractions is
+not one-to-one. To reduce complexity, Lyra consolidates some Vega mark types. A
+line mark in Lyra translates to one of Vega's line, path, or rule marks based on
+which properties and fields the designer chooses to map. Similarly, Vega's image
+marks are simply rectangle marks in Lyra with an ``image fill.''
+
+Lyra also simplifies Vega's handling of hierarchical data. In a Vega
+specification, each level of a hierarchy is assigned to a ``group'' mark, with
+children marks inheriting the corresponding subset of data. Lyra insulates users
+from this scheme by automatically performing \emph{group injection}: when a user
+assigns a mark to a pipeline containing hierarchical data, Lyra automatically
+adds and nests the necessary group marks for each level of the hierarchy in the
+resulting Vega specification. Group injection makes building small multiples
+easy: an exposed \texttt{layout} property lets designers choose between having
+groups overlap, layout horizontally, or layout vertically.
+
+Lyra's direct manipulation interactors (handles, connectors, drop zones) are
+also generated using Vega, using a separate specification rendered \emph{over}
+the visualization. The geometry of the marks serves as input data for this
+interactive layer. By decoupling the visualization and interactors, we ensure
+that Lyra features do not interfere with the designer's visualization.
