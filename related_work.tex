@@ -1,0 +1,345 @@
+% !TEX root = ./thesis.tex
+\chapter{Related Work}
+
+This dissertation builds on prior work in visualization systems, programming
+languages, streaming databases, and human-computer interaction. In this chapter,
+I survey pertinent work in each domain and describe how this thesis extends
+them.
+
+\section{Visualization Toolkits \& Systems}
+
+Chart templates, as found in spreadsheets and online services (e.g., Many
+Eyes~\cite{ibm:manyeyes} and Google Fusion Tables), are a common means for
+creating visualizations: users select from a pre-defined palette of chart types.
+Such \emph{chart typologies} are popular because they are simple to use and
+efficient\,---\,users can produce a recognizable chart with only a few clicks.
+This approach, however, is closed. Users are restricted to only the available
+chart types, and may customize only a small handful of parameters.
+
+To enable custom visualization design, researchers have developed programming
+toolkits that offer a number of visualization components. For instance, the
+InfoVis Toolkit~\cite{fekete:ivtk} provides a class hierarchy of visualization
+widgets, where new visualizations are created by subclassing existing components
+or writing new ones. In contrast, Prefuse~\cite{heer:prefuse} and
+Flare~\cite{flare} offer composable operators for data transform, layout, and
+encoding. While either approach offers fine-grained control over visual output,
+they both constrain expressivity much like chart typologies. Novel designs
+require new widgets or operators, and significant software engineering effort.
+
+\subsection{Grammar-Based Visual Encoding}
+
+In 1999, Leland Wilkinson introduced an alternative approach with \emph{The
+Grammar of Graphics}~\cite{wilkinson:grammar}. Eschewing chart typologies in
+favor of a combinatorial building blocks, Wilkinson's grammar yields a more
+expressive design space and allows users to rapidly construct visualizations.
+Provided abstractions include primitives for data modeling and transformation,
+visual encodings defined as mappings between data fields and channels (e.g.,
+position, color, and size), and scales and guides (i.e., axes and legends). His
+work was quickly followed by the Stanford Polaris system~\cite{stolte:polaris}
+(commercialized as Tableau), and Hadley Wickham's popular
+ggplot2~\cite{wickham:layered} package implements a variant of this model in the
+R statistical language.
+
+These tools focus on statistical graphics for exploratory analysis and, to that
+end, favor concise specification languages. Analysts may omit details such as
+scale transforms (e.g., linear or log) or color palettes, which are then filled
+in by the grammar using a rule-based system of smart defaults. As a result,
+
+Through the lower-level Protovis~\cite{bostock:protovis,heer:protovisjava} and
+D3~\cite{bostock:d3} languages, Bostock and Heer describe how a similar approach
+can enable expressive design for custom, explanatory graphics as well. Perhaps
+most importantly, they articulate the advantages of declarative design for data
+visualizations: by separating specification from execution, declarative
+languages facilitate an iterative development process, can transparently
+optimize processing, and simplify retargeting across
+platforms~\cite{heer:protovisjava}.
+
+The design of Reactive Vega and Vega-Lite is heavily influenced by these works.
+Reactive Vega's visual encoding primitives and implementation pipeline closely
+mirror Protovis'. Marks including \emph{arcs}, \emph{areas}, \emph{bars},
+\emph{lines}, plotting \emph{symbols} and \emph{text} are processed through
+\emph{bind}, \emph{build}, and \emph{evaluate} stages to generate a scene graph.
+Protovis' \emph{panel} marks are renamed to \emph{group} marks, and enable the
+repeated and nested structures found in small multiple displays. Marks can be
+positioned relative to one-another with Vega's \emph{reactive geometry}, which
+provides a more unified approach to layout as compared with Protovis'
+\emph{anchors}.
+
+Similarly, Vega-Lite represents basic plots using a set of encoding definitions
+that map data attributes to visual channels, and may include common data
+transformations. Vega-Lite differs most from other high-level grammars in its
+approach to multiple view displays. Each of these grammars supports faceting (or
+nesting) to construct trellis plots in which each cell similarly visualizes a
+different partition of the data. Both Wilkinson's grammar and Polaris/Tableau
+achieve this through a \emph{table algebra} over data fields, which in turn
+determines spatial subdivisions. Tableau additionally supports the construction
+of multi-view dashboards via a different mechanism, with each view backed by a
+separate specification. In contrast, Vega-Lite contributes a \emph{view
+algebra}: starting with unit specifications that define a single plot, Vega-Lite
+expresses composite views using operators for layering, horizontal or vertical
+concatenation, faceting, and parameterized repetition. When applicable, these
+operators will merge scale domains and properly align constituent views.
+Disparate views can also be combined into arbitrary dashboards, all within a
+unified algebraic model.
+
+\subsection{Dataflow Visualization Systems}
+
+Dataflow architectures are common in scientific visualization systems, such as
+IBM Data Explorer~\cite{lucas:dataflow,abram:ibmdx} and
+VTK~\cite{schroeder:vtk}. Developers must manually specify and connect each
+required operator into a network, which can support updates in a demand-driven
+fashion (e.g., as data is modified) or an event-driven fashion (e.g., in
+response to user input). These systems expose fine-grained control over the
+construction of the dataflow graph. For example, VTK developers can choose to
+favor memory efficiency over processing speed, which causes dataflow operators
+to delete their output after computation. While Reactive Vega shares some
+dataflow strategies with these systems\,---\,for example, using
+pass-by-reference for unchanged tuples to reduce memory consumption\,---\,it
+abstracts such execution concerns away from the user. The dataflow graph is
+automatically assembled based on definitions found in a declarative
+specification, and optimizations are transparently performed such that output
+data is only stored when needed by downstream operators and shared otherwise.
+
+Within the domain of information visualization, the Stencil
+language~\cite{cottam:stencil} is also grounded in reactive semantics and uses a
+dataflow model. Like Reactive Vega, it provides a unified data model where both
+input data and interaction events are modeled as first-class streaming data
+sources. However, Reactive Vega is more expressive than Stencil in two important
+ways. First, Stencil does not provide primitives, beyond event streams, to
+support interaction design; Reactive Vega, on the other hand, offers predicates
+and scale inversions to lift interactive selections into data queries, and
+coordinate multiple displays. Moreover, graphical primitives can be arbitrarily
+nested with Reactive Vega, drawing from either hierarchical or distinct data
+sources. This ability is critical to concisely specifying small multiples
+displays, and requires Reactive Vega's dataflow graph to dynamically rewrite
+itself at runtime. To the best of our knowledge, Stencil's architecture does not
+support self-instantiating dataflows.
+
+Improvise~\cite{weaver:improvise} features active variables called ``live
+properties,'' which provide a basic form of reactivity\,---\,they may be bound
+to control widgets and parameterize a visualization. Using an expression
+language, live properties are assembled into a coordination graph to dynamically
+evaluate visual encodings and generate views of data. While Improvise and
+Reactive Vega share some conceptual underpinnings, Improvise places a higher
+burden on users to correctly construct the necessary graph. As Reactive Vega
+takes a declarative approach to visualization design, users need only compose
+the necessary primitives into a specification. Reactive Vega parses this
+specification to build the corresponding dataflow graph.
+
+\subsection{Interactive Visualization Systems}
+
+Besides text-based toolkits, researchers have also developed graphical user
+interfaces for constructing visualizations.
+Polaris/Tableau~\cite{stolte:polaris}, for instance, displays a ``schema'' panel
+that lists available data fields. Data groupings and visual encodings are
+specified by dragging these fields onto ``shelves'' that array the periphery of
+the visualization. Lyra extends this mode of interaction onto the visualization
+canvas itself\,---\,property \emph{drop zones} overlay marks during drag
+operations, providing a more direct data-mapping target.
+
+Roth et al.'s SageBrush~\cite{roth:sagebrush} supports similar interactions.
+Users can drag-and-drop ``partial prototypes'' for spatial encodings and
+``grapheme'' (mark) primitives such as lines and bars. Custom grapheme
+properties are manually selected via menus, then exposed as drop-target icons.
+Lyra refines the SageBrush model in several ways. Partial prototypes in
+SageBrush implicitly define scale transforms and layout; by leveraging the Vega
+and Vega-Lite grammars, Lyra decouples these components to support richer
+designs. Lyra's data pipelines provide an extensible set of data
+transformations, and different marks can be driven by unique pipelines and
+composed. Finally, Lyra eschews iconic abstractions in favor of direct drop
+zones for mark properties, without need of explicit enumeration via menus.
+
+More recently, Bret Victor demonstrated a data-driven drawing
+tool~\cite{victor:drawing} (now developed as
+Apparatus\footnote{http://aprt.us/}) that combines geometric constraints with
+\emph{imperative} procedures over data. Alongside an interactive canvas and data
+table viewer, the tool includes programming structures with lexical scope and
+control flow via loops and conditionals. To form a basic bar chart, designers
+must define loops to create and position each bar. The tool supports purely
+geometric constructions, rendering some layouts inexpressible. By building on
+Vega and Vega-Lite, Lyra takes a \emph{declarative} approach to design. When a
+designer associates a mark with a dataset, one mark instance per datum is
+automatically produced rather than requiring explicitly instantiation by the
+designer. More advanced algorithms, which are difficult to express with Victor's
+tool, are accessible as part of Lyra's graphical data pipeline.
+
+\section{Specifying Interactions in Visualizations}
+
+Despite the central role of interaction in effective data visualization
+\cite{heer:dynamics, pike:interactionscience}, little work has been done to
+develop a grammar for specifying interaction techniques. Wilkinson's grammar
+includes no notion of interaction. Tableau supports common interaction
+techniques, but relies on mechanisms external to the visual encoding grammar.
+Early systems like GGobi~\cite{swayne:ggobi} support common techniques as well,
+and provide imperative APIs for custom methods. However, such APIs make easy
+tasks needlessly complex, burdening developers with learning low-level execution
+details. More recent systems, including Protovis, D3, and
+VisDock~\cite{choi:visdock}, offer a typology of common techniques that can be
+applied to a visualization. Such top-down approaches, however, limit
+customization and composition. For example, D3's interactors encapsulate event
+processing, making it difficult to combine them if their events conflict (e.g.,
+if dragging triggers brushing \emph{and} panning).
+
+\subsection{Interactive Selection \& Querying}
+
+Selection, often in the form of users clicking or lassoing visual items, is a
+fundamental operation in user interfaces and has been well-studied in the
+context of data visualization. For example, in Snap-Together
+Visualization~\cite{north:snap}, multiple views are coordinated via ``primary-''
+and ``foreign-key actions,'' which propagate selected data tuples from one view
+to the others. Wilhelm~\cite{wilhelm:interaction} describes the need for such
+``indirect object manipulation'' methods as an axiom of interactive data
+displays. Chen's compound brushing~\cite{chen:compound} provides a visual
+dataflow language for specifying a rich space of transformations of brush
+selections.  More recently, Brunel~\cite{brunel} provides a special
+\texttt{\#selection} data field that is dynamically populated with the elements
+a user interacts with, and can be used to link multiple views or filter input
+data. Similarly, RStudio's Shiny~\cite{shiny}, an imperative web application
+layer, provides \texttt{brushedPoints} and \texttt{nearestPoints} functions
+which can be used to operate on selected elements.
+
+Other systems have studied formally representing selections as data
+queries~\cite{wilhelm:interaction}. For example, brushing interactions in
+VQE~\cite{derthick:interactive} generate \emph{extensional} queries that
+enumerate all items of interest; a form-based interface enables specification of
+\emph{intensional} (declarative) queries. Individual point and brush selections
+in DEVise~\cite{livny:devise}, known as \emph{visual queries}, map to a
+declarative structure and are used to link together multiple views. With
+VIQING~\cite{olsten:viqing}, rectangular ``rubber band'' selections are modeled
+as range extents, and views can be dropped on top of each other to join their
+underlying datasets. Heer et al.~\cite{heer:generalized} demonstrate that by
+modeling a selection as a declarative query, interactive ``query relaxation''
+can successively capture more items of interest.
+
+Reactive Vega and Vega-Lite both build on this work with abstractions for
+constructing selections. In Reactive Vega, \emph{predicates} express interactive
+selections in visual space, are lifted to data queries by inverting them through
+scale functions, and participate in if-then-else chains to manipulate visual
+encoding rules. Vega-Lite abstracts these primitives with a higher-level
+\emph{selection}. Vega-Lite selections are populated with one or more points of
+interest, in response to user interaction. Their built-in predicates map to
+declarative queries, thereby allowing a minimal set of ``backing'' points to
+represent the full space of selected points. Additional operators can transform
+a selection's predicate or backing points (e.g., offsetting them to translate a
+brush selection or perform panning). Selections parameterize visual encodings by
+driving conditional logic, serving as input data, or defining scale extents.
+
+\section{Alternate Paradigms for Imperative Callbacks}
+
+For custom interaction design with existing visualization toolkits, users must
+author imperative event handling callbacks which present several development
+hurdles~\cite{myers:callbacks}. Callbacks registered outside the visualization
+specification allow users to externally manipulate visualization state and
+manually update dependencies~\cite{cooper:embedding}. This approach breaks
+encapsulation and necessitates the introduction of side-effects: external calls
+to maintain state~\cite{cooper:integrating}. Callback execution order can also
+be unpredictable, requiring users to coordinate interleaved
+calls~\cite{edwards:coherent}. As a result, callbacks can make it difficult to
+reason about the current state of the visualization, which is now the product of
+both the original specification and the side-effects of interaction callbacks.
+
+\subsection{Constraint Programming}
+
+One alternative to callback-oriented imperative programming is constraint-based
+specification. Systems like Gilt~\cite{myers:callbacks} and
+$\mu$constraints~\cite{hudson:constraints} implement one-way constraints: when
+the value of a constrained interface is modified, its dependents are
+automatically affected. Other systems, like Cassowary~\cite{badros:cassowary},
+implement two-way constraints using more complex constraint solvers. Recently,
+ConstraintJS~\cite{oney:constraintjs} and Bret Victor's prototype for drawing
+data visualizations~\cite{victor:drawing} have shown that constraint programming
+is suitable for authoring web applications and data visualizations,
+respectively.
+
+However, while constraint systems remove many of the obstacles introduced by
+callbacks, they do not involve general consideration of event handling\,---\,a
+crucial element for interaction design. In fact, the authors of ConstraintJS
+intend for their system to complement event
+architectures~\cite{oney:constraintjs}.
+
+\subsection{Functional Reactive Programming}
+
+Functional Reactive Programming (FRP) formalizes semantics similar to one-way
+constraints. Drawing from dataflow programming, FRP recasts mutable values as
+continuous, time-varying data streams~\cite{bainomugisha:frpsurvey}. We focus on
+a discrete variant called Event-Driven FRP (E-FRP)~\cite{wan:efrp}. To capture
+value changes as they occur, E-FRP provides \emph{streams}, which are infinite
+time-ordered sequences of discrete events. Streams can be composed into
+\emph{signals} to build expressions that react to events. The E-FRP runtime
+constructs the necessary dataflow graph such that, when a new event fires, it
+propagates to corresponding streams. Dependent signals are evaluated in a
+two\--phase update: in the first phase, signals use prior computed values of
+their dependents, which are subsequently updated in the second phase. E-FRP has
+been shown to be viable for authoring interactive web
+applications~\cite{czaplicki:elm, meyerovich:flapjax} and
+visualizations~\cite{cottam:stencil, kelleher:modeljs}.
+
+Reactive Vega's declarative interaction primitives remain grounded in E-FRP
+semantics, and they preserve the two-phase update: interdependent signals are
+updated in the order in which they are defined in the specification. However,
+naive applications of E-FRP to visualization tasks can result in wasteful
+recomputation. Traditional E-FRP primitives support only \emph{scalar} values,
+whereas visualization pipelines must also process relational and hierarchical
+data. Modeling these latter data types as scalar values provides insufficient
+granularity to perform targeted recomputation. To efficiently support relational
+data, Reactive Vega integrates streaming database methods; and, to support
+streaming hierarchical data, the dataflow graph dynamically rewrites itself at
+runtime, instantiating new branches to process nested relations.
+
+\section{Data Stream Management}
+
+The problem of managing streaming data has been well studied in the database
+community. Researchers have developed an arsenal of techniques through the
+development of systems such as Aurora~\cite{abadi:aurora},
+Eddies~\cite{avnur:eddies}, STREAM~\cite{arasu:stream}, and
+TelegraphCQ~\cite{chandrasekaran:telegraphcq}. As tuples are observed by these
+systems, they are flagged as either new or removed. Tuples, rather than full
+relations, are passed between operators in a query plan (realized as a dataflow
+graph). As a result, operators can inspect just the updated tuples to perform
+efficient computation. However, for some operations a set of changed tuples is
+insufficient. For example, a join of two relations requires access to all tuples
+within a specified window. In such cases, caches (sometimes referred to as
+\emph{views}~\cite{abadi:aurora} or \emph{synopses}~\cite{arasu:stream}) are
+used to materialize a relation, and shared among dependent operators.
+
+Borealis~\cite{abadi:borealis} extends this work in two ways. To support
+streaming tuple modifications, it introduces a revision processing scheme. An
+operator can be \emph{replayed} with revised tuples in place of the original
+data, and will then only emit corresponding revisions. Similarly, to enable
+dynamic operator parameters, Borealis introduces \emph{time travel}. When an
+operator parameter changes, an \texttt{undo} is issued to the nearest cache. The
+cache emits tuple deletions, effectively ``rewinding'' the system to a previous
+time. A subsequent \texttt{replay} triggers recomputation with the new parameter
+value.
+
+However, existing streaming data systems concern flat relations. Reactive Vega
+instantiates these techniques, alongside E-FRP, within a visualization pipeline
+and extends them to support streaming nested data. To do so, Reactive Vega's
+dataflow graph dynamically rewrites itself at runtime with new branches. These
+branches unpack nested relations, enabling downstream operators to remain
+agnostic to higher-level structure while supporting arbitrary levels of nesting.
+
+\section{Generative Models of User Interfaces}
+
+Michel Beaudoin-Lafon's instrumental interaction
+paradigm~\cite{beaudouin:instrumental} helped motivate this dissertation's
+approach of considering declarative interaction design at varying levels of
+abstraction. He identifies three properties of interaction models for post-WIMP
+interaction: \emph{descriptive} of existing and new techniques;
+\emph{comparative} to evaluate alternative designs; and, \emph{generative}, to
+facilitate the identification and creation of new points in the design space.
+Reactive Vega only offers the first property\,---\,an expressive design
+space\,---\,but is too low-level to be generative or facilitate evaluation of
+similar behaviors. Vega-Lite, on the other hand, offers both an expressive and
+generative design space, suitable for exploring alternative techniques as
+demonstrated in~\Cref{sec:vl:examples}. Kim et al. also demonstrate its
+comparative powers, using Vega-Lite to model optimal sequences of
+visualizations~\cite{kim:graphscape}.
+
+Moreover, our articulation of Vega-Lite as a parametric design language is
+inspired by Mackinlay's APT~\cite{mackinlay:apt} and his follow-on work with
+Card and Robertson conducting a morphological analysis of input
+devices~\cite{card:morphological}. In particular, we sought to identify and
+decouple orthogonal axes of the design space. While \Cref{sec:vl:examples}
+begins to systematically consider points along these axes, a full morphological
+analysis of the Vega-Lite design space is left to future work.
