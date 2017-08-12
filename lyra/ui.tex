@@ -8,16 +8,26 @@ existing tools. These users evaluated low-fidelity prototypes and later
 interactive prototypes.
 
 The Lyra interface, as shown in \cref{fig:lyra:teaser}, is split into three
-sections. The left-hand panel (Fig.~\ref{fig:inspectors}a) depicts \emph{data
+sections. The left-hand panel (\cref{fig:lyra:inspectors}(a)) depicts \emph{data
 pipelines}: chains of data transformations applied to a data source. A
 pipeline's inspector provides a paginated data table showing the output of the
 pipeline, buttons to add new transformations, and a list of scales defined over
-data fields. The right-hand panel (Fig.~\ref{fig:inspectors}c) contains
+data fields. The right-hand panel (\cref{fig:lyra:inspectors}(c)) contains
 inspectors for graphical elements such as marks, axes, and legends. These
 elements are grouped into \emph{layers} to determine coordinate spaces and
 z-ordering. These inspectors list all visual properties (position, fill color,
 angle, etc.) along with widgets to manipulate them. The central panel contains
 the visualization canvas where graphical elements may be directly manipulated.
+
+\begin{figure}[t!]
+\includegraphics[width=0.9\columnwidth]{inspectors}
+\caption{Lyra's side-panels for data pipelines (left), and
+visual properties (right). (a) Data table showing the current output
+of the pipeline; (b) Scale transforms defined over fields in the pipeline.
+(c) A property inspector for a symbol mark type; two properties have been
+mapped to data fields.}
+\label{fig:lyra:inspectors}
+\end{figure}
 
 \subsection{Data Pipelines}
 
@@ -28,7 +38,7 @@ applicable transforms and presents a paginated table view of transformed data.
 \textbf{Data Table View}. Data pipelines include a data table view, using a
 layout inspired by Bret Victor~\cite{victor:drawing}. The first column in the
 table view lists field names, enabling vertical scanning. Subsequent columns
-display individual records (Fig.~\ref{fig:inspectors}a). Field names in the
+display individual records (\cref{fig:lyra:inspectors}(a)). Field names in the
 first column are interactive: clicking a field sorts the table by that
 dimension, drag-and-drop can be used to bind fields to mark properties. Fields
 are colored by their source: green for fields in the original data and yellow
@@ -43,26 +53,26 @@ pipeline, adjusting its properties is reflected in real-time across the table
 view and the visualization.
 
 \textbf{Scales}. The inspector also lists all scales defined over data fields in
-the pipeline (Fig.~\ref{fig:inspectors}b). Lyra automatically instantiates
+the pipeline (\cref{fig:lyra:inspectors}(b)). Lyra automatically instantiates
 scales when a field is associated with a mark property. The scale domain is
 defined over the field values; the range is determined using production rules
 described below. Users can also create scales manually. Users can drag scales
 onto mark properties to apply a scale transform, or click a scale to access an
-editor dialog (see Fig.~\ref{fig:workflow}e). When editing a scale that is not
+editor dialog (see \cref{fig:lyra:usage}(e)). When editing a scale that is not
 represented by an axis or legend, a transient guide is shown in the canvas to
 convey the effect of scale changes.
 
 \subsubsection{Design Rationale}
 
-Our initial prototypes hid raw data values in favor of
-exposing only the table schema. However, user evaluations indicated this was
-insufficient. Users noted that it was difficult to determine the effect of a
-data transformation based only on the visualization. The incremental nature of
-visualization design can lead to unexpected intermediate output, for example
-setting the \texttt{height} of a rectangle mark can cause all mark instances
-to overlap if no \texttt{x} or \texttt{width} property has been set. Later
-prototypes introduced a full data table view, to enable inspection of raw
-values and expose the current data organization.
+Our initial prototypes hid raw data values in favor of exposing only the table
+schema. However, evaluations indicated this was insufficient. Users noted that
+it was difficult to determine the effect of a data transformation based solely
+on the visualization. Moreover, the incremental nature of visualization design
+can lead to unexpected intermediate output, for example setting the
+\texttt{height} of a rectangle mark can cause all mark instances to overlap if
+no \texttt{x} or \texttt{width} property has been set. Later prototypes
+introduced a full data table view, to enable inspection of raw values and expose
+the current data organization.
 
 Similarly, early prototypes masked the presence of scales: mapping data to
 visual properties automatically instantiated a scale, but they were not
@@ -82,38 +92,60 @@ Visualizations in Lyra are compositions of visual elements: graphical
 \emph{marks} and \emph{guides}. Elements are grouped together into
 \emph{layers}, which define local coordinates and establish z-ordering. Lyra's
 right-hand panel lists the layers and their elements
-(Fig.~\ref{fig:inspectors}c). Elements are added to a visualization by creating
-them within this panel or by dragging a mark from the mark palette. When an
-element is selected, an inspector presents all the element's associated
+(\cref{fig:lyra:inspectors}(c)). Elements are added to a visualization by
+creating them within this panel or by dragging a mark from the mark palette.
+When an element is selected, an inspector presents all the element's associated
 properties. Property values may be edited directly or set via drag-and-drop of
 data fields with changes reflected on the visualization in real-time. Hovering
 over a property displays a guide overlaid on the visualization to illustrate how
 that particular property affects the rendered output. Visual elements can also
 be manipulated directly on the visualization canvas.
 
-\textbf{Handles} in the canvas area can be used to interactively move, rotate
-and resize selected elements. A mark definition will typically render one mark
+\begin{wrapfigure}{l}{0pt}
+  \raisebox{0pt}[\dimexpr\height-1\baselineskip\relax]{\includegraphics
+  [width=0.6cm]{handles}}
+\end{wrapfigure}
+
+\vspace{5pt}
+\noindent
+\textbf{Handles} in the canvas can be used to interactively move, rotate and
+resize selected elements. A mark definition will typically render one mark
 instance per datum in the visualization. To reduce visual clutter, selecting a
 mark displays handles only on the instance that was clicked. However, when a
 user adjusts the handles, the change is reflected simultaneously across all mark
 instances.
 
-\textbf{Connectors}. Marks can be positioned relative to one another using
-diamond-shaped connectors. Dragging a target mark onto a host mark's connector
-establishes a connection: the target mark's position is now determined by the
-host's properties. Changes to the host mark automatically propagate to all
-connected targets. Connectors are particularly useful for positioning text
-labels relative to other marks.
+\begin{wrapfigure}{l}{0pt}
+  \hspace{-12pt}
+  \raisebox{0pt}[\dimexpr\height-1\baselineskip\relax]{
+  \includegraphics
+  [width=1cm]{connectors}}
+\end{wrapfigure}
 
-\textbf{Drop zones}. Lyra uses drop zones to associate data fields with mark
-properties. When dragging a data field, drop zones are overlaid on the
-visualization canvas. Each drop zone comprises a shaded region and a guide line
-or point to indicate the corresponding mark property (e.g., \texttt{x},
-\texttt{width}, etc.). Hovering on a drop zone highlights it and shows the
-property name in a tooltip. Dropping a field then establishes a mapping between
-the data field and the mark property. To avoid clutter, Lyra shows drop zones
-only for the currently selected item. When dragging a data field, users can
-hover and pause over a mark instance to make it the selected item.
+\vspace{5pt}
+\noindent
+\textbf{Connectors} can be used to position marks relative to one-another.
+Dragging a target mark onto a host mark's connector establishes a connection:
+the target mark's position is now determined by the host's properties. Changes
+to the host mark automatically propagate to all connected targets. Connectors
+are particularly useful for positioning text labels relative to other marks.
+
+\begin{wrapfigure}{l}{0pt}
+  \raisebox{0pt}[\dimexpr\height-0.6\baselineskip\relax]{\includegraphics
+  [width=2cm]{dropzones}}
+\end{wrapfigure}
+
+\vspace{5pt}
+\noindent
+\textbf{Drop zones} are used to associate data fields with mark properties. When
+dragging a data field, drop zones are overlaid on the visualization canvas. Each
+drop zone comprises a shaded region and a guide line or point to indicate the
+corresponding mark property (e.g., \texttt{x}, \texttt{width}, etc.). Hovering
+on a drop zone highlights it and shows the property name in a tooltip. Dropping
+a field then establishes a mapping between the data field and the mark property.
+To avoid clutter, Lyra shows drop zones only for the currently selected item.
+When dragging a data field, users can hover and pause over a mark instance to
+make it the selected item.
 
 \subsubsection{Design Rationale}
 

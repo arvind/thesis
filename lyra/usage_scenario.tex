@@ -5,10 +5,10 @@
 New York Times that illustrates how scenes from five Best Picture Oscar nominees
 were edited into trailers. It is an example of a visualization that cannot be
 built using existing chart typologies or high-level grammars. The visualization
-layers several mark types and uses a non-standard ``scatter'' plot with small
+layers several mark types and uses a non-standard ``scatterplot'' with
 rectangles of varying widths. The original consists of over 350 lines of
-JavaScript/D3~\cite{bostock:d3} code. Here, we demonstrate how this graphic can
-be created using Lyra (Fig.~\ref{fig:lyra:usage}).
+JavaScript/D3~\cite{bostock:d3} code. \Cref{fig:lyra:usage} demonstrates how it
+can be recreated in Lyra.
 
 \begin{figure}[h!]
 \floatbox[{\capbeside\thisfloatsetup{capbesideposition=
@@ -29,9 +29,8 @@ adds a new line (backed by a single datum) to the current layer and associates
 it with a new data pipeline. The default pipeline is empty, as we have not yet
 specified a data source. To register a new source, we provide a name and a URL
 to our trailer shots data, and, upon load, review the inferred data types
-(number, string, etc.) for each data field. The output of the pipeline is then
-shown in the data table at the bottom of the pipeline inspector
-(Fig.~\ref{fig:lyra:usage}(b)).
+(number, string, etc.) for each data field. The output of the pipeline is
+shown in the data table (Fig.~\ref{fig:lyra:usage}(b)).
 
 We bind data in the pipeline to visual properties of the line mark via
 drag-and-drop of data fields. Dragging triggers the display of \emph{drop zones}

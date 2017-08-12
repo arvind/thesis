@@ -10,8 +10,27 @@
   \label{fig:lyra:teaser}
 \end{figure}
 
+Reactive Vega and Vega-Lite offer JSON syntaxes to facilitate programmatic
+generation of interactive visualizations within higher-level interactive
+applications. In this chapter, I explore this nascent space with Lyra: an
+interactive visualization design environment (VDE). Lyra is motivated by
+recognizing that Reactive Vega and Vega-Lite present a fundamental mismatch in
+representations\,---\,using \emph{textual} languages to express \emph{visual}
+output. As a result, with a commensurately poor ``closeness of
+mapping,''~\cite{blackwell:cogdim} these languages impose a wide gulf of
+execution~\cite{hutchins:directmanip}. It can be difficult for users to map
+desired graphical outputs with the required textual specifications.
+
+Existing graphical applications for visualization design, however, have limited
+expressivity. At one end are \emph{chart typologies}~\cite{wilkinson:grammar}:
+pre-defined palettes of chart types (bar charts, line charts, etc.) that make
+numerous design decisions on behalf of the user. At the other end, vector
+graphics packages offer designers complete flexibility but provide few (if any)
+data-driven abstractions~\cite{bigelow:reflections}.
+
 \input{lyra/ui}
 \input{lyra/implementation}
 \input{lyra/usage_scenario}
 \input{lyra/examples}
 \input{lyra/evaluation}
+\input{lyra/reflections}
