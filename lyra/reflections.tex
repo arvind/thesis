@@ -1,18 +1,28 @@
 % !TEX root = ../thesis.tex
 \section{Reflections \& Future Work}
 
+\begin{figure}[b!]
+\includegraphics[width=\columnwidth]{lyra2}
+\caption{The new Lyra interface. The side panels from \cref{fig:lyra:inspectors}
+have been redesigned and consolidated to the left-hand side. As the user drags a
+data field across the canvas, the nearest drop zone (highlighted in orange) is
+automatically selected\,---\,a technique known as a bubble
+cursor~\cite{grossman:bubble}.}
+\label{fig:lyra2}
+\end{figure}
+
 Chronologically, Lyra was the first project to form part of this dissertation.
 At the time of writing, a new version, that leverages Reactive Vega and
 Vega-Lite, is under development. Thus, it is worth reflecting on how its role in
 the ecosystem has evolved.
 
 Much of Lyra's existing functionality can now be driven purely via a Reactive
-Vega specification rather than through external callbacks. For instance,
-direct manipulation operations on handles are now driven entirely via signals,
-rather than event handling callbacks. Similarly, connectors make use of reactive
-geometry directly. To address a major shortcoming with drop zone interaction,
-identified during our user evaluations, a UDF (see \cref{sec:udfs}) is
-registered to produce a bubble cursor~\cite{grossman:bubble}.
+Vega specification rather than through external callbacks. For instance, direct
+manipulation operations on handles are now driven entirely via signals, rather
+than event handling callbacks. Similarly, connectors make use of reactive
+geometry directly. A bubble cursor~\cite{grossman:bubble} UDF (see
+\cref{sec:udfs}) is registered to accelerate drop zone selection, as shown in
+\cref{fig:lyra2}, addressing a major shortcoming users identified previously.
 
 Moreover, Lyra's built-in production rule system has been subsumed by Vega-Lite.
 Now, when users drag a data field onto a drop zone, a Vega-Lite unit
@@ -32,13 +42,13 @@ played by Vega and Vega-Lite under-the-hood!
 
 Looking ahead, an exciting challenge is how Lyra might be extended to support
 the design of \emph{interactive} visualizations. In-keeping with the above
-approach, perhaps direct- manipulation interactions (or demonstrations) should
+approach, perhaps direct manipulation interactions (or demonstrations) should
 generate Vega-Lite selections, which can be further modified with signal and
 predicate inspectors.
 
 Similarly, while Lyra's primary focus is currently on design tasks, data
 visualization inevitably requires data cleaning and transformation. Lyra's data
 pipelines offer sufficient flexibility to support analytic tasks, but require
-familiarity with transformation operators. Can direct manipulation methods be
-further incorporated to specify more complex data transformations such as those
-found in Data Wrangler~\cite{kandel:wrangler}?
+familiarity with transformation operators. Can direct manipulation methods, akin
+to those in Data Wrangler~\cite{kandel:wrangler}, be further incorporated to
+specify more complex data transformations?
