@@ -1,0 +1,31 @@
+% !TEX root = ./thesis.tex
+\prefacesection{Abstract}
+
+Interactive visualization is an increasingly popular medium for analysis and
+communication as it allows readers to engage data in dialogue. Hypotheses can be
+rapidly generated and evaluated in situ, facilitating an accretive construction
+of knowledge and serendipitous discovery. Crafting effective visualizations,
+however, remains difficult. Programming toolkits are typically required for
+custom visualization design, and impose a significant technical burden on users.
+Moreover, existing models of visualization relegate interaction to a
+second-class citizen: imperative event handling callbacks that are difficult to
+specify, and even harder to reason about.
+
+This thesis introduces the \emph{Reactive Vega stack}: two new declarative
+languages that lower the threshold for authoring interactive visualizations, and
+enable higher-level reasoning about the interaction design space. \emph{Reactive
+Vega} is an expressive, low-level representation that is well-suited for custom,
+explanatory visualizations. It shifts the burden of execution from the user to
+the underlying streaming dataflow system. \emph{Vega-Lite} builds on Vega to
+provide a higher-level grammar for rapidly specifying interactive graphics for
+exploratory analysis. Its concise format decomposes interaction design into
+semantic units that can be systematically enumerated.
+
+Together, these languages serve as platforms for further research into novel
+methods of expressing visualization design, and systems for interactive data
+analysis. And, critically, they provide a growing and engaged community to study
+their use with -- the Wikipedia and Jupyter communities, for instance, have
+embraced Vega and Vega-Lite to author interactive visualizations within articles
+and data science notebooks, respectively. This thesis explores this nascent
+space of higher-level interactive data systems with \emph{Lyra}, an interactive
+visualization design environment (VDE).
