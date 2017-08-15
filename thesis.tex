@@ -15,7 +15,8 @@
 \usepackage{wrapfig}
 \usepackage{rotating}
 \usepackage{subfigure}
-
+\usepackage{epigraph}
+% \usepackage{charter}
 
 %% This turns references into clickable hyperlinks.
 \usepackage[bookmarks,backref=true,linkcolor=blue]{hyperref} %,colorlinks
@@ -75,11 +76,13 @@ Visualization}
 I would like to thank...
 \afterpreface
 
+\input{introduction}
 \input{related_work}
 \input{vega-lang/index}
 \input{vega-arch/index}
 \input{vega-lite/index}
 \input{lyra/index}
+\input{conclusion}
 
 \bibliography{thesis}
 \end{document}
