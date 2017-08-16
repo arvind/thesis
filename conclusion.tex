@@ -1,3 +1,108 @@
 % !TEX root = ./thesis.tex
 \chapter{Conclusion}
 \label{sec:conclusion}
+
+This dissertation addresses the lack of support existing declarative
+visualization systems provide for specifying interactive behaviors\,---\,a
+critical component of effective
+visualization~\cite{pike:interactionscience,yi:understanding}. Through two new
+languages, Reactive Vega and Vega-Lite, this dissertation demonstrates that
+declarative design is suitably expressive to cover an established taxonomy of
+interaction methods for data visualization~\cite{yi:understanding}. Moreover, it
+illustrates how declarative specification facilitates retargeting interaction
+techniques across multiple modalities (e.g., mouse and touch) and how the
+underlying runtime architecture yields interactive performance that meets or
+exceeds the current state-of-the-art.
+
+Critically, these languages are at two distinct points in the ladder of
+abstraction: Reactive Vega is a lower-level language while Vega-Lite is a
+higher-level grammar. As a result, this dissertation also studies the impact of
+trading Reactive Vega's expressivity for gains in concision with Vega-Lite.
+Namely, Vega-Lite decomposes interaction design into semantic units that can be
+systematically enumerated. As a result, not only can users rapidly explore
+alternative designs, but higher-level reasoning tasks (e.g., visualization
+recommendation~\cite{compassql}) now become more tractable.
+
+These languages offer JSON syntaxes to facilitate programmatic generation of
+visualization, setting the stage for a new breed of interactive data systems.
+This dissertation explores this nascent application space with Lyra, an
+interactive visualization design environment (VDE). With Lyra, users are able to
+author a diverse range of visualizations without writing a single line of code.
+As a result, in formative user studies, participants reported that Lyra
+\emph{``[made them] feel more in control''} and that \emph{``there's a real joy
+in using Lyra.''}
+
+\section{Future Directions in Interactive Data Systems}
+
+By enabling programmatic generation of interactive visualizations, the Reactive
+Vega stack provides both a platform for developing novel interactive data
+systems and, critically, a growing and engaged community of users to study.
+Already, using Reactive Vega and Vega-Lite, researchers have built the Voyager
+visualization recommendation browser~\cite{voyager,voyager2,compassql}, modeled
+optimal sequences of visualizations~\cite{kim:graphscape}, and
+reverse-engineered visualizations from chart images~\cite{poco:reverse}.
+Moreover, the two languages are used on Wikipedia~\cite{mediawiki:graph}, to
+embed interactive visualizations in articles, and in Jupyter
+Notebooks~\cite{vega-lite:altair} respectively.
+
+\subsection{Automated Design \& Inference over Interactive Visualizations}
+
+These systems are only an initial exploration of the space of higher-level
+interactive data systems, and there is a fertile ground to study how inference
+procedures can be used to accelerate analysis and design. For example, an
+immediate next step is to study how Lyra can be extended to support interaction
+design by direct manipulation. Analogous to Lyra's existing drag-and-drop data
+bindings and scale inference, perhaps users could demonstrate an interactive
+behavior with Lyra synthesizing the necessary Vega or Vega-Lite constructs.
+
+Longer-term, Reactive Vega and Vega-Lite provide representations that are
+readily amenable for design mining techniques~\cite{kumar:webzeitgeist}. Corpora
+of interactive visualization designs can be assembled via
+reverse-engineering~\cite{poco:reverse} or
+deconstruction~\cite{harper:deconstructing,harper:templates}, and then mined to
+codify best practices and identify design trends. This information could then
+enable ``auto-complete'' design suggestions, or improve designs with a
+visualization ``linter.'' Once deployed, such systems could use \emph{online}
+design mining algorithms to react to \emph{emergent} trends.
+
+\subsection{Evaluating Expressivity and Usability}
+
+This dissertation evaluated the expressiveness of the Reactive Vega stack
+through example interactive visualizations. A more rigorous morphological
+analysis~\cite{card:morphological} however would not only identify new points in
+the design space (e.g., panning color legends as described
+in~\secref{sec:vl:panzoom}) but highlight opportunities to refine the models.
+For example, while Vega-Lite's visual encoding model can be extended to support
+cartographic projections in a straightforward fashion, how to do so to support
+pie charts and graph layouts is less clear.
+
+Similarly, while the Cognitive Dimensions of Notation~\cite{blackwell:cogdim}
+provide a useful set of heuristic to bootstrap evaluating the usability of the
+systems, more formal and longitudinal user studies are necessary to assess the
+cognitive burden these tools impose. Such studies can also lead to the
+development of new scaffolding to support users. Initial work here has been
+promising: through studies with novice Reactive Vega users, Hoffswell
+et~al.~\cite{hoffswell:debugging} validated the need to expose system state, and
+developed a ``time-traveling'' debugger.
+
+\subsection{A Science of Interaction}
+
+Developing a generalized theory of interaction\,---\,one that answers questions
+such as what makes an interaction technique more effective than another, or what
+are principles for combining multiple techniques that preserve their individual
+advantages\,---\,has been difficult because existing empirical evaluations of
+interactions have been conducted largely in an ad-hoc manner. This is due, in
+part, to representations of interaction that have obscured how to isolate
+properties of a behavior as experimental variables. As Herbert Simon notes,
+\emph{``solving a problem simply means representing it so as to make the
+solution transparent''}~\cite{simon:designscience}.
+
+The Reactive Vega stack offers a promising way forward. For a constant Vega-Lite
+visual encoding, we can not only systematically generate interaction techniques,
+but also vary their constituent properties. These alternative designs could then
+be classified using a taxonomy of analytic tasks~\cite{brehmer:taxonomy} and
+tested with human subjects. The results will inform our understanding of the
+costs and benefits of interactive methods\,---\,for example, are specific
+interactive formulations better suited for particular tasks\,---\,and spur the
+development of design guidelines, much as graphical perception studies have done
+for visual encodings.
