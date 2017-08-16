@@ -16,7 +16,24 @@
 \usepackage{rotating}
 \usepackage{subfigure}
 \usepackage{epigraph}
-% \usepackage{charter}
+
+%% Styling
+\usepackage[T1]{fontenc}
+\usepackage{AlegreyaSans} %% Option 'black' gives heavier bold face
+\usepackage{Alegreya} %% Option 'black' gives heavier bold face
+\renewcommand*\oldstylenums[1]{{\AlegreyaOsF #1}}
+\usepackage{parskip}
+\usepackage[all]{nowidow}
+\usepackage[font={sf,small},labelfont=bf]{caption}
+
+\usepackage{titlesec, blindtext, color}
+\definecolor{gray75}{gray}{0.75}
+\newcommand{\hsp}{\hspace{20pt}}
+\titleformat{\chapter}[hang]{\Huge\bfseries\sffamily}{\thechapter\hsp
+\textcolor{gray75}{|}\hsp}{0pt}{\Huge\bfseries}
+\titleformat*{\section}{\bfseries\Large\sffamily}
+\titleformat*{\subsection}{\bfseries\large\sffamily}
+\titleformat*{\subsubsection}{\bfseries\sffamily}
 
 %% This turns references into clickable hyperlinks.
 \usepackage[bookmarks,backref=true,linkcolor=blue]{hyperref} %,colorlinks
@@ -65,7 +82,7 @@
 Visualization}
 \author{Arvind Satyanarayan}
 \principaladviser{Jeffrey Heer}
-\firstreader{Maneesh Agrawala}
+\coprincipaladviser{Maneesh Agrawala}
 \secondreader{James Landay}
 
 \tablespagefalse

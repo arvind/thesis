@@ -29,7 +29,7 @@
 %   replaced the required doublespace.sty by setspace.sty
 % Modified 8/21/98
 %   added a \businessthesis for the school of business
-% Modified 8/22/98 
+% Modified 8/22/98
 %   added a \lawthesis
 % Modified 8/23/98
 %   spelling error in \businessthesis def corrected
@@ -77,7 +77,7 @@
 
 % Modified 8/26/2005 by Emma Pease
 %   Modified \language to \languagemajor so as not to interfere with
-%   babel. 
+%   babel.
 
 % Modifed 10/31/2005 by Emma Pease
 %   added an optional fourth reader to signature page (Biology)
@@ -95,12 +95,12 @@
 
 % November 2009 by Emma Pease
 %   changing to use online or hardcopy options for the new online
-%   submission possibility.  
+%   submission possibility.
 
 % Modified May 2010 by Emma Pease
 %   added command \onlinesignature which creates a signatue page
-%   for the online version.  This should be the last command before the 
-%   \end{document} 
+%   for the online version.  This should be the last command before the
+%   \end{document}
 
 % Modified May 2014 by Emma Pease
 %   fixed error in the signature page (Stanford University Committee not just University Committee)
@@ -166,14 +166,14 @@ suthesis documentation.}}{}
     \secondreader{John BigBooty}
     \thirdreader{Jane Supernumerary} %if needed
     \fourthreader{Severus Snape} %if needed
- 
+
     \beforepreface
     \prefacesection{Preface}
         This thesis tells you all you need to know about...
     \prefacesection{Acknowledgments}
         I would like to thank...
     \afterpreface
- 
+
     \chapter{Introduction}
          ...
     \chapter{Conclusions}
@@ -185,7 +185,7 @@ suthesis documentation.}}{}
     \bibliography{mybib}
     \end{document}
 
-Documentation: 
+Documentation:
     This style file modifies the standard report style to follow the
     Graduate Degree Support Section of the Registrar's Office's
     "Directions for Preparing Doctoral Dissertations".  It sets the
@@ -198,10 +198,10 @@ Documentation:
     command.  The \afterpreface command then produces the tables of
     contents, tables and figures, and sets things up to start
     the main body (on arabic page 1).
-    
+
     The following commands can control what goes in the front matter
     material:
-    
+
         \title{thesis title}
         \author{author's name}
         \dept{author's department}
@@ -220,7 +220,7 @@ The following switches allow for special title pages (not all are current)
         \industrialthesis - for a thesis in Industrial Engineering
         \dualthesis     - for a thesis in a dual language department.
                           Also define \languagemajor{language}.
-                          e.g., \dept{French and Italian} 
+                          e.g., \dept{French and Italian}
                           \languagemajor{Italian}
          \principaladviser{the principal advisor's name}
            (or \principaladvisor, if you prefer advisor spelled with o)
@@ -231,7 +231,7 @@ The following switches allow for special title pages (not all are current)
         \secondreader{the second reader's name}
         \thirdreader{optional third reader's name}
         \fourthreader{optional fourth reader's name}
-        \setlength{\signaturespace}{.5in} 
+        \setlength{\signaturespace}{.5in}
                 - default is .5in, can be adjusted to fit all
                 signatures in one page
         \submitdate{month year in which submitted to GPO}
@@ -299,7 +299,7 @@ smaller print.
 
 \marginparsep 10pt
 %\oddsidemargin 0.5in \evensidemargin 0in
-%\marginparwidth 40pt 
+%\marginparwidth 40pt
 
 
 \topmargin 0pt \headsep .5in
@@ -352,7 +352,7 @@ smaller print.
 \newif\ifthesiscopyright
 
 
-\copyrighttrue 
+\copyrighttrue
 \thesiscopyrighttrue
 
 \figurespagetrue \tablespagetrue
@@ -460,7 +460,7 @@ AND THE COMMITTEE ON GRADUATE STUDIES}
 
 \long\def\signature#1{%
 \begin{flushright}
-\begin{minipage}{5in}
+\begin{minipage}{5.4in}
 \parindent=0pt
 I certify that I have read this dissertation and that, in my opinion,
 it is fully adequate in scope and quality as a dissertation for the degree
@@ -486,30 +486,30 @@ of Doctor of Philosophy.
 \end{flushright}}
 
 
-\def\signaturepage{% 
+\def\signaturepage{%
 \ifonline
 \setcounter{page}{0}
 \def\thepage{}
 \thispagestyle{myheadings}
 \markboth{\rm \@author}{\rm \@author}\fi
-\signature{(\@principaladviser)\quad Principal \advis@r}
+\signature{(\@principaladviser)\quad Principal Adviser}
   \vfill
 % if second principal advisor
         \if*\@coprincipaladviser \else
-        \signature{(\@coprincipaladviser)\quad Principal \advis@r}
+        \signature{(\@coprincipaladviser)\quad Co-Adviser}
         \vfill\fi
-        \if*\@firstreader \else 
+        \if*\@firstreader \else
         \signature{(\@firstreader)}
         \vfill\fi
-        \if*\@secondreader \else 
+        \if*\@secondreader \else
         \signature{(\@secondreader)}
         \vfill\fi
 % if thirdreader then do \signature\@thirdreader \vfill
-        \if*\@thirdreader \else 
+        \if*\@thirdreader \else
         \signature{(\@thirdreader)}
         \vfill\fi
 % if fourthreader then do \signature\@fourthreader \vfill
-        \if*\@fourthreader \else 
+        \if*\@fourthreader \else
         \signature{(\@fourthreader)}
         \vfill\fi
 \ucgssignature
@@ -532,7 +532,7 @@ of Doctor of Philosophy.
         \ifcopyright\ifthesiscopyright\thesiscopyrightpage\else\tradcopyrightpage\fi\fi
         \signaturepage\fi
         \cleardoublepage}
-        
+
 
 \def\prefacesection#1{%
         \chapter*{#1}

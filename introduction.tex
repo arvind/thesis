@@ -1,7 +1,9 @@
 % !TEX root = ./thesis.tex
 \chapter{Introduction}
 
-\setlength\epigraphwidth{.7\textwidth}
+\vspace{-35pt}
+
+\setlength\epigraphwidth{.75\textwidth}
 \epigraph{\textit{A graphic is not ``drawn'' once and for all; it is
 ``constructed'' and reconstructed until it reveals all the relationships
  constituted by the interplay of the data. The best graphic operations are those
@@ -15,10 +17,10 @@ the proliferation of visualization tools, which span the gamut of expressivity.
 At one end are chart templates (e.g., Google Fusion Tables, or as found in
 spreadsheet packages such as Microsoft Excel). Users can easily generate
 recognizable output by choosing from a pre-defined palette of chart types, but
-can only customize a handful of properties. At the other end are vector graphics
-packages (e.g., Adobe Illustrator), and low-level programming APIs (e.g.,
-Processing or OpenGL). Here, users have complete control over the resultant
-graphic but the added expressivity trades-off ease-of-use.
+only a handful of properties may be customized. At the other end are vector
+graphics programs (e.g., Adobe Illustrator), and low-level programming APIs
+(e.g., Processing or OpenGL). Users have complete control but the added
+expressivity trades-off ease-of-use.
 
 Advances in visualization toolkits have popularized \emph{grammar-based}
 approaches for visual encodings
@@ -26,23 +28,21 @@ approaches for visual encodings
 These models are more expressive than chart templates as they decompose the
 design space into combinatorial primitives for data transformation and visual
 encoding. Moreover, they embody \emph{declarative design}\,---\,the languages
-are used to describe \emph{what} the visualization should look like, rather than
-\emph{how} it should be rendered. As a result, users are free to focus on visual
-encoding and design decisions while the underlying runtime is entirely
-responsible for execution concerns and performance
-optimization~\cite{heer:protovisjava}.
+describe \emph{what} the visualization should look like, rather than \emph{how}
+it should be rendered. As a result, users are free to focus on visual encoding
+and design decisions while the underlying runtime is entirely responsible for
+execution concerns and performance optimization~\cite{heer:protovisjava}.
 
-However, key challenges remain. Interaction is a critical component of effective
-visualization, allowing users to interrogate the data and iteratively refine
-their mental models~\cite{pike:interactionscience,yi:understanding}. Yet,
-existing declarative visualization models provide poor support for interaction
-techniques. Users can use simple ``interaction typologies'' (e.g., brushing,
-panning, etc.) which offer limited means of customization, or must author
-\emph{imperative} event handling callbacks. These callbacks undo the benefits of
-declarative design, forcing users to manually maintain
-state~\cite{cooper:embedding} or coordinate interleaved execution\,---\,a
-complex and error-prone task colloquially referred to ask ``callback
-hell''~\cite{edwards:coherent}.
+However, key challenges remain. Interaction is critical for effective
+visualization, allowing users to interrogate data and iteratively refine their
+mental models~\cite{pike:interactionscience,yi:understanding}. Yet, existing
+declarative visualization models provide poor support for interaction
+techniques. Simple ``interaction typologies'' (e.g., brushing, panning, etc.)
+are available, but limit customization. Thus, users often author
+\emph{imperative} event handling callbacks that undo the benefits of declarative
+design. Users are forced to manually maintain state~\cite{cooper:embedding} and
+coordinate interleaved execution\,---\,a complex and error-prone task
+colloquially called ``callback hell''~\cite{edwards:coherent}.
 
 Moreover, most existing declarative models (including
 ggplot2~\cite{wickham:layered} and D3~\cite{bostock:d3}) are instantiated via
@@ -51,34 +51,34 @@ non-trivial \emph{articulatory distance}~\cite{hutchins:directmanip} as users
 must map their desired \emph{visual} output to \emph{textual} commands\,---\,a
 fundamental mismatch in representations.
 
+\vspace{-10pt}
+
 \section{Thesis Contributions and Outline}
 
-This dissertation is divided into seven chapters, and contributes two new
-declarative languages for \emph{interactive} visualization as well as a new
-interactive system for visualization design through direct manipulation.
+This dissertation is divided into seven chapters, and contributes a layered
+stack of new declarative languages for \emph{interactive} visualization as well
+as a new interactive system for visualization design through direct
+manipulation.
 
 \Cref{sec:related_work} surveys prior work that this dissertation builds on,
-including a panoply of visualization toolkits and systems, methods from the
-functional programming languages and streaming databases literature, and
-generative models of user interfaces.
+including a panoply of visualization toolkits and systems, methods from
+functional programming languages and streaming database systems, and generative
+models of user interfaces.
 
 \Cref{sec:vg:lang} introduces Reactive Vega: a declarative language for
 interactive data visualization that models user interaction as \emph{streaming
 data}. Alongside established declarative visual encoding primitives, Reactive
 Vega introduces event streams and signals, two constructs from Functional
 Reactive Programming. Event streams, defined with a novel CSS-inspired selector
-syntax, abstract the complexity of capturing and sequencing input events. For
-example \texttt{[mousedown, mouseup] > mousemove} defines a stream of drag
-events\,---\,a sequence that would previously require three callbacks to modify
-external state. Event streams drive signals: dynamic expressions that are
-automatically reevaluated when new events fire. Signals parameterize visual
-encoding primitives, thereby endowing them with reactive semantics\,---\,when a
-new event fires, it is propagated to corresponding signals; dependent visual
-encodings are automatically reevaluated and the visualization is automatically
-re-rendered. Additional primitives allow interaction techniques to be
-generalized and reused across distinct visualizations. This chapter further
-demonstrates that Reactive Vega is suitably expressive to cover taxonomies of
-interaction techniques for data visualizations.
+syntax, abstract the complexity of capturing and sequencing input events. Event
+streams drive signals: dynamic expressions that are automatically reevaluated
+when new events fire. Signals parameterize visual encoding primitives, thereby
+endowing them with reactive semantics\,---\,when a new event fires, it is
+propagated to corresponding signals; dependent visual encodings are reevaluated
+and the visualization is automatically re-rendered. Additional primitives allow
+interaction techniques to be generalized and reused across distinct
+visualizations. This chapter demonstrates Reactive Vega's expressivity through
+example visualizations that cover an established interaction taxonomy.
 
 \Cref{sec:vg:arch} studies the implications of declarative interaction design on
 the architecture of visualization systems. The Reactive Vega architecture adapts
@@ -94,58 +94,62 @@ described and comparative benchmark studies conducted to evaluate Reactive
 Vega's performance. These studies find that Reactive Vega meets or exceeds the
 performance of D3~\cite{bostock:d3} and the prior Vega system.
 
-\Cref{sec:vega-lite} introduces Vega-Lite: a higher-level grammar of interactive
-graphics. Vega-Lite extends a traditional grammar of graphics with a \emph{view
-composition algebra} for layered and multi-view displays. A novel \emph{grammar
-of interaction} features \emph{selections}: an abstraction that defines input
-event processing, points of interest, and a predicate function for inclusion
-testing. Selections parameterize visual encodings by serving as input data,
-defining scale extents, or by driving conditional logic. Vega-Lite
-specifications are concise through ambiguity: lower-level details (e.g., the
-particular events that trigger a selection) can be omitted and are filled in by
-the Vega-Lite compiler. Moreover, a smaller language surface area makes
-higher-level reasoning (such as systematic enumeration of alternative designs)
-more tractable. This chapter demonstrates these language properties by
-recreating the examples from \Cref{sec:vg:lang}.
+\Cref{sec:vega-lite} introduces Vega-Lite: a higher-level grammar that builds on
+Reactive Vega. Vega-Lite extends a traditional grammar of graphics with a
+\emph{view composition algebra} for layered and multi-view displays. A novel
+\emph{grammar of interaction} features \emph{selections}: an abstraction that
+encapsulates input event processing, points of interest, and a predicate
+function for inclusion testing. Selections parameterize visual encodings by
+serving as input data, defining scale extents, or by driving conditional logic.
+Vega-Lite specifications are concise through ambiguity: lower-level details
+(e.g., the events that trigger a selection) can be omitted and are filled in by
+the Vega-Lite compiler. The smaller language surface area also facilitates
+higher-level reasoning tasks, such as systematic enumeration of alternative
+designs. These language properties are reified by recreating the examples from
+\Cref{sec:vg:lang}.
 
-\Cref{sec:lyra} introduces Lyra: an interactive environment for visualization
-design by direct manipulation. Through drag-and-drop interactions, users bind
-data values to mark properties. With a data pipeline interface, users can
-visually specify and inspect data transformations and layout algorithms. As a
-higher-level graphical interface, Lyra allows users to fluidly move between the
-different levels of abstraction. Direct manipulation interactions generate
-statements in Vega-Lite, which are compiled, and merged into a backing Reactive
-Vega specification; the visual inspectors provide complete control over the
-latter. Thus, users can iterate between rapidly creating recognizable output and
-making fine-grained customizations. This approach yields a diverse range of
-visualizations without writing a single line of code.
+\Cref{sec:lyra} introduces Lyra: an interactive environment that leverages both
+Reactive Vega and Vega-Lite for visualization design by direct manipulation.
+Through drag-and-drop interactions, users bind data values to mark properties.
+Data transformations and layout algorithms are visually specified and inspected
+with a ``data pipeline'' interface. As a higher-level graphical interface, Lyra
+allows users to fluidly move between the different levels of abstraction. Direct
+manipulation interactions generate statements in Vega-Lite, which are compiled,
+and merged into a backing Reactive Vega specification; the visual inspectors
+provide complete control over the latter. Thus, users can iterate between
+rapidly creating recognizable output and making fine-grained
+customizations\,---\,an approach that yields a diverse range of visualizations
+without writing a single line of code.
 
-Finally, \Cref{sec:conclusion} sketches new research opportunities that Reactive
+Finally, \Cref{sec:conclusion} sketches new research directions that Reactive
 Vega and Vega-Lite enable. These systems have been released as open-source
-projects, and researchers have already begun to use them to power the Voyager
-visualization recommendation browser~\cite{voyager,voyager2,compassql}, develop
-a model for sequencing visualizations~\cite{kim:graphscape}, and
-reverse-engineer visualizations from chart images~\cite{poco:reverse}. Moreover,
-the broader adoption both have seen\,---\,Vega is in use on Wikipedia, to embed
-interactive visualizations within articles, and Vega-Lite can be used within
-Jupyter notebooks\,---\,provide a growing and engaged community of users to
-study their use with.
+projects, and have already been used to power the Voyager visualization
+recommendation browser~\cite{voyager,voyager2,compassql}, develop a model for
+sequencing visualizations~\cite{kim:graphscape}, and reverse-engineer
+visualizations from chart images~\cite{poco:reverse}. Moreover, the broader
+adoption both tools have seen\,---\,Vega is used to embed interactive
+visualizations within Wikipedia articles, and Vega-Lite can be used within
+Jupyter notebooks\,---\,provide a growing, engaged user community to study their
+use with.
+
+\vspace{-20pt}
 
 \section{Prior Publications and Authorship}
+
+\vspace{-7pt}
 
 Although I am the principal author for the research detailed in this
 dissertation, it is also the product of several years of collaboration with my
 primary advisor, Jeffrey Heer, and my colleagues at the University of Washington
-Interactive Data Lab. The design of the Reactive Vega language, described in
-\Cref{sec:vg:lang}, previously appeared at ACM UIST
-2014~\cite{satyanarayan:declarative} with Kanit ``Ham'' Wongsuphasawat
-contributing a prototype implementation of the reactive extensions against the
-existing Vega codebase. The Reactive Vega architecture (\Cref{sec:vg:arch}) was
-published at IEEE VIS 2015~\cite{reactive-vega-arch}, with Ryan Russell and Jane
+Interactive Data Lab. The Reactive Vega language (\Cref{sec:vg:lang}) appeared
+at \textsc{acm uist} 2014~\cite{satyanarayan:declarative} with Kanit
+Wongsuphasawat contributing a prototype implementation of the reactive runtime.
+The Reactive Vega architecture (\Cref{sec:vg:arch}) was published at
+\textsc{ieee vis} 2015~\cite{reactive-vega-arch}, with Ryan Russell and Jane
 Hoffswell contributing example visualizations and designing the figures.
 Vega-Lite (\Cref{sec:vega-lite}) is joint work with Dominik Moritz and Kanit
-``Ham'' Wongsuphasawat. It was published at IEEE VIS 2016~\cite{vega-lite} and
-my colleagues led the design and implementation of Vega-Lite's visual encodings.
-Finally, Lyra was previously published at EuroVis 2014~\cite{lyra}. To reflect
-the contributions of my collaborators, I will use the first-person plural (we)
-in these chapters.
+Wongsuphasawat. It was published at \textsc{ieee vis} 2016~\cite{vega-lite} and
+my co-authors led the design and implementation of the visual encodings.
+Finally, Lyra was published at EuroVis 2014~\cite{lyra}. To reflect the
+contributions of my collaborators, I will use the first-person plural (we) in
+these chapters.
