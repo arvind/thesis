@@ -2,6 +2,8 @@
 \section{Discussion: Cognitive Dimensions of Notation}
 \label{sec:vg:discussion}
 
+\vspace{-10pt}
+
 The previous section demonstrated the expressivity of Reactive Vega's model of
 declarative interaction design. Here, we evaluate it from the perspective of a
 visualization designer using the Cognitive Dimensions of
@@ -55,13 +57,12 @@ callbacks, introducing \textbf{hard mental operations} and
 \textbf{Consistency} (similar semantics are expressed in similar syntactic
 forms). Our interaction model is best suited for systems that declaratively
 specify visual encodings, and would feel foreign in imperative systems. However,
-given the widespread adoption of D3, and Vega's increasing integration in
-systems~\cite{lyra, voyager, wikipedia:graph} we believe this is not a
+given widespread adoption of D3, and Vega's increasing integration in
+systems~\cite{lyra, voyager, mediawiki:graph} we believe this is not a
 significant liability. By contrast, registering event callbacks on D3
 visualizations breaks consistency: visual design is declarative while
-interaction design is imperative. It requires users to think in terms of
-different notational systems, and exposes underlying implementation and
-execution concerns.
+interaction design is imperative. Users must think in two notational systems,
+and the underlying implementation and execution concerns are exposed.
 
 \textbf{Visibility} (ability to view components easily). One of the primary
 advantages of using D3, and registering event callbacks, is being able to debug

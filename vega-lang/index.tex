@@ -1,12 +1,24 @@
 % !TEX root = ../thesis.tex
 \graphicspath{{./vega-lang/figures/}}
-\chapter{Declarative Primitives for Interaction Design}
+\chapter{Declarative Interaction Primitives}
 \label{sec:vg:lang}
+
+\vspace{-30pt}
+
+\begin{figure}[b!]
+  \centering
+  \includegraphics[width=0.95\columnwidth]{barChart}
+  \caption{A JSON specification for a bar chart, demonstrating Vega's
+  abstractions for visual encoding. Data is imported from a URL. Scales
+  transform data values to visual values. Properties of graphical marks (in
+  this case rectangles) are determined by scale mappings. Guides (here, axes)
+  are instantiated as well.}
+  \label{fig:vg:barChart}
+\end{figure}
 
 Reactive Vega builds on a long-running thread of research on declarative
 visualization design, popularized by the Grammar of
-Graphics~\cite{wilkinson:grammar} and Polaris~\cite{stolte:polaris} (now
-Tableau).
+Graphics~\cite{wilkinson:grammar} and Polaris/Tableau~\cite{stolte:polaris}.
 
 Visual encodings are defined by composing graphical primitives called
 \emph{marks}~\cite{bostock:protovis}, which include \emph{arcs}, \emph{areas},
@@ -16,41 +28,35 @@ properties such as position and color. Scales and guides (i.e., axes and
 legends) are provided as first-class primitives for mapping a domain of data
 values to a range of visual properties. Special \emph{group} marks serve as
 containers to express nested or small multiple displays. Child marks and scales
-can inherit a group's data, or draw from independent datasets.
+can either inherit a group's data or draw from independent datasets.
 
 Although interaction is a crucial component of effective
 visualization~\cite{liu:mentalmodels, pike:interactionscience}, existing
-declarative visualization models, including widely used tools such as
+declarative visualization models, including widely used packages such as
 D3~\cite{bostock:d3} and ggplot2~\cite{wickham:ggplot2}, do not offer composable
 primitives for interaction design. Instead, if they support interaction, they do
-so through either a palette of standard techniques~\cite{bostock:protovis,
+so with either a palette of standard techniques~\cite{bostock:protovis,
 bostock:d3} or \emph{imperative} event handling callbacks. While the former
 restricts expressivity, the later undoes many of the benefits of declarative
-design. In particular, users are forced to contend with interaction execution
-details, such as interleaved events and coordinating external state, which can
-be complex and error\--prone~\cite{cooper:embedding, edwards:coherent,
-myers:callbacks}.
-
-\begin{figure}[h!]
-  \centering
-  \includegraphics[width=\columnwidth]{barChart}
-  \caption{A JSON specification for a bar chart, demonstrating Vega's
-  abstractions for visual encoding. Data is imported from a URL. Scales
-  transform data values to visual values. Properties of graphical marks (in
-  this case rectangles) are determined by scale mappings. Guides (here, axes)
-  can be instantiated as well.}
-  \label{fig:vg:barChart}
-\end{figure}
+design. Users are forced to contend with complex interaction execution details,
+such as coordinating state and interleaved events~\cite{cooper:embedding,
+edwards:coherent, myers:callbacks}.
 
 In response, Reactive Vega introduces a model for \emph{declarative} interaction
 design.
+
+\vspace{-20pt}
 
 \input{vega-lang/primitives}
 \input{vega-lang/examples}
 \input{vega-lang/discussion}
 
+\vspace{-20pt}
+
 \section{Summary}
 \label{sec:vg:lang-summary}
+
+\vspace{-7pt}
 
 In this chapter, we demonstrate that the advantages of declarative specification
 extend to interaction design as well. With event streams and signals, users need
@@ -60,5 +66,5 @@ manually maintained by users, but is automatically updated when new events
 occur. Moreover, signals provide a powerful abstraction barrier that simplifies
 retargeting and has spurred development of a new ``time-traveling''
 debugger~\cite{hoffswell:debugging}. Reusing and repurposing interactive
-behaviors is also supported by passing predicates through scale inversions, and
-extracting declarative specifications to standalone interactors.
+behaviors is achieved by passing predicates through scale inversions, and
+extracting specifications to standalone interactors.

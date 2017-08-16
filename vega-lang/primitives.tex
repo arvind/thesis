@@ -1,19 +1,22 @@
 \section{Interaction Language Design}
 \label{sec:vg:primitives}
+
+\vspace{-10pt}
+
 \subsection{Event Streams and Signals}
 
 Reactive Vega adapts the semantics of Event-Driven Functional Reactive
-Programming (E-FRP)~\cite{wan:efrp}. Low-level input events (e.g., mouse events
-and keystrokes) are captured as time-varying \emph{streaming data}, rather than
-event callbacks. This abstraction reduces the burden of composing and sequencing
+Programming~\cite{wan:efrp}. Low-level input events (e.g., mouse events) are
+captured as time-varying \emph{data streams}, rather than event callbacks. This
+abstraction reduces the burden of composing and sequencing
 events\,---\,operations that would require several callbacks and some external
 state under an imperative paradigm. To this end, we introduce a syntax for
 specifying event streams (\cref{fig:vg:eventStreams}). While prior work has
 formulated regex-based symbols for event selection~\cite{kin:proton++} we
-believe our approach, by drawing on CSS selectors for inspiration, will be more
-familiar to designers.
+believe our approach, by mimicking CSS selectors, will be more familiar to
+designers.
 
-\begin{figure}[h!]
+\begin{figure}[t!]
   \centering
   \includegraphics[width=\columnwidth]{eventStreams}
   \caption{Reactive Vega provides an event stream selector syntax, inspired by
@@ -23,29 +26,28 @@ familiar to designers.
 
 A basic event stream selector is specified by a particular event type (e.g.,
 \texttt{mousemove}), optionally prepended with the source of the
-events\,---\,either a mark type (e.g., \texttt{rect:}) or mark name (e.g.,
+events\,---\,either a mark type (e.g., \texttt{rect:}) or name (e.g.,
 \texttt{@cell:}). The comma operator (\texttt{,}) merges streams to produce a
 single stream with interleaved events. Square brackets (\texttt{[]}) filter
 events based on their properties. When followed by the right-combinator
 (\texttt{>}), the brackets indicate a ``between filter,'' defining bounding
 events for the stream. For instance, \texttt{[mousedown, mouseup] > mousemove}
-is a single stream of \texttt{mousemove} events that occur between a
-\texttt{mousedown} and \texttt{mouseup} (i.e., ``drag'' events). To throttle or
-debounce an event stream, timing information can be specified between curly
-braces (e.g., \texttt{\{100, 200\}} throttles a stream by 100 milliseconds and
-debounces it by 200 milliseconds).  All operators are composable. For instance,
-\texttt{[mousedown[event.shiftKey], window:mouseup] > window:mousemove\{100,
-200\}} specifies a stream of throttled and debounced drag events that are only
-triggered when the shift key is pressed.
+captures \texttt{mousemove} events that occur between a \texttt{mousedown} and
+\texttt{mouseup} (i.e., ``drag'' events). To throttle or debounce an event
+stream, timing information can be specified between curly braces (e.g.,
+\texttt{\{100, 200\}} throttles a stream by 100ms and debounces it by 200ms).
+All operators are composable. For instance, \texttt{[mousedown[event.shiftKey],
+window:mouseup] > window:mousemove\{100, 200\}} specifies a stream of throttled
+and debounced drag events that are only triggered when the shift key is pressed.
 
 With Reactive Vega, interaction events are a first-class data source. They can
 be run through the full gamut of data transformations and can drive visual
 encoding primitives. While doing so can usefully visualize a user's interaction,
 for added expressivity, event streams can also be composed into reactive
 expressions called \emph{signals}. By default, signals are evaluated using the
-most recent event from a stream. However, by drawing from multiple event
-streams, signals can define finite-state machines with each stream triggering a
-transition between states.
+most recent event from a stream. However, signals can also define finite-state
+machines by drawing from multiple streams\,---\,each stream triggers a state
+transition.
 
 Signals can be used to directly specify visual encoding primitives (e.g., a
 mark's fill color) thereby endowing them with reactive semantics. When an event
@@ -54,11 +56,13 @@ signals are re-evaluated and dependent visual encodings re-rendered
 automatically.
 
 Upon definition, signals must be given unique names. These named entities are
-then used to define the rest of an interaction technique. This separation
-decouples input events from downstream application logic. Thus, an interaction
-can be triggered by a different set of events by simply rebinding signal
-declarations. As we later demonstrate, rebinding is particularly useful for
-retargeting interactions or for combining otherwise conflicting interactions.
+then used to define the rest of an interaction technique, thereby decoupling
+input events from downstream application logic. Thus, an interaction can be
+triggered by a different set of events by simply rebinding signal declarations.
+As we later demonstrate, rebinding is particularly useful for retargeting
+interactions or for combining otherwise conflicting interactions.
+
+\vspace{-20pt}
 
 \subsection{Predicates and Scale Inversion}
 
@@ -70,13 +74,7 @@ With interaction design, however, selections are driven by user
 input\,---\,brushing over points of interest, or adjusting a slider to filter
 data.
 
-To express interactive selections, we introduce reactive \emph{predicates}.
-As shown below, predicates can be constructed either with an \emph{intensional}
-definition\,---\,specifying conditions over properties of selected
-members\,---\,or an \emph{extensional} one\,---\,explicitly enumerating all
-members of a selection.
-
-\begin{figure}[h!]
+\begin{figure}[b!]
   \centering
   \includegraphics[width=0.9\columnwidth]{predicates}
   \caption{Points are highlighted using (left) an intensional predicate
@@ -85,19 +83,25 @@ members of a selection.
   \label{fig:vg:predicates}
 \end{figure}
 
+To express interactive selections, we introduce reactive \emph{predicates}. As
+shown in \cref{fig:vg:predicates}, predicates can be constructed either with an
+\emph{intensional} definition\,---\,specifying conditions over properties of
+selected members\,---\,or an \emph{extensional} one\,---\,explicitly enumerating
+all members of a selection.
+
 Predicate operands are typically signals and, as signals drawn from input event
 streams, predicates express interactive selections at the visual (or pixel)
 level by default. However, pixel-level selection is often insufficient. A single
 visualization may have multiple distinct visual spaces, or an interactive
-technique may wish to coordinate multiple distinct visualizations. In such
-cases, it is necessary to generalize an interactive selection into a query over
-the data domain~\cite{heer:generalized}. Scale functions are a critical
-component in visualization design~ \cite{wilkinson:grammar} as they transform
-data values into visual values such as pixels or colors. By applying an
-\emph{inverted} scale function to predicate operands, we can lift a predicate to
-the data domain.
+technique may wish to coordinate several visualizations. In such cases, it is
+necessary to generalize an interactive selection into a query over the data
+domain~\cite{heer:generalized}. Scale functions are a critical component in
+visualization design~ \cite{wilkinson:grammar} as they transform data values
+into visual values such as pixels or colors. By applying an \emph{inverted}
+scale function to predicate operands, we can lift a predicate to the data
+domain.
 
-\begin{figure}[h!]
+\begin{figure}[b!]
   \floatbox[{\capbeside\thisfloatsetup{capbesideposition=
   {right,center},capbesidewidth=0.3\columnwidth}}]{figure}[\FBwidth]
   {\caption{\emph{Predicates} use signal values to define interactive selections
@@ -110,6 +114,8 @@ overview (bottom) and detail (top).}
 
 \subsection{Production Rules}
 
+\vspace{-7pt}
+
 Production rules are an established design pattern for visualization
 specification~\cite{heer:designpatterns} that we endow with reactive semantics.
 A rule defines the outcome of evaluating an \texttt{if-then-else} chain to set
@@ -117,8 +123,12 @@ property values. For example, a rule might set a mark's fill color using
 scale-transformed data if predicate \texttt{A} is true, set it to yellow is
 predicate \texttt{B} is true, or otherwise set the color to grey by default.
 
+\vspace{-20pt}
+
 \subsection{User-Defined Functions}
 \label{sec:udfs}
+
+\vspace{-7pt}
 
 During our design process, we encountered visualizations in which interactions
 trigger custom data transforms. For example, sorting a co-occurrence matrix by
@@ -132,13 +142,18 @@ the specification. User-defined functions ensure that the language remains
 concise and domain-specific, while ensuring extensibility to idiosyncratic
 operations.
 
+\vspace{-20pt}
+
 \subsection{Encapsulated Interactors}
 
-To allow reuse of custom interaction techniques, Reactive Vega's interaction
+\vspace{-7pt}
+
+To enable reuse of custom interaction techniques, Reactive Vega's interaction
 primitives can be parameterized and encapsulated as named \emph{interactors}.
 Inspired by Garnet's component of the same name~\cite{myers:garnet}, a Reactive
 Vega's interactor can subsequently be applied to a visualization and functions
-like mixin. Its specification is merged into the host's and, to prevent
+as a mixin. Its specification is merged into the host's and, to prevent
 conflicts, its components are addressable only under its namespace.
-\Cref{fig:vg:splomInteractor} illustrates how a brush interaction, extracted
-from \cref{fig:vg:brush}, can be applied to brush \& link a scatterplot matrix.
+\Cref{fig:vg:splomInteractor,fig:vg:brush} illustrate how a brushing
+interaction (within a single scatterplot) can be extracted to a standalone
+interactor, and reapplied to brush \& link a scatterplot matrix.
