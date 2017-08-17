@@ -5,19 +5,26 @@
 \section{Comparative Performance Benchmarks}
 \label{sec:vg:performance}
 
-\vspace{-7pt}
+\vspace{-10pt}
 
 To evaluate the performance of Reactive Vega against D3~\cite{bostock:d3} and
 the origin, non-reactive Vega system (v1.5.0), we use the same setup described
 in the previous section.
 
-\vspace{-20pt}
+\vspace{-10pt}
 
 \subsection{Streaming Visualizations}
 
 \vspace{-7pt}
 
-\begin{figure}[b!]
+Figure~\ref{fig:vg:static_benchmark} shows the average performance of
+uninteractive streaming scatter plots, parallel coordinates plots, and trellis
+plots. We first measured the average time to initially parse and render the
+visualizations. To gauge streaming performance, we next measured the average
+time taken to update and re-render upon adding, modifying, or removing 1\% of
+tuples. We ran 10 trials per dataset, sized 100--100,000 tuples.
+
+\begin{figure}[t!]
   \centering
   \includegraphics[width=\columnwidth]{streaming-lines.pdf}
   \caption{Average performance of rendering (non-interactive) streaming visualizations:
@@ -26,13 +33,6 @@ initialization time, average frame time, and average frame rate. Dashed lines
 indicate the threshold of interactive updates~\cite{card:modelhuman}.}
   \label{fig:vg:static_benchmark}
 \end{figure}
-
-Figure~\ref{fig:vg:static_benchmark} shows the average performance of
-uninteractive streaming scatter plots, parallel coordinates plots, and trellis
-plots. We first measured the average time to initially parse and render the
-visualizations. To gauge streaming performance, we next measured the average
-time taken to update and re-render upon adding, modifying, or removing 1\% of
-tuples. We ran 10 trials per dataset, sized 100--100,000 tuples.
 
 Reactive Vega has the greatest effect with the parallel coordinates plot,
 displaying 2x and 4x performance increases over D3 and Vega 1.5, respectively.
@@ -51,7 +51,7 @@ However, with streaming visualizations this cost amortizes and performance in
 response to data changes becomes more important. In this case, Reactive Vega
 makes up the difference in a single cycle.
 
-\vspace{-20pt}
+\vspace{-10pt}
 
 \subsection{Interactive Visualizations}
 

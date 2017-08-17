@@ -27,8 +27,6 @@ primitives, supports the accretive design of richer interactions.
   \label{fig:vg:shiftClick}
 \end{figure}
 
-\vspace{-20pt}
-
 \subsection{Selection: Click/Shift-Click and Brushing}
 
 \vspace{-7pt}
@@ -87,7 +85,7 @@ blue points in the other cells. Instead, the interactor uses scale inversions to
 lift the predicate to the data domain, and the production rule correctly links
 brushed points across scatterplots.
 
-\vspace{-20pt}
+\vspace{-10pt}
 
 \subsection{Abstract/Elaborate: Overview\,+\,Detail}
 
@@ -102,7 +100,7 @@ to filter points for display in the detail plot. As a user brushes, signals
 update the range predicate, which in turn filters points in the data source,
 updates scale functions and re-renders the detail view.
 
-\vspace{-20pt}
+\vspace{-10pt}
 
 \subsection{Explore \& Encode: Panning \& Zooming}
 
@@ -165,7 +163,7 @@ overlaying counties. A production rule uses a predicate to test whether the zoom
 signal is above a specified threshold; if it is, the state-level map is rendered
 transparently, displaying the county-level map underneath it.
 
-\vspace{-20pt}
+\vspace{-10pt}
 
 \subsection{Reconfigure: Index Chart}
 
@@ -192,7 +190,11 @@ Using Vega's data transformations, we join the index point against the original
 data set and normalize the data values. Scale functions are defined in terms of
 the normalized data.
 
+\vspace{-10pt}
+
 \subsection{Reconfigure: Reordering Columns of a Matrix}
+
+\vspace{-7pt}
 
 \begin{wrapfigure}{l}{0pt}
   \raisebox{0pt}[\dimexpr\height-0.6\baselineskip\relax]{\includegraphics
@@ -209,13 +211,13 @@ source column to be reordered, while a signal on \texttt{[@col\_label:mousedown,
 mouseup] > mousemove} updates the target column location. On \texttt{mouseup},
 the data source is updated to swap the two sorting indices.
 
-\vspace{-20pt}
+\vspace{-10pt}
 
 \subsection{Filter: Control Widgets}
 
 \vspace{-7pt}
 
-\begin{figure}[b!]
+\begin{figure}[t!]
   \centering
   \includegraphics[width=0.9\columnwidth]{jobVoyager}
   \caption{The job voyager can be filtered using signals bound to control
@@ -249,14 +251,6 @@ triggers temporal navigation, with the rest of the points updating to reflect
 the new time. In evaluation studies, users reported feeling more engaged when
 exploring their data using DimpVis~\cite{kondo:dimpvis}.
 
-\begin{figure}[b!]
-  \centering
-  \includegraphics[width=\columnwidth]{dimpvis}
-  \caption{DimpVis~\cite{kondo:dimpvis}, touch-based navigation of time-series
-  data recreated with Reactive Vega.}
-  \label{fig:vg:dimpvis}
-\end{figure}
-
 As shown in \cref{fig:vg:dimpvis}, we can recreate this technique with Reactive
 Vega's declarative interaction primitives and the GapMinder
 country-fertility-life-expectancy dataset used by the original. Input data is
@@ -273,7 +267,15 @@ properties determine the position of plotted points, producing smooth
 transitions as the user drags back-and-forth. To draw the hint map, a derived
 data source filters data tuples for the selected country across all years.
 
-\vspace{-20pt}
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\columnwidth]{dimpvis}
+  \caption{DimpVis~\cite{kondo:dimpvis}, touch-based navigation of time-series
+  data recreated with Reactive Vega.}
+  \label{fig:vg:dimpvis}
+\end{figure}
+
+\vspace{-10pt}
 
 \subsection{Reusable Touch Interaction Abstractions}
 

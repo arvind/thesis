@@ -1,10 +1,10 @@
 % !TEX root = ../thesis.tex
-\vspace{-40pt}
+\vspace{-20pt}
 
 \section{Performance Optimizations}
 \label{sec:vg:optimizations}
 
-\vspace{-7pt}
+\vspace{-10pt}
 
 Declarative language runtimes can transparently optimize
 performance~\cite{heer:protovisjava} and Reactive Vega uses several strategies
@@ -17,7 +17,7 @@ tuples. For ecological validity, benchmarks were run with Google Chrome 42
 tests were conducted on a MacBook Pro running Mac OS X 10.10.2, with a quad-core
 2.5GHz Intel Core i7 processor and 16GB of 1600 MHz \textsc{ddr3 ram}.
 
-\vspace{-20pt}
+\vspace{-10pt}
 
 \subsection{On-Demand Tuple Revision Tracking}
 
@@ -60,7 +60,7 @@ previous values. Our on-demand strategy effectively reduces these costs,
 requiring only 5-10\% more memory and taking 5\% longer to initialize than the
 ``never'' condition.
 
-\vspace{-20pt}
+\vspace{-10pt}
 
 \subsection{Pruning Unnecessary Recomputation}
 \label{sec:pruning}
@@ -96,6 +96,15 @@ reflows only, skipping unchanged operators only, and applying both
 optimizations) across four tasks (initializing the visualization, updating each
 signal in turn, and updating both signals together).
 
+\begin{figure}[b!]
+  \centering
+  \includegraphics[width=\columnwidth]{skips-lines.pdf}
+  \caption{The effects of pruning unnecessary computation on average processing
+speed. (a) A relative difference between conditions (higher is better). (b)
+Absolute values for time taken, plotted on a log$_{10}$ scale (lower is better).}
+  \label{fig:vg:skips_benchmark}
+\end{figure}
+
 Results are shown in Figure~\ref{fig:vg:skips_benchmark}. Preventing multiple
 reflows is the most effective strategy, increasing throughput 1.4 times on
 average. Skipping unchanged operators sees little benefit by itself as, in our
@@ -108,18 +117,13 @@ additional nodes were erroneously skipped, we hypothesize that the JavaScript
 runtime is able to perform just-in-time optimizations that it is unable to apply
 to the other conditions.
 
-\begin{figure}[b!]
-  \centering
-  \includegraphics[width=\columnwidth]{skips-lines.pdf}
-  \caption{The effects of pruning unnecessary computation on average processing
-speed. (a) A relative difference between conditions (higher is better). (b)
-Absolute values for time taken, plotted on a log$_{10}$ scale (lower is better).}
-  \label{fig:vg:skips_benchmark}
-\end{figure}
+\vspace{-10pt}
 
 \subsection{Inlining Sequential Operators}
 
-\begin{figure}[h!]
+\vspace{-7pt}
+
+\begin{figure}[b!]
   \centering
   \includegraphics[width=\columnwidth]{inlined-lines.pdf}
   \caption{The effects of inlining sequential operators on average processing

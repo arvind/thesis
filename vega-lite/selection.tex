@@ -1,12 +1,18 @@
 % !TEX root = ../thesis.tex
+
+\vspace{-20pt}
+
 \section{Interactive Selections}
 \label{sec:vl:goi}
+
+\vspace{-10pt}
 
 To support specification of interaction techniques, we extend the definition of
 unit specifications to also include a set of \emph{selections}. Selections
 identify the set of points a user is interested in manipulating, and is formally
 defined as an eight-tuple:
 
+\vspace{7pt}
 \centerline{
   \emph{selection := (name, type, predicate, domain$|$range, event, init,
   transforms, resolve})
@@ -33,6 +39,14 @@ when a multi selection serves as an ordinal scale domain.
 \Cref{fig:vl:singleSelection,fig:vl:multiSelection} illustrate how points are
 highlighted in a scatterplot using single and multi selections.
 
+Intervals are similar to multi selections. They are backed by datasets, but
+their predicates determine whether an argument falls within the minimum and
+maximum extent defined by the backing points. Thus, they express continuous
+selections. The compiler automatically adds a rectangle mark, as shown in
+\cref{fig:vl:intervalSelection}, to depict the selected interval. Users can
+customize the appearance of this mark via the \texttt{mark} keyword, or disable
+it altogether when defining the selection.
+
 \begin{figure*}[h!]
   \centering
   \includegraphics[width=\columnwidth]{singleSelection}
@@ -48,14 +62,6 @@ highlighted in a scatterplot using single and multi selections.
   value is selected on click, and additional values on shift-click.}
   \label{fig:vl:multiSelection}
 \end{figure*}
-
-Intervals are similar to multi selections. They are backed by datasets, but
-their predicates determine whether an argument falls within the minimum and
-maximum extent defined by the backing points. Thus, they express continuous
-selections. The compiler automatically adds a rectangle mark, as shown in
-\cref{fig:vl:intervalSelection}, to depict the selected interval. Users can
-customize the appearance of this mark via the \texttt{mark} keyword, or disable
-it altogether when defining the selection.
 
 \begin{figure*}[h!]
   \centering
@@ -92,19 +98,18 @@ stored.
 The particular events that update a selection are determined by the platform a
 Vega-Lite specification is compiled on, and the input modalities it supports. By
 default we use mouse events on desktops, and touch events on mobile and tablet
-devices. A user can specify alternate events using Vega's event selector
-syntax~\cite{reactive-vega-model}. For example, \cref{fig:vl:paintbrush}
-demonstrates how \texttt{mouseover} events are used to populate a multi
-selection. With the event selector syntax, multiple events are specified using a
-comma (e.g., \texttt{mousedown, mouseup} adds items to the selection when either
-event occurs). A sequence of events is denoted with the between-filter. For
-example, \texttt{[mousedown, mouseup] > mousemove} selects all
-\texttt{mousemove} events that occur between a \texttt{mousedown} and a
-\texttt{mouseup} (otherwise known as ``drag'' events). Events can also be
-filtered using square brackets (e.g., \texttt{mousemove [event.pageY > 5]} for
-events at the top of the page) and throttled using braces (e.g.,
-\texttt{mousemove\{100ms\}} populates a selection at most every 100
-milliseconds).
+devices. A user can specify alternate events using Vega's event selectors
+(\secref{sec:vg:events}). For example, \cref{fig:vl:paintbrush} demonstrates how
+\texttt{mouseover} events are used to populate a multi selection. With the event
+selector syntax, multiple events are specified using a comma (e.g.,
+\texttt{mousedown, mouseup} adds items to the selection when either event
+occurs). A sequence of events is denoted with the between-filter. For example,
+\texttt{[mousedown, mouseup] > mousemove} selects all \texttt{mousemove} events
+that occur between a \texttt{mousedown} and a \texttt{mouseup} (otherwise known
+as ``drag'' events). Events can also be filtered using square brackets (e.g.,
+\texttt{mousemove [event.pageY > 5]} for events at the top of the page) and
+throttled using braces (e.g., \texttt{mousemove\{100\}} populates a selection at
+most every 100 milliseconds).
 
 \begin{figure*}[h!]
   \centering
@@ -115,7 +120,11 @@ milliseconds).
   \label{fig:vl:paintbrush}
 \end{figure*}
 
+\vspace{-10pt}
+
 \subsection{Selection Transforms}
+
+\vspace{-7pt}
 
 Analogous to data transforms, selection transforms manipulate the components of
 the selection they are applied to. For example, they may perform operations on
@@ -137,7 +146,11 @@ custom behaviors.
 % multi selection in order to toggle membership of the point nearest the user's
 % cursor.
 
+\vspace{-10pt}
+
 \subsubsection{Project}
+
+\vspace{-7pt}
 
 \centerline{\emph{project(fields, channels)}}
 
@@ -173,6 +186,8 @@ introduced due to inline binning or aggregation). For such cases, a list of
 
 \subsubsection{Toggle}
 
+\vspace{-7pt}
+
 \centerline{\emph{toggle(event)}}
 
 The \emph{toggle} transform is automatically instantiated for uninitialized
@@ -186,7 +201,11 @@ however, specifies a custom \texttt{mouseover} event. Thus, additional points
 are inserted when the shift key is pressed and the mouse cursor hovers over a
 point.
 
+\vspace{-10pt}
+
 \subsubsection{Translate}
+
+\vspace{-7pt}
 
 \centerline{\emph{translate(events, by)}}
 
@@ -212,6 +231,8 @@ selections.
 
 \subsubsection{Zoom}
 
+\vspace{-7pt}
+
 \centerline{\emph{zoom(event, factor)}}
 
 The \emph{zoom} transform applies a scale factor, determined by the \emph{event}
@@ -220,7 +241,11 @@ to the spatial properties (or corresponding data fields) of backing points. A
 (e.g., when arrow keys are pressed). When combined with the \emph{project}
 transform, an interval can be zoomed uni-dimensionally.
 
+\vspace{-10pt}
+
 \subsubsection{Bind}
+
+\vspace{-7pt}
 
 \centerline{\emph{bind(widgets$|$scales)}}
 
@@ -257,7 +282,11 @@ prevent collision with the brushing interaction, previously defined in
 {\includegraphics[width=0.65\textwidth]{bindScales}}
 \end{figure}
 
+\vspace{-10pt}
+
 \subsubsection{Nearest}
+
+\vspace{-7pt}
 
 \centerline{\emph{nearest()}}
 
@@ -268,7 +297,11 @@ Cursor~\cite{grossman:bubble}). Currently, the centroid of each mark instance is
 used to calculate the Voronoi diagram but we plan to extend this operator to
 account for boundary points as well (e.g., rectangle vertices).
 
+\vspace{-10pt}
+
 \subsection{Selection-Driven Visual Encodings}
+
+\vspace{-7pt}
 
 Once selections are defined, they parameterize visual encodings to make them
 interactive\,---\,visual encodings are automatically reevaluated as selections
@@ -289,12 +322,12 @@ schemas. Using selections in this way enables linked interactions, including
 displaying tooltips or labels, and cross-filtering.
 
 Besides serving as input data, a materialized selection can also define scale
-extents. Initializing a selection with scale extents offers a concise way of
-specifying this behavior within the same unit specification. For multi-view
-displays, selection names can be specified as the domain or range of a
-particular channel's scale. Doing so constructs interactions that manipulate
-viewports, including panning \& zooming (\cref{fig:vl:bindScales}) and
-overview\,+\,detail (\cref{fig:vl:overviewDetail}).
+extents. Binding a selection to scales offers a concise way of specifying this
+behavior within the same unit specification. For multi-view displays, selection
+names can be specified as the domain or range of a particular channel's scale.
+Doing so constructs interactions that manipulate viewports, including panning \&
+zooming (\cref{fig:vl:bindScales}) and overview\,+\,detail
+(\cref{fig:vl:overviewDetail}).
 
 In all three cases, selections can be composed using logical \texttt{OR},
 \texttt{AND}, and \texttt{NOT} operators. As previously discussed, single
@@ -305,7 +338,11 @@ channel without the overhead of a conditional rule. In \cref{fig:vl:indexChart},
 for instance, the red rule is positioned using the \texttt{date} value of the
 \texttt{indexPt} selection.
 
+\vspace{-10pt}
+
 \subsection{Disambiguating Composite Selections}
+
+\vspace{-7pt}
 
 Selections are defined within unit specifications to provide a default
 context\,---\,a selection's events are registered on the unit's mark instances,
@@ -323,7 +360,7 @@ for the overall visualization, or one per cell? If the latter, which cell's
 when selections serve as input data or scale extents, and when selections share
 the same name across a layered or concatenated views.
 
-\begin{figure}[h!]
+\begin{figure}[b!]
   \centering
   \includegraphics[width=\columnwidth]{resolveGlobal}
   \caption{By adding a \emph{repeat} operator, we compose the encodings and
@@ -342,11 +379,25 @@ previous brushes are removed.
 
 Users can specify an alternate ambiguity resolution when defining a selection.
 These schemes all construct one instance of the selection per view, and define
-which instances are used in determining inclusion. For example, setting a
-selection to resolve to \emph{independent} creates one instance per view, and
-each unit uses only its own selection to determine inclusion. With our SPLOM
-example, this would produce the interaction shown below. Each cell would display
-its own brush, which would determine how only its points would be highlighted.
+which instances are used in determining inclusion. For example, resolving a
+selection to \emph{independent} creates one instance per view, and each unit
+uses only its own selection to determine inclusion. With our SPLOM example, this
+would produce the interaction shown below. Each cell would display its own
+brush, which would determine how only its points would be highlighted.
+
+Selections can also be resolved to \emph{union} or \emph{intersect}. Here, all
+instances of a selection are considered in concert: a point falls within the
+overall selection if it is included in, respectively, at least one of the
+constituents or all of them. More concretely, with the SPLOM example, these
+settings would continue to produce one brush per cell, and points would
+highlight when they lie within at least one brush (\emph{union}) or if they are
+within every brush (\emph{intersect}) as shown in
+\cref{fig:vl:resolveUnion,fig:vl:resolveIntersect} respectively. We also support
+\emph{union others} and \emph{intersect others} resolutions, which function like
+their full counterparts except that a unit's own selection is not part of the
+inclusion determination. These latter methods support cross-filtering
+(\cref{fig:vl:crossfilter}) where interactions within a view should not filter
+itself.
 
 \begin{figure}[h!]
   \centering
@@ -356,20 +407,6 @@ produces a brush in each cell, and points only highlight based on the selection
 in their own cell.}
   \label{fig:vl:resolveIndependent}
 \end{figure}
-
-Selections can also be resolved to \emph{union} or \emph{intersect}. In these
-cases, all instances of a selection are considered in concert: a point falls
-within the overall selection if it is included in, respectively, at least one of
-the constituents or all of them. More concretely, with the SPLOM example, these
-settings would continue to produce one brush per cell, and points would
-highlight when they lie within at least one brush (\emph{union}) or if they are
-within every brush (\emph{intersect}) as shown in \cref{fig:vl:resolveUnion} and
-\cref{fig:vl:resolveIntersect} respectively. We also support \emph{union others}
-and \emph{intersect others} resolutions, which function like their full
-counterparts except that a unit's own selection is not part of the inclusion
-determination. These latter methods support cross-filtering interactions, as in
-Figs.~\ref{fig:vl:SimpleCrossFilter} \& ~\ref{fig:vl:LayeredCrossFilter}, where
-interactions within a view should not filter itself.
 
 \begin{figure}[h!]
   \centering

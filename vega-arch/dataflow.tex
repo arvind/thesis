@@ -12,7 +12,7 @@ when interaction events occur, they are propagated (or ``\emph{pulsed}'')
 through the graph with each operator being evaluated in turn. Propagation ends
 at the renderer.
 
-\vspace{-20pt}
+\vspace{-10pt}
 
 \subsection{Data, Interaction, and Scene Graph Operators}
 
@@ -21,11 +21,11 @@ at the renderer.
 Reactive Vega's dataflow operators fall into one of three categories: input data
 processing, interaction handling, or scene graph construction.
 
-\vspace{-17pt}
+\vspace{-10pt}
 
 \subsubsection{Processing Input Data}
 
-\vspace{-7pt}
+\vspace{-10pt}
 
 Reactive Vega parses each dataset definition and constructs a corresponding
 branch in the dataflow graph. These branches comprise input and output nodes
@@ -50,7 +50,7 @@ current values to the \texttt{previous} object.
 
 \subsubsection{Handling Interaction}
 
-\vspace{-7pt}
+\vspace{-10pt}
 
 Reactive Vega instantiates an event listener node for each low-level event type
 required by the visualization (e.g., \texttt{mousedown} or \texttt{touchstart}).
@@ -63,11 +63,11 @@ and only propagates the final signal value when appropriate. Individual signals
 can be dependent on multiple event nodes and/or other signals, and value
 propagation follows E-FRP's two-phase update (\secref{sec:propagation}).
 
-\vspace{-17pt}
+\vspace{-10pt}
 
 \subsubsection{Constructing the Scene Graph}
 
-\vspace{-7pt}
+\vspace{-10pt}
 
 To construct the scene graph, Reactive Vega follows a process akin to the
 Protovis bind-build-evaluate pipeline~\cite{heer:protovisjava}. When a
@@ -132,7 +132,7 @@ Finally, if animated transitions are specified, a changeset contains an
 interpolation queue to which mark evaluators add generated mark instances; the
 interpolators are then run when the changeset is evaluated by the renderer.
 
-\vspace{-20pt}
+\vspace{-10pt}
 
 \subsection{Coordinating Changeset Propagation}
 \label{sec:propagation}
@@ -192,7 +192,7 @@ edge it was a part of, and determine the correct dataset to supply.
 \Cref{fig:vg:teaser,fig:vg:groupedBar,fig:vg:scenegraph} use filled and unfilled
 arrows for internal and external connections, respectively.
 
-\vspace{-20pt}
+\vspace{-10pt}
 
 \subsection{Dynamically Restructuring the Graph}
 

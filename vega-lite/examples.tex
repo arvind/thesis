@@ -1,6 +1,11 @@
 % !TEX root = ../thesis.tex
+
+\vspace{-10pt}
+
 \section{Example Interactive Visualizations}
 \label{sec:vl:examples}
+
+\vspace{-10pt}
 
 Vega-Lite's design is motivated by two goals: to enable rapid yet expressive
 specification of interactive visualizations, and to do so with concise
@@ -19,7 +24,11 @@ Vega examples~\cite{reactive-vega-arch, reactive-vega-model, vega:editor}. Where
 applicable, we also show how construction of our examples can be systematically
 varied to explore alternate points in the design space.
 
+\vspace{-10pt}
+
 \subsection{Selection: Click/Shift-Click and Brushing}
+
+\vspace{-7pt}
 
 \cref{fig:vl:singleSelection} provides the full Vega-Lite specification for a
 scatterplot where users can mark individual points of interest. It includes the
@@ -28,12 +37,11 @@ how the mark color is determined conditionally.
 
 Modifying a single property, \emph{type}, as in \cref{fig:vl:multiSelection},
 allows users to mark multiple points (\emph{toggle} is automatically
-instantiated by the compiler, but we explicitly specify it in the figure for
-clarity). We can instead add \emph{project} (\cref{fig:vl:projectSingle})
-such that marking a single point of interest highlights all other points that
-share particular data values\,---\,a \emph{connect}-type interaction. Such
-changes to the specification are not mutually exclusive, and can be composed as
-shown in \cref{fig:vl:projectMulti}.
+instantiated by the compiler). We can instead add \emph{project}
+(\cref{fig:vl:projectSingle}) such that marking a single point of interest
+highlights all other points that share particular data values\,---\,a
+\emph{connect}-type interaction. Such changes to the specification are not
+mutually exclusive, and can be composed as shown in \cref{fig:vl:projectMulti}.
 
 By using the \emph{interval} type, users can mark items of interest within a
 continuous region. As shown in \cref{fig:vl:intervalSelection}, the compiler
@@ -49,25 +57,29 @@ by default, individual points are selected on click and multiple points on
 shift-click. Users can override these defaults, sometimes producing a
 qualitatively different user experience. For example, one can instead update
 selections on \texttt{mouseover} to produce a ``paint brush'' interaction, as in
-\cref{fig:vl:paintbrush}. In contrast, with Vega, users need to manually author all
-the components of an interaction technique, including determining whether event
-properties need to be passed through scale inversions, creating necessary
-backing data structures, and adding marks to represent a brush component.
+\cref{fig:vl:paintbrush}. In contrast, with Vega, users must manually author all
+the components of an interaction, including determining if event properties need
+to be passed through scale inversions, creating necessary backing data
+structures, and adding marks to represent brushed extents.
+
+\vspace{-10pt}
 
 \subsection{Explore \& Encode: Panning \& Zooming}
 \label{sec:vl:panzoom}
 
+\vspace{-7pt}
+
 Vega-Lite's selections also enable accretive design of interactions. Consider
 our previous example of brushing a scatterplot. We can define an additional
 interval selection and \emph{bind} it to the unit's scale functions
-(\cref{fig:vl:bindScales}). The compiler populates the selection with the x and y
-scale domains, parameterizes them to use it, and instantiates the
+(\cref{fig:vl:bindScales}). The compiler populates the selection with the x and
+y scale domains, parameterizes them to use it, and instantiates the
 \emph{translate} and \emph{zoom} transforms. Users can now brush, pan, and zoom
 the scatterplot. However, the default definitions of the two interval selections
 collide: dragging produces a brush and pans the plot. This example illustrates
 that concise methods for overriding defaults can not only be useful (as in
-\cref{fig:vl:paintbrush}) but also necessary. We override the default events that
-trigger the two interactions using Vega's event selector
+\cref{fig:vl:paintbrush}) but also necessary. We override the default events
+that trigger the two interactions using Vega's event selector
 syntax~\cite{reactive-vega-model}. As \cref{fig:vl:bindScales} shows, we specify
 that brushing only occurs when the user drags with the shift key pressed.
 
@@ -77,13 +89,12 @@ compare the latter against the output specification produced by the Vega-Lite
 compiler. The Vega example requires users to manually specify their initial
 scale extents when defining the interaction. On the other hand, to enable
 data-driven initialization of interval selections, the Vega-Lite output
-calculates scale extents as part of a derived dataset in the output
-specification, with additional transformations to offset these calculations for
-the interaction. Such a construction is not idiomatic Vega, and would be
-unintuitive for users to construct manually. Thus, Vega-Lite's higher-level
-approach not only offers more rapid specification, but it can also enable
-interactions that a user may not realize are expressible with lower-level
-representations.
+calculates scale extents as part of a derived dataset, with additional
+transformations to offset these calculations for the interaction. Such a
+construction is not idiomatic Vega, and would be unintuitive for users to
+construct manually. Thus, Vega-Lite's higher-level approach not only offers more
+rapid specification, but it can also enable interactions that a user may not
+realize are expressible with lower-level representations.
 
 Moreover, by enabling this interaction through composable primitives (rather
 than a single, specific ``pan and zoom'' operator~\cite{bostock:d3}), Vega-Lite
@@ -100,10 +111,14 @@ intensity data values. If the selections were defined over the visual
 \emph{range}, users could instead shift the colors used in a sequential color
 scale.
 
+\vspace{-10pt}
+
 \subsection{Connect: Brushing \& Linking}
 
-We can wrap our previous example, from \cref{fig:vl:bindScales}, in a \emph{repeat}
-operator to construct a scatterplot matrix (SPLOM) as shown in
+\vspace{-7pt}
+
+We can wrap our previous example, from \cref{fig:vl:bindScales}, in a
+\emph{repeat} operator to construct a scatterplot matrix (SPLOM) as shown in
 \cref{fig:vl:resolveGlobal}. With no further modifications, all our previous
 interactions now work within each cell of the SPLOM and are synchronized across
 the others. For example, dragging pans not only the particular cell the user is
@@ -136,7 +151,11 @@ requires unidiomatic Vega once more. Users cannot simply duplicate the
 interaction logic for each cell manually, as the dimensions of the SPLOM are
 determined by data.
 
+\vspace{-10pt}
+
 \subsection{Abstract/Elaborate: Overview\,+\,Detail}
+
+\vspace{-7pt}
 
 Thus far, selections have parameterized scale extents through the \emph{bind}
 transform and previous examples have demonstrated how visualized data can be
@@ -155,7 +174,10 @@ items at a higher resolution in the larger (detail) chart at the top.
   \label{fig:vl:overviewDetail}
 \end{figure}
 
+\clearpage
 \subsection{Reconfigure: Index Chart}
+
+\vspace{-7pt}
 
 \Cref{fig:vl:indexChart} uses a single selection to interactively normalize
 stock price time series data as the user moves their mouse across the chart. We
@@ -220,7 +242,11 @@ that bars in the brushed plot also highlight during the interaction.
   \label{fig:vl:layeredCrossfilter}
 \end{figure}
 
+\vspace{-10pt}
+
 \subsection{Limitations}
+
+\vspace{-7pt}
 
 The previous examples demonstrate that Vega-Lite specifications are more concise
 than those of the lower-level Vega language, and yet are sufficiently expressive

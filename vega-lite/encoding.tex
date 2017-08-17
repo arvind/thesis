@@ -1,23 +1,30 @@
 % !TEX root = ../thesis.tex
+
+\vspace{-20pt}
+
 \section{Visual Encoding}
 \label{sec:vl:gog}
+
+\vspace{-7pt}
 
 The simplest Vega-Lite specification\,---\,referred to as a \emph{unit}
 specification\,---\,describes a single Cartesian plot with the following
 four-tuple:
 
+\vspace{7pt}
 \centerline{\emph{unit := (data, transforms, mark-type, encodings)}}
 
-The \emph{data} definition identifies a data source, a relational table
-consisting of records (rows) with named attributes (columns). This data table
-can be subject to a set of \emph{transforms}, including filtering and adding
-derived fields via formulas. The \emph{mark-type} specifies the geometric object
-used to visually encode the data records. Legal values include \emph{bar},
-\emph{line}, \emph{area}, \emph{text}, \emph{rule} for reference lines, and
-plotting symbols (\emph{point} \& \emph{tick}). The \emph{encodings} determine
-how data attributes map to the properties of visual marks. Formally, an encoding
-is a seven-tuple:
+The \emph{data} definition identifies a data source: a relational table
+consisting of records (rows) with named attributes (columns). This table can be
+subject to a set of \emph{transforms}, including filtering and adding derived
+fields via formulas. The \emph{mark-type} specifies the geometric object used to
+visually encode the data records. Legal values include \emph{bar}, \emph{line},
+\emph{area}, \emph{text}, \emph{rule} for reference lines, and plotting symbols
+(\emph{point} \& \emph{tick}). The \emph{encodings} determine how data
+attributes map to the properties of visual marks. Formally, an encoding is a
+seven-tuple:
 
+\vspace{7pt}
 \centerline{\emph{encoding := (channel, field, data-type, value, functions, scale, guide)}}
 
 Available visual encoding \emph{channels} include spatial position (\emph{x},
@@ -62,21 +69,20 @@ instantiated in a JSON (JavaScript Object Notation) syntax, as shown in
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=\textwidth]{unit-2}
-  \caption{A \emph{binned} scatterplot visualizes correlation between wind
-  and temperature.}
-  \label{fig:vl:unit2}
-\end{figure}
-
-\begin{figure}[h!]
-  \centering
   \includegraphics[width=\textwidth]{unit-3}
   \caption{A \emph{stacked} bar chart that sums the various weather types by
   location.}
   \label{fig:vl:unit3}
 \end{figure}
 
-\newpage
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\textwidth]{unit-2}
+  \caption{A \emph{binned} scatterplot visualizes correlation between wind
+  and temperature.}
+  \label{fig:vl:unit2}
+\end{figure}
+
 \section{View Composition Algebra}
 
 Given multiple \emph{unit} specifications, \emph{composite} views can be
@@ -87,6 +93,7 @@ choose to override these default behaviors by specifying tuples of the form
 to refer to any Vega-Lite specification, be it a \emph{unit} or \emph{composite}
 specification.
 
+\newpage
 \subsection{Layer}
 
 \centerline{
@@ -98,9 +105,9 @@ on top of each other. To produce coherent and comparable layers, we share scales
 (if their types match) and merge guides by default. For example, we compute the
 union of the data domains for the \emph{x} or \emph{y} channel, for which we
 then generate a single scale. However, Vega-Lite can not enforce that a unioned
-domain is \emph{semantically} meaningful. To prohibit layering of composite
-views with incongruent internal structures, the \emph{layer} operator restricts
-its operands to be \emph{unit} views.
+domain is \emph{semantically} meaningful. To prohibit layering of incongruent
+composite views, the \emph{layer} operator restricts its operands to be
+\emph{unit} views.
 
 \begin{figure*}[h!]
   \centering
@@ -198,13 +205,15 @@ legends are shared when data fields coincide.
 
 \subsection{Dashboards and Nested Views}
 
+\vspace{-7pt}
+
 These view composition operators form an algebra: the output of one operator can
 serve as input to a subsequent operator. As a result, complex dashboards and
 nested views can be concisely specified. For instance, a layer of two unit views
 might be repeated, and then concatenated with a different unit view. The one
-exception is the \emph{layer} operator, which, as previously noted, only accepts
-unit views to ensure consistent plots. For concision, two dimensional faceted or
-repeated layouts can be achieved by applying the operators to the \emph{row} and
+exception is \emph{layer}, which, as previously noted, only accepts unit views
+to ensure consistent plots. For concision, two dimensional faceted or repeated
+layouts can be achieved by applying the operators to the \emph{row} and
 \emph{column} channels simultaneously. When faceting a composite view, only the
 dataset targeted by the operator is partitioned; any other datasets specified in
 sub-views are replicated.
