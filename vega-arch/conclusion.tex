@@ -1,6 +1,11 @@
 % !TEX root = ../thesis.tex
+
+\vspace{-20pt}
+
 \section{Conclusion \& Future Work}
 \label{sec:vg:conclusion}
+
+\vspace{-7pt}
 
 Declarative languages are a popular means of authoring
 visualizations~\cite{bostock:protovis, bostock:d3, heer:protovisjava}, but have
@@ -9,33 +14,32 @@ Reactive Vega, the first language and system architecture to support declarative
 visualization and interaction design in a comprehensive and performant fashion.
 
 It is important to note that although Reactive Vega provides an complete
-end\--to\--end system\,---\,whereby users invoke the parser to traverse an
-input declarative specification and instantiate the necessary architecture
-components to render a visualization\,---\,this process can be decoupled.
-Reactive Vega's declarative model can be used to implement extensions to D3, and
-higher-level tools can opt to manually construct and connect required dataflow
-operators.
+end\--to\--end system\,---\,whereby users invoke the parser to traverse an input
+declarative specification and instantiate the necessary architecture components
+to render a visualization\,---\,this process can be decoupled. Reactive Vega's
+declarative model can be implemented as extensions to D3, and higher-level tools
+can manually construct and connect dataflow operators.
 
-By simplifying programmatic generation of visualization, Reactive Vega's
-declarative JSON syntax has led to a growing ecosystem of higher-level
+By facilitating programmatic generation of visualization, Reactive Vega's
+declarative \textsc{json} syntax has led to a growing ecosystem of higher-level
 visualization systems. For example, MapD~\cite{mapd:vega} has integrated Vega
-with their GPU-powered database; custom SQL queries can be embedded within the
-JSON specification, which is dispatched to the backend server, rendered, and
-returned to the client as a PNG image. Similarly, Wikipedia, a security-concious
-environment where it would be difficult to allow users to write imperative
-visualization code, has recently integrated Vega~\cite{mediawiki:graph} to
-enable visualization of data embedded in articles.
+with their \textsc{gpu}-powered database; custom \textsc{sql} queries can be
+embedded within the \textsc{json} specification, which are dispatched to the
+backend server, rendered, and returned to the client as a \textsc{png} image.
+Similarly, Wikipedia, a security-concious environment where it would be
+difficult to allow users to write imperative visualization code, has integrated
+Vega~\cite{mediawiki:graph} to embed interactive visualizations within articles.
 
 Still, improved support for authoring and debugging Vega specifications remains
-a promising avenue for future work. In recent work, Hoffswell
+a promising avenue for future work. For instance, Hoffswell
 et~al.~\cite{hoffswell:debugging} developed a ``time-traveling'' debugger for
 Reactive Vega specifications and found that first-time Vega users were able to
 accurately trace errors through the specification. Further work, particularly by
 instrumenting Reactive Vega's dataflow graph to enable inspection and stepping
 through changeset propagation could aid in learnability~\cite{guo:tutor}.
 Through the development of such tools, we can also assess the accessibility of
-the language. Are new users able to learn the declarative interaction model? Can
-experts, accustomed to callback-driven programming, quickly transition as well?
+the language. Can new users learn the declarative interaction model? Can
+experts, accustomed to callback-driven programming, adapt quickly?
 
 Reactive Vega's architecture also offers opportunities to study scalable
 visualization design. Interactive visualization of large-scale datasets often

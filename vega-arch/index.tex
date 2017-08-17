@@ -7,11 +7,11 @@
   \vspace{-40pt}
   \centering
   \includegraphics[width=\columnwidth]{teaser}
-  \caption{The Reactive Vega dataflow graph created for a interactive index
-  chart of streaming financial data. As streaming data arrives from the Yahoo!
-  Finance API, or as a user moves their mouse pointer across the chart, an
-  update cycle propagates through the graph and triggers an efficient update and
-  re-render of the visualization.}
+  \caption{The Reactive Vega dataflow graph for a interactive index chart of
+  streaming financial data. As data arrives from Yahoo! Finance, or as a user
+  moves their mouse cursor across the chart, an update cycle propagates through
+  the graph and triggers an efficient update and re-render of the
+  visualization.}
   \label{fig:vg:teaser}
 \end{figure}
 
@@ -38,7 +38,7 @@ observe an entire relation as having changed and so would need to reprocess all
 tuples. Instead, Reactive Vega integrates techniques from streaming
 databases~\cite{abadi:borealis, abadi:aurora, arasu:stream, avnur:eddies,
 chandrasekaran:telegraphcq} alongside E-FRP, including tracking state at the
-tuple-level and only propagating modified tuples through the dataflow graph.
+tuple-level and only propagating modified tuples.
 
   \item \textbf{Streaming Nested Data}. Interactive visualizations, particularly
 those involving small multiples, often require hierarchical structures.

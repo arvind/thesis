@@ -1,6 +1,10 @@
 % !TEX root = ../thesis.tex
+\vspace{-40pt}
+
 \section{Performance Optimizations}
 \label{sec:vg:optimizations}
+
+\vspace{-7pt}
 
 Declarative language runtimes can transparently optimize
 performance~\cite{heer:protovisjava} and Reactive Vega uses several strategies
@@ -8,12 +12,16 @@ to increase throughput and reduce memory usage. In this section, we describe
 these strategies and evaluate their effect through benchmark studies. Each
 benchmark was run with datasets sized at N = 100, 1,000, 10,000, and 100,000
 tuples. For ecological validity, benchmarks were run with Google Chrome 42
-(64-bit) and, to prevent confounds with browser-based just-in-time (JIT)
-optimizations, each iteration was run in a fresh instance. All tests were
-conducted on a MacBook Pro system running Mac OS X 10.10.2, with a quad-core
-2.5GHz Intel Core i7 processor and 16GB of 1600 MHz DDR3 RAM.
+(64-bit) and, to prevent confounds with browser-based just-in-time (
+\textsc{jit}) optimizations, each iteration was run in a fresh instance. All
+tests were conducted on a MacBook Pro running Mac OS X 10.10.2, with a quad-core
+2.5GHz Intel Core i7 processor and 16GB of 1600 MHz \textsc{ddr3 ram}.
+
+\vspace{-20pt}
 
 \subsection{On-Demand Tuple Revision Tracking}
+
+\vspace{-7pt}
 
 \begin{figure}[h!]
   \centering
@@ -52,17 +60,12 @@ previous values. Our on-demand strategy effectively reduces these costs,
 requiring only 5-10\% more memory and taking 5\% longer to initialize than the
 ``never'' condition.
 
+\vspace{-20pt}
+
 \subsection{Pruning Unnecessary Recomputation}
 \label{sec:pruning}
 
-\begin{figure}[h!]
-  \centering
-  \includegraphics[width=\columnwidth]{skips-lines.pdf}
-  \caption{The effects of pruning unnecessary computation on average processing
-speed. (a) A relative difference between conditions (higher is better). (b)
-Absolute values for time taken, plotted on a log$_{10}$ scale (lower is better).}
-  \label{fig:vg:skips_benchmark}
-\end{figure}
+\vspace{-7pt}
 
 By centralizing responsibility for operator scheduling and changeset dispatch,
 we can aggressively prune unnecessary recomputation. The dataflow graph
@@ -104,6 +107,15 @@ multiple benchmark trials. After careful hand-verification to ensure no
 additional nodes were erroneously skipped, we hypothesize that the JavaScript
 runtime is able to perform just-in-time optimizations that it is unable to apply
 to the other conditions.
+
+\begin{figure}[b!]
+  \centering
+  \includegraphics[width=\columnwidth]{skips-lines.pdf}
+  \caption{The effects of pruning unnecessary computation on average processing
+speed. (a) A relative difference between conditions (higher is better). (b)
+Absolute values for time taken, plotted on a log$_{10}$ scale (lower is better).}
+  \label{fig:vg:skips_benchmark}
+\end{figure}
 
 \subsection{Inlining Sequential Operators}
 

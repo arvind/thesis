@@ -1,14 +1,23 @@
 % !TEX root = ../thesis.tex
+
+\vspace{-20pt}
+
 \section{Comparative Performance Benchmarks}
 \label{sec:vg:performance}
+
+\vspace{-7pt}
 
 To evaluate the performance of Reactive Vega against D3~\cite{bostock:d3} and
 the origin, non-reactive Vega system (v1.5.0), we use the same setup described
 in the previous section.
 
+\vspace{-20pt}
+
 \subsection{Streaming Visualizations}
 
-\begin{figure}[h!]
+\vspace{-7pt}
+
+\begin{figure}[b!]
   \centering
   \includegraphics[width=\columnwidth]{streaming-lines.pdf}
   \caption{Average performance of rendering (non-interactive) streaming visualizations:
@@ -40,19 +49,13 @@ have to parse and compile a JSON specification, and a streaming dataflow graph
 is a more complex execution model, with higher overheads, than batch processing.
 However, with streaming visualizations this cost amortizes and performance in
 response to data changes becomes more important. In this case, Reactive Vega
-makes up the difference in a single update cycle.
+makes up the difference in a single cycle.
+
+\vspace{-20pt}
 
 \subsection{Interactive Visualizations}
 
-\begin{figure}[h!]
-  \centering
-  \includegraphics[width=\columnwidth]{interaction-lines.pdf}
-  \caption{Average frame rates for three interactive visualizations: (left-right)
-  brushing and linking on a scatterplot matrix; brushing and linking on an
-  overview+detail visualization; panning and zooming on a scatterplot. Dashed
-  lines indicate the threshold of interactive updates~\cite{card:modelhuman}.}
-  \label{fig:vg:interactive_benchmark}
-\end{figure}
+\vspace{-7pt}
 
 We evaluated the performance of interactive visualizations (measured in terms of
 interactive frame rate) using three common examples: brushing \& linking a
@@ -69,13 +72,23 @@ behavior of the fragmented reactive approach used in prior
 work~\cite{satyanarayan:declarative}. We tested these visualizations with
 datasets sized between 100 and 10,000 tuples.
 
-Figure~\ref{fig:vg:interactive_benchmark} shows the results\,---\,on average, and
-across both Canvas and SVG renderers, Reactive Vega offers superior interactive
-performance to custom D3 and Vega event handling callbacks. This effect
-primarily stems from Reactive Vega's unified data model, and is most noticeable
-with brushing \& linking a scatterplot matrix and the time-series
+\begin{figure}[t!]
+  \centering
+  \includegraphics[width=\columnwidth]{interaction-lines.pdf}
+  \caption{Average frame rates for three interactive visualizations: (left-right)
+  brushing and linking on a scatterplot matrix; brushing and linking on an
+  overview+detail visualization; panning and zooming on a scatterplot. Dashed
+  lines indicate the threshold of interactive updates~\cite{card:modelhuman}.}
+  \label{fig:vg:interactive_benchmark}
+\end{figure}
+
+Figure~\ref{fig:vg:interactive_benchmark} shows the results\,---\,on average,
+and across both Canvas and SVG renderers, Reactive Vega offers superior
+interactive performance to custom D3 and Vega event handling callbacks. This
+effect primarily stems from Reactive Vega's unified data model, and is most
+noticeable with brushing \& linking a scatterplot matrix and the time-series
 overview+detail visualization. In both examples, interactions manipulate only a
 subset of all data tuples. With Reactive Vega, only these tuples are processed,
-and their corresponding scene graph elements re-encoded and re- rendered. By
-comparison, with Vega 1.5's fragmented reactive approach, the entire scene graph
-must be reconstructed and rendered in response to changes in input data.
+and their corresponding scene graph elements re-encoded and re-rendered. In
+contrast, Vega 1.5's fragmented reactive approach reconstructs and re-renders
+the entire scene graph in response to changing data.
