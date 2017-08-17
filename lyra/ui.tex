@@ -1,5 +1,10 @@
 % !TEX root = ../thesis.tex
+
+\vspace{-10pt}
+
 \section{User Interface Design}
+
+\vspace{-10pt}
 
 Lyra was developed through an iterative user-centered design process. We held
 formative interviews with representative users, such as visualization designers
@@ -29,7 +34,11 @@ mapped to data fields.}
 \label{fig:lyra:inspectors}
 \end{figure}
 
+\vspace{-10pt}
+
 \subsection{Data Pipelines}
+
+\vspace{-7pt}
 
 Lyra's left-hand panel contains \emph{data pipelines}: workflows of transforms
 applied to input data. Clicking a pipeline reveals an inspector that lists
@@ -62,7 +71,11 @@ editor dialog (see \cref{fig:lyra:usage}(e)). When editing a scale that is not
 represented by an axis or legend, a transient guide is shown in the canvas to
 convey the effect of scale changes.
 
+\vspace{-10pt}
+
 \subsubsection{Design Rationale}
+
+\vspace{-10pt}
 
 Our initial prototypes hid raw data values in favor of exposing only the table
 schema. However, evaluations indicated this was insufficient. Users noted that
@@ -86,7 +99,11 @@ or the effects of scale modification, if the scales were not explicitly
 represented on the visualization by an axis or legend guide. In response, we
 introduced transient guides.
 
+\vspace{-10pt}
+
 \subsection{Composing Visual Elements}
+
+\vspace{-7pt}
 
 Visualizations in Lyra are compositions of visual elements: graphical
 \emph{marks} and \emph{guides}. Elements are grouped together into
@@ -102,7 +119,7 @@ that particular property affects the rendered output. Visual elements can also
 be manipulated directly on the visualization canvas.
 
 \begin{wrapfigure}{l}{0pt}
-  \raisebox{0pt}[\dimexpr\height-1\baselineskip\relax]{\includegraphics
+  \raisebox{0pt}[\dimexpr\height-0.85\baselineskip\relax]{\includegraphics
   [width=0.6cm]{handles}}
 \end{wrapfigure}
 
@@ -117,7 +134,7 @@ instances.
 
 \begin{wrapfigure}{l}{0pt}
   \hspace{-12pt}
-  \raisebox{0pt}[\dimexpr\height-1\baselineskip\relax]{
+  \raisebox{0pt}[\dimexpr\height-0.9\baselineskip\relax]{
   \includegraphics
   [width=1cm]{connectors}}
 \end{wrapfigure}
@@ -131,15 +148,15 @@ to the host mark automatically propagate to all connected targets. Connectors
 are particularly useful for positioning text labels relative to other marks.
 
 \begin{wrapfigure}{l}{0pt}
-  \raisebox{0pt}[\dimexpr\height-0.6\baselineskip\relax]{\includegraphics
+  \raisebox{0pt}[\dimexpr\height-0\baselineskip\relax]{\includegraphics
   [width=1.8cm]{dropzones}}
 \end{wrapfigure}
 
 \vspace{5pt}
 \noindent
 \textbf{Drop zones} are used to associate data fields with mark properties. When
-dragging a data field, drop zones are overlaid on the visualization canvas. Each
-drop zone comprises a shaded region and a guide line or point to indicate the
+dragging a data field, drop zones overlay the visualization canvas. Each drop
+zone comprises a shaded region and a guide line or point to indicate the
 corresponding mark property (e.g., \texttt{x}, \texttt{width}, etc.). Hovering
 on a drop zone highlights it and shows the property name in a tooltip. Dropping
 a field then establishes a mapping between the data field and the mark property.
@@ -147,7 +164,11 @@ To avoid clutter, Lyra shows drop zones only for the currently selected item.
 When dragging a data field, users can hover and pause over a mark instance to
 make it the selected item.
 
+\vspace{-10pt}
+
 \subsubsection{Design Rationale}
+
+\vspace{-10pt}
 
 Surfacing all properties in the inspector was an immediate first step to ensure
 that Lyra maintained Vega's expressivity. Users noted that these inspectors were
@@ -198,7 +219,11 @@ rectangle mark will present a larger \texttt{height} drop zone than a shorter
 one. We mitigate this issue by showing drop zones only for the currently
 selected mark.
 
+\vspace{-10pt}
+
 \subsection{Scale Inference and Production Rules}
+
+\vspace{-7pt}
 
 When a user binds a data field to a mark property, Lyra performs \emph{scale
 inference} in an attempt to reuse existing scale definitions. Lyra searches for
@@ -222,7 +247,11 @@ production rules only when a mapping is established using drop zones. If the
 user instead drops a data field onto the property inspector panel, no production
 rules are evaluated and so no defaults are added.
 
+\vspace{-10pt}
+
 \subsubsection{Design Rationale}
+
+\vspace{-10pt}
 
 Scale inference and production rules were informed primarily by early user
 feedback. Without these features, users had to manually create every aspect of
@@ -237,11 +266,13 @@ may sidestep the rules by working directly with property inspector instead. We
 fully enumerate Lyra's scale inference procedure and production rules in
 supplementary material.
 
+\vspace{-10pt}
+
 \subsection{Saving and Exporting Visualizations}
 
-Visualizations built in Lyra can be exported as static PNG or SVG files, or as
-Vega JSON specifications. With Vega's JavaScript runtime, the JSON file can be
-parsed and rendered on a web page, dynamically bound to new input data, and
-extended with interactions using JavaScript event callbacks. Vega specifications
-optionally can contain both input data and visual encoding directives, providing
-a single standalone file for sharing a visualization instance.
+\vspace{-7pt}
+
+Visualizations built in Lyra can be exported as static \textsc{png} or
+\textsc{svg} files, or as Vega \textsc{json} specifications. With Vega's
+JavaScript runtime, the \textsc{json} file can be parsed and rendered on a web
+page, dynamically bound to new input data, and extended with interactions.

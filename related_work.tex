@@ -7,11 +7,11 @@ languages, streaming databases, and human-computer interaction. In this chapter,
 I survey pertinent work in each domain and describe how this thesis extends
 them.
 
-\vspace{-20pt}
+\vspace{-10pt}
 
 \section{Visualization Toolkits \& Systems}
 
-\vspace{-7pt}
+\vspace{-10pt}
 
 Chart templates, as found in spreadsheets and online services (e.g., Many
 Eyes~\cite{ibm:manyeyes} and Google Fusion Tables), are a common means for
@@ -32,6 +32,8 @@ they both constrain expressivity much like chart typologies. Novel designs
 require new widgets or operators, and significant software engineering effort.
 
 \subsection{Grammar-Based Visual Encoding}
+
+\vspace{-10pt}
 
 In 1999, Leland Wilkinson introduced an alternative approach with \emph{The
 Grammar of Graphics}~\cite{wilkinson:grammar}. Eschewing chart typologies in
@@ -92,6 +94,8 @@ unified algebraic model.
 
 \subsection{Dataflow Visualization Systems}
 
+\vspace{-10pt}
+
 Dataflow architectures are common in scientific visualization systems, such as
 IBM Data Explorer~\cite{lucas:dataflow,abram:ibmdx} and
 VTK~\cite{schroeder:vtk}. Developers must manually specify and connect each
@@ -137,6 +141,8 @@ the corresponding dataflow graph.
 
 \subsection{Interactive Visualization Systems}
 
+\vspace{-10pt}
+
 Besides text-based toolkits, researchers have also developed graphical user
 interfaces for constructing visualizations.
 Polaris/Tableau~\cite{stolte:polaris}, for instance, displays a ``schema'' panel
@@ -159,22 +165,24 @@ iconic abstractions in favor of direct drop zones for mark properties, without
 need of explicit enumeration via menus.
 
 More recently, Bret Victor demonstrated a data-driven drawing
-tool~\cite{victor:drawing} (now developed as
-Apparatus\footnote{http://aprt.us/}) that combines geometric constraints with
-\emph{imperative} procedures over data. Alongside an interactive canvas and data
-table viewer, the tool includes programming constructs such as lexical scope,
-looping control flow, and conditionals. For a basic bar chart, designers must
-define loops to create and position each bar. The tool supports purely geometric
-constructions, rendering some layouts inexpressible. By building on Vega and
-Vega-Lite, Lyra takes a \emph{declarative} approach to design. When a designer
-associates a mark with a dataset, one mark instance per datum is automatically
-produced rather than requiring explicit instantiation. More advanced layout
-algorithms, including cartographic projections and force-directed layouts, are
-accessible as part of Lyra's graphical data pipeline.
+tool~\cite{victor:drawing} (now developed as Apparatus~\cite{apparatus}) that
+combines geometric constraints with \emph{imperative} procedures over data.
+Alongside an interactive canvas and data table viewer, the tool includes
+programming constructs such as lexical scope, looping control flow, and
+conditionals. For a basic bar chart, designers must define loops to create and
+position each bar. The tool supports purely geometric constructions, rendering
+some layouts inexpressible. By building on Vega and Vega-Lite, Lyra takes a
+\emph{declarative} approach to design. When a designer associates a mark with a
+dataset, one mark instance per datum is automatically produced rather than
+requiring explicit instantiation. More advanced layouts (e.g., cartographic
+projections, force-directed layout, etc.) are available through Lyra's graphical
+data pipeline.
 
 \vspace{-10pt}
 
 \section{Specifying Interactions in Visualizations}
+
+\vspace{-10pt}
 
 Despite the central role of interaction in effective data visualization
 \cite{heer:dynamics, pike:interactionscience}, little work has been done to
@@ -191,7 +199,11 @@ customization and composition. For example, D3's interactors encapsulate event
 processing, making it difficult to combine them if their events conflict (e.g.,
 if dragging triggers brushing \emph{and} panning).
 
+\vspace{-10pt}
+
 \subsection{Interactive Selection \& Querying}
+
+\vspace{-7pt}
 
 Selection (e.g., users clicking or lassoing visual items) is a fundamental
 operation in user interfaces and has been well-studied in data visualization.
@@ -233,9 +245,9 @@ selection's predicate or backing points (e.g., offsetting them to translate a
 brush or perform panning). Selections parameterize visual encodings by driving
 conditional logic, serving as input data, or defining scale extents.
 
-\vspace{-20pt}
+\vspace{-10pt}
 
-\section{Alternate Paradigms for Imperative Callbacks}
+\section{Alternate Paradigms to Imperative Callbacks}
 
 \vspace{-10pt}
 
@@ -251,7 +263,7 @@ calls~\cite{edwards:coherent}. As a result, callbacks make it difficult to
 reason about the current state of the visualization, which is now the product of
 both the original specification and the side-effects of interaction callbacks.
 
-\vspace{-20pt}
+\vspace{-10pt}
 
 \subsection{Constraint Programming}
 
@@ -271,7 +283,7 @@ handling\,---\,a crucial element for interaction design. In fact, the authors of
 ConstraintJS intend for their system to complement event
 architectures~\cite{oney:constraintjs}.
 
-\vspace{-20pt}
+\vspace{-10pt}
 
 \subsection{Functional Reactive Programming}
 
@@ -303,7 +315,7 @@ data, Reactive Vega integrates streaming database methods; and, to support
 streaming hierarchical data, the dataflow graph dynamically rewrites itself at
 runtime, instantiating new branches to process nested relations.
 
-\vspace{-25pt}
+\vspace{-10pt}
 
 \section{Data Stream Management}
 
@@ -343,7 +355,7 @@ agnostic to higher-level structure while supporting arbitrary levels of nesting.
 
 \section{Generative Models of User Interfaces}
 
-\vspace{-7pt}
+\vspace{-15pt}
 
 Michel Beaudoin-Lafon's instrumental interaction
 paradigm~\cite{beaudouin:instrumental} helped motivate this dissertation's

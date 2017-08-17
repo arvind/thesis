@@ -1,5 +1,9 @@
 % !TEX root = ../thesis.tex
+\vspace{-10pt}
+
 \section{Example Visualizations}
+
+\vspace{-10pt}
 
 One of Lyra's primary goals is to enable an expressive design space. With Lyra,
 it should be possible to create visualizations that would have previously
@@ -72,7 +76,7 @@ community-detection algorithm.}
   \centering
   \includegraphics[width=\columnwidth]{streamgraph}
   \caption{A streamgraph of unemployed U.S. workers by industry, using a
-  \emph{stack} layout with a \texttt{wiggle}~\cite{byron:streamgraph} offset.}
+  \emph{stack} layout with a \texttt{wiggle} offset~\cite{byron:streamgraph}.}
   \label{fig:lyra:streamgraph}
 \end{figure}
 
@@ -96,13 +100,15 @@ community-detection algorithm.}
 
 \subsection{Limitations}
 
-The visualizations in
-\cref{fig:lyra:usage,fig:lyra:bulletChart,fig:lyra:gas_driving,fig:lyra:les_mis,fig:lyra:caltrain,fig:lyra:zipscribble,fig:lyra:streamgraph,fig:lyra:napoleon,fig:lyra:bertin}
+\vspace{-7pt}
+
+\Cref{fig:lyra:usage,fig:lyra:bulletChart,fig:lyra:gas_driving,fig:lyra:les_mis,fig:lyra:caltrain,fig:lyra:zipscribble,fig:lyra:streamgraph,fig:lyra:napoleon,fig:lyra:bertin}
 demonstrate that Lyra enables an expressive design space, but creating these
 examples also reveals some limitations. Vega currently lacks support for polar
 coordinates. As a result, Lyra cannot (yet) provide \emph{arc} mark connectors
 or produce radial axes, making it difficult to recreate classic visualizations
 such as Nightingale's Rose or Burtin's antibiotics chart. Additionally, Lyra
-only supports the RGB color space, while Vega also supports HSL, LAB, and HCL.
-These color spaces can facilitate perceptually-sound designs. We plan to address
-these limitations in future iterations of Vega and Lyra.
+only supports the \textsc{rgb} color space, while Vega also supports
+\textsc{hsl}, \textsc{lab}, and \textsc{hcl}. These color spaces facilitate
+perceptually-sound designs. We plan to address these limitations in future
+versions of Vega and Lyra.

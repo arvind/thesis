@@ -1,5 +1,9 @@
 % !TEX root = ../thesis.tex
+\vspace{-10pt}
+
 \section{Usage Scenario}
+
+\vspace{-10pt}
 
 \emph{Dissecting a Trailer}~\cite{nytimes:trailer} is a visualization from The
 New York Times that illustrates how scenes from five Best Picture Oscar nominees
@@ -28,9 +32,9 @@ the screen and dropping it on the canvas (Fig.~\ref{fig:lyra:usage}(a)). This
 adds a new line (backed by a single datum) to the current layer and associates
 it with a new data pipeline. The default pipeline is empty, as we have not yet
 specified a data source. To register a new source, we provide a name and a URL
-to our trailer shots data, and, upon load, review the inferred data types
-(number, string, etc.) for each data field. The output of the pipeline is
-shown in the data table (Fig.~\ref{fig:lyra:usage}(b)).
+to our trailer shots data and, on load, review the inferred data types (number,
+string, etc.) for each data field. The output of the pipeline is shown in the
+data table (Fig.~\ref{fig:lyra:usage}(b)).
 
 We bind data in the pipeline to visual properties of the line mark via
 drag-and-drop of data fields. Dragging triggers the display of \emph{drop zones}
@@ -48,18 +52,18 @@ and the mark's property inspector now offers an option for group
 movie, arrayed down the canvas. We now see that the data includes shots that
 appear in trailers but not in movies (identified by the \texttt{suppress}
 field); we add a \emph{filter} transform to remove them
-(Fig.~\ref{fig:lyra:usage}(d)). Next, we want film timelines oriented
-top-to-bottom, but our lines show the reverse. We adjust the orientation of the
-y-axis \emph{scale} by reversing its scale range (Fig.~\ref{fig:lyra:usage}(e)).
+(Fig.~\ref{fig:lyra:usage}(d)). We want film timelines oriented top-to-bottom,
+but our lines curently show the reverse. We adjust the orientation of the y-axis
+\emph{scale} by reversing its range (Fig.~\ref{fig:lyra:usage}(e)).
 
-Next, we add small rectangle plots by dragging a \emph{rectangle mark} onto the
+To add the small rectangle plots, we drag a \emph{rectangle mark} onto the
 canvas. Lyra automatically associates the mark with the current pipeline and the
 visualization now shows one rectangle per shot. As with the line mark, we drag
 \texttt{trailer\_ms} and \texttt{movie\_ms} to the rectangle's \texttt{x} and
 \texttt{y} property drop zones. We size the rectangles by dragging
 \texttt{shot\_length} over the \texttt{width} drop zone and dragging the bottom
 \emph{handle} to manually set the desired height (Fig.~\ref{fig:lyra:usage}(f)).
-To color rectangles based on shot onset time in the film, we drag
+To color rectangles based on when the shot occurs in the film, we drag
 \texttt{movie\_ms} over the \texttt{fill} property drop zone, and choose custom
 colors in the resulting scale definition dialog.
 

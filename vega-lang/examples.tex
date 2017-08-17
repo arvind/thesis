@@ -21,9 +21,9 @@ primitives, supports the accretive design of richer interactions.
 \begin{figure}[h!]
   \centering
   \includegraphics[width=\columnwidth]{shiftClick}
-  \caption{Reactive Vega JSON for a click-to-highlight interaction. Signals over
-  a click stream feed data transform to toggle values in a data source. A
-  production rule uses a predicate to set marks' fill color.}
+  \caption{Reactive Vega \textsc{json} for a click-to-highlight interaction.
+  Signals over a click stream feed data transform to toggle values in a data
+  source. A production rule uses a predicate to set marks' fill color.}
   \label{fig:vg:shiftClick}
 \end{figure}
 
@@ -31,27 +31,28 @@ primitives, supports the accretive design of richer interactions.
 
 \vspace{-7pt}
 
-\Cref{fig:vg:shiftClick} provides a snippet of Reactive Vega JSON for a
+\Cref{fig:vg:shiftClick} provides a snippet of Reactive Vega \textsc{json} for a
 click-to-highlight interaction. Signals constructed over a click stream feed
 data transforms that toggle values in the \texttt{selected\_pts} data source. An
 intensional predicate tests for the shift key. If it is not pressed, the data
 source is cleared prior to inserting the clicked values. A production rule sets
 the fill color of selected points using an extensional predicate.
 
-Similarly, \cref{fig:vg:brush} demonstrates the Reactive Vega JSON necessary to
-enable brush selections. Signals are registered to capture the start and end
-positions of the brush, by default \texttt{mousedown} and \texttt{[mousedown,
-mouseup] > mousemove}, respectively. Scale inversions are invoked to calculate
-the data extents of the brush, which are used to define an intensional predicate
-to express the brushed data range. As before, the predicate is used within a
-production rule to set the fill color of selected points.
+Similarly, \cref{fig:vg:brush} demonstrates the Reactive Vega \textsc{json}
+necessary to enable brush selections. Signals are registered to capture the
+start and end positions of the brush, by default \texttt{mousedown} and
+\texttt{[mousedown, mouseup] > mousemove}, respectively. Scale inversions are
+invoked to calculate the data extents of the brush, which are used to define an
+intensional predicate to express the brushed data range. As before, the
+predicate is used within a production rule to set the fill color of selected
+points.
 
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.9\columnwidth]{brush}
-  \caption{A JSON snippet for one-dimensional brushing. Signals over drag
-  events are inverted through the x-scale to construct a data query over the
-  \texttt{Horsepower} field.}
+  \caption{A \textsc{json} snippet for one-dimensional brushing. Signals over
+  drag events are inverted through the x-scale to construct a data query over
+  the \texttt{Horsepower} field.}
   \label{fig:vg:brush}
 \end{figure}
 

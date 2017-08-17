@@ -7,17 +7,17 @@
 
 \vspace{-10pt}
 
-The Vega-Lite compiler ingests a JSON specification and outputs a lower-level
-Reactive Vega specification (also expressed as JSON). However, there is no
-one-to-one correspondence between components of the Vega-Lite and Vega
-specifications. For instance, the compiler has to synthesize a single Vega data
-source, with transforms for binning and aggregation, from multiple Vega-Lite
-encoding definitions. Conversely, for a single definition of a Vega-Lite
-selection, the compiler might generate multiple Vega signals, data sources, and
-even parameterize scale extents. Moreover, to facilitate rapid authoring of
-visualizations, Vega-Lite specifications omit lower-level details including
-scale types and the properties of the visual elements such as the font size. The
-compiler must resolve the resulting ambiguities.
+The Vega-Lite compiler ingests a \textsc{json} specification and outputs a
+lower-level Reactive Vega specification (also expressed as \textsc{json}).
+However, there is no one-to-one correspondence between components of the
+Vega-Lite and Vega specifications. For instance, the compiler has to synthesize
+a single Vega data source, with transforms for binning and aggregation, from
+multiple Vega-Lite encoding definitions. Conversely, for a single definition of
+a Vega-Lite selection, the compiler might generate multiple Vega signals, data
+sources, and even parameterize scale extents. Moreover, to facilitate rapid
+authoring of visualizations, Vega-Lite specifications omit lower-level details
+including scale types and the properties of the visual elements such as the font
+size. The compiler must resolve the resulting ambiguities.
 
 To overcome these challenges, the compiler moves through four phases:
 

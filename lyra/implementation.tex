@@ -1,5 +1,9 @@
 % !TEX root = ../thesis.tex
+\vspace{-10pt}
+
 \section{Implementation Details}
+
+\vspace{-10pt}
 
 Lyra is a web-based HTML5 application built using
 AngularJS\footnote{http://angularjs.org}. Vega is used extensively throughout
@@ -22,6 +26,6 @@ groups overlap, layout horizontally, or layout vertically.
 
 Lyra's direct manipulation interactors (handles, connectors, drop zones) are
 also generated using Vega, using a separate specification rendered \emph{over}
-the visualization. The geometry of the marks serves as input data for this
-interactive layer. By decoupling the visualization and interactors, we ensure
-that Lyra features do not interfere with the designer's visualization.
+the visualization. Mark geometry serves as input data for this interactive
+layer. Decoupling the visualization and interactors ensures that Lyra features
+do not interfere with the designer's visualization.

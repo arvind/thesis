@@ -38,18 +38,18 @@ Reactive Vega has the greatest effect with the parallel coordinates plot,
 displaying 2x and 4x performance increases over D3 and Vega 1.5, respectively.
 This effect is due to each plotted line being built and encoded by its own
 dataflow branch. Across the other two examples, and averaging between the Canvas
-and SVG renderers, we find that although Reactive Vega takes 1.7x longer to
-initialize the visualizations, subsequent streaming operations are 1.9x faster
-than D3. Against Vega 1.5, Reactive Vega is again 1.7x slower at initializing
-visualizations; streaming updates perform roughly op-par with the Canvas
-renderer, but are 2x faster with the SVG renderer.
+and \textsc{svg} renderers, we find that although Reactive Vega takes 1.7x
+longer to initialize the visualizations, subsequent streaming operations are
+1.9x faster than D3. Against Vega 1.5, Reactive Vega is again 1.7x slower at
+initializing visualizations; streaming updates perform roughly op-par with the
+Canvas renderer, but are 2x faster with the \textsc{svg} renderer.
 
 Slower initialization times for Reactive Vega are to be expected. D3 does not
-have to parse and compile a JSON specification, and a streaming dataflow graph
-is a more complex execution model, with higher overheads, than batch processing.
-However, with streaming visualizations this cost amortizes and performance in
-response to data changes becomes more important. In this case, Reactive Vega
-makes up the difference in a single cycle.
+have to parse and compile a \textsc{json} specification, and a streaming
+dataflow graph is a more complex execution model, with higher overheads, than
+batch processing. However, with streaming visualizations this cost amortizes and
+performance in response to data changes becomes more important. In this case,
+Reactive Vega makes up the difference in a single cycle.
 
 \vspace{-10pt}
 
@@ -82,13 +82,12 @@ datasets sized between 100 and 10,000 tuples.
   \label{fig:vg:interactive_benchmark}
 \end{figure}
 
-Figure~\ref{fig:vg:interactive_benchmark} shows the results\,---\,on average,
-and across both Canvas and SVG renderers, Reactive Vega offers superior
-interactive performance to custom D3 and Vega event handling callbacks. This
-effect primarily stems from Reactive Vega's unified data model, and is most
-noticeable with brushing \& linking a scatterplot matrix and the time-series
-overview+detail visualization. In both examples, interactions manipulate only a
-subset of all data tuples. With Reactive Vega, only these tuples are processed,
-and their corresponding scene graph elements re-encoded and re-rendered. In
-contrast, Vega 1.5's fragmented reactive approach reconstructs and re-renders
-the entire scene graph in response to changing data.
+Reactive Vega has the greatest effect with the parallel coordinates plot,
+displaying 2x and 4x performance increases over D3 and Vega 1.5, respectively.
+This effect is due to each plotted line being built and encoded by its own
+dataflow branch. Across the other two examples, and averaging between the Canvas
+and \textsc{svg} renderers, we find that although Reactive Vega takes 1.7x
+longer to initialize the visualizations, subsequent streaming operations are
+1.9x faster than D3. Against Vega 1.5, Reactive Vega is again 1.7x slower at
+initializing visualizations; streaming updates perform roughly op-par with the
+Canvas renderer, but are 2x faster with the \textsc{svg} renderer.
