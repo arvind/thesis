@@ -55,7 +55,7 @@ current values to the \texttt{previous} object.
 Reactive Vega instantiates an event listener node for each low-level event type
 required by the visualization (e.g., \texttt{mousedown} or \texttt{touchstart}).
 These nodes are directly connected to dependent signals as specified by event
-selectors~\cite{satyanarayan:declarative}. In the case of ordered selectors
+selectors~\cite{reactive-vega-model}. In the case of ordered selectors
 (e.g., ``drag'' events specified by \texttt{[mousedown, mouseup] > mousemove}),
 each constituent event is connected to an automatically created anonymous
 signal; an additional anonymous signal connects them to serve as a gatekeeper,

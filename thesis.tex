@@ -36,7 +36,7 @@
 \titleformat*{\subsubsection}{\bfseries\sffamily}
 
 %% This turns references into clickable hyperlinks.
-\usepackage[bookmarks,backref=true,linkcolor=blue]{hyperref} %,colorlinks
+\PassOptionsToPackage{hyphens}{url}\usepackage[bookmarks,backref=true,linkcolor=blue]{hyperref} %,colorlinks
 \hypersetup{
   pdfauthor = {},
   pdftitle = {},
@@ -52,7 +52,6 @@
 }
 
 \usepackage[square,numbers,sort]{natbib}
-\bibliographystyle{plain}
 
 % each of the following has two versions
 %   \crefname{environmentname}{singular}{plural}, to be used mid-sentence
@@ -101,5 +100,6 @@ I would like to thank...
 \input{lyra/index}
 \input{conclusion}
 
+\bibliographystyle{abbrv}
 \bibliography{thesis}
 \end{document}
