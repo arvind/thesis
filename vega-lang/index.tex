@@ -7,7 +7,7 @@
 
 \begin{figure}[b!]
   \centering
-  \includegraphics[width=0.95\columnwidth]{barChart}
+  \includegraphics[width=0.85\columnwidth]{barChart}
   \caption{A \textsc{json} specification for a bar chart, demonstrating Vega's
   abstractions for visual encoding. Data is imported from a URL. Scales
   transform data values to visual values. Properties of graphical marks (in this
@@ -18,7 +18,10 @@
 
 Reactive Vega builds on a long-running thread of research on declarative
 visualization design, popularized by the Grammar of
-Graphics~\cite{wilkinson:grammar} and Polaris/Tableau~\cite{stolte:polaris}.
+Graphics~\cite{wilkinson:grammar} and Polaris/Tableau~\cite{stolte:polaris}. In
+this chapter, we describe the design of the Reactive Vega specification
+language. Discussion of its underlying streaming dataflow architecture is
+deferred to the subsequent chapter.
 
 Visual encodings are defined by composing graphical primitives called
 \emph{marks}~\cite{bostock:protovis}, which include \emph{arcs}, \emph{areas},

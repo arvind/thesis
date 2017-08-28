@@ -3,8 +3,21 @@
 
 \vspace{-10pt}
 
+Reactive Vega models low-level events as composable data streams from which
+higher-level semantic \emph{signals} can be constructed. Signals feed
+\emph{predicates} and \emph{scale inversions}, to generalize interactive
+selections at the level of item geometry (pixels) into interactive queries over
+the data domain. \emph{Production rules} then use these queries to manipulate
+the visualization's appearance. To facilitate reuse and sharing, these
+constructs can be encapsulated as named \emph{interactors}: standalone, purely
+declarative specifications of interaction techniques.
+
+\vspace{-10pt}
+
 \subsection{Event Streams and Signals}
 \label{sec:vg:events}
+
+\vspace{-10pt}
 
 Reactive Vega adapts the semantics of Event-Driven Functional Reactive
 Programming~\cite{wan:efrp}. Low-level input events (e.g., mouse events) are
@@ -17,7 +30,7 @@ formulated regex-based symbols for event selection~\cite{kin:proton++} we
 believe our approach, by mimicking CSS selectors, will be more familiar to
 designers.
 
-\begin{figure}[t!]
+\begin{figure}[b!]
   \centering
   \includegraphics[width=\columnwidth]{eventStreams}
   \caption{Reactive Vega provides an event stream selector syntax, inspired by
@@ -77,7 +90,7 @@ With interaction design, however, selections are driven by user
 input\,---\,brushing over points of interest, or adjusting a slider to filter
 data.
 
-\begin{figure}[b!]
+\begin{figure}[t!]
   \centering
   \includegraphics[width=0.9\columnwidth]{predicates}
   \caption{Points are highlighted using (left) an intensional predicate
@@ -102,22 +115,25 @@ domain~\cite{heer:generalized}. Scale functions are a critical component in
 visualization design~ \cite{wilkinson:grammar} as they transform data values
 into visual values such as pixels or colors. By applying an \emph{inverted}
 scale function to predicate operands, we can lift a predicate to the data
-domain.
+domain. \Cref{fig:vg:scaleInversion} demonstrates how a predicate defines an
+interactive selection and, when coupled with scale inversions, an interactive
+query to drive an overview\,+\,detail visualization.
 
-\begin{figure}[b!]
-  \floatbox[{\capbeside\thisfloatsetup{capbesideposition=
-  {right,center},capbesidewidth=0.3\columnwidth}}]{figure}[\FBwidth]
-  {\caption{\emph{Predicates} use signal values to define interactive selections
+\newpage
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\columnwidth]{scaleInversion}
+  \caption{\emph{Predicates} use signal values to define interactive selections
 of elements. Using \emph{scale inversions}, predicates can be generalized to
 define interactive queries, and thus operate across different coordinate spaces:
 overview (bottom) and detail (top).}
-  \label{fig:vl:scaleInversion}}
-  {\includegraphics[width=0.7\textwidth]{scaleInversion}}
+  \label{fig:vg:scaleInversion}
 \end{figure}
+
 
 \subsection{Production Rules}
 
-\vspace{-7pt}
+\vspace{-10pt}
 
 Production rules are an established design pattern for visualization
 specification~\cite{heer:designpatterns} that we endow with reactive semantics.
@@ -126,12 +142,12 @@ property values. For example, a rule might set a mark's fill color using
 scale-transformed data if predicate \texttt{A} is true, set it to yellow is
 predicate \texttt{B} is true, or otherwise set the color to grey by default.
 
-\vspace{-20pt}
+\vspace{-10pt}
 
 \subsection{User-Defined Functions}
 \label{sec:udfs}
 
-\vspace{-7pt}
+\vspace{-10pt}
 
 During our design process, we encountered visualizations in which interactions
 trigger custom data transforms. For example, sorting a co-occurrence matrix by
@@ -145,11 +161,11 @@ the specification. User-defined functions ensure that the language remains
 concise and domain-specific, while ensuring extensibility to idiosyncratic
 operations.
 
-\vspace{-20pt}
+\vspace{-10pt}
 
 \subsection{Encapsulated Interactors}
 
-\vspace{-7pt}
+\vspace{-10pt}
 
 To enable reuse of custom interaction techniques, Reactive Vega's interaction
 primitives can be parameterized and encapsulated as named \emph{interactors}.

@@ -37,7 +37,7 @@ require new widgets or operators, and significant software engineering effort.
 
 In 1999, Leland Wilkinson introduced an alternative approach with \emph{The
 Grammar of Graphics}~\cite{wilkinson:grammar}. Eschewing chart typologies in
-favor of a combinatorial building blocks, Wilkinson's grammar yields a more
+favor of combinatorial building blocks, Wilkinson's grammar yields a more
 expressive design space and allows users to rapidly construct visualizations.
 Provided abstractions include primitives for data modeling and transformation,
 visual encodings defined as mappings between data fields and channels (e.g.,
@@ -68,10 +68,10 @@ mirror Protovis'. Marks including \emph{arcs}, \emph{areas}, \emph{bars},
 \emph{lines}, plotting \emph{symbols} and \emph{text} are processed through
 \emph{bind}, \emph{build}, and \emph{evaluate} stages to generate a scene graph.
 Protovis' \emph{panel} marks are renamed to \emph{group} marks, and enable the
-repeated and nested structures found in small multiple displays. Marks can be
-positioned relative to one-another with Vega's \emph{reactive geometry}, which
-provides a more unified approach to layout as compared with Protovis'
-\emph{anchors}.
+repeated and nested structures found in small multiple
+displays~\cite{tufte:envisioning}. Marks can be positioned relative to
+one-another with Vega's \emph{reactive geometry}, which provides a more unified
+approach to layout as compared with Protovis' \emph{anchors}.
 
 Similarly, Vega-Lite represents basic plots using a set of encoding definitions
 that map data attributes to visual channels, and may include common data
@@ -110,7 +110,7 @@ unchanged tuples to reduce memory consumption\,---\,it abstracts such execution
 concerns away from the user. The dataflow graph is automatically assembled based
 on definitions found in a declarative specification, and optimizations are
 transparently performed such that output data is only stored when needed by
-downstream operators and shared otherwise.
+downstream operators and shared whenever possible.
 
 Within the domain of information visualization, Stencil~\cite{cottam:stencil} is
 also grounded in reactive semantics and uses a dataflow model. Like Reactive
@@ -377,5 +377,5 @@ inspired by Mackinlay's APT~\cite{mackinlay:apt} and his follow-on work with
 Card and Robertson conducting a morphological analysis of input
 devices~\cite{card:morphological}. In particular, we sought to identify and
 decouple orthogonal axes of the design space. While \Cref{sec:vl:examples}
-begins to systematically consider points along these axes, a full morphological
-analysis of Vega-Lite is left to future work.
+begins to systematically consider points along these axes, a formal analysis of
+the Vega-Lite design space is left to future work.
