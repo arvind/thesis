@@ -134,8 +134,8 @@ evaluate visual encodings and generate views of data. While Improvise and
 Reactive Vega share some conceptual underpinnings, Improvise places a higher
 burden on users to correctly construct the necessary graph. As Reactive Vega
 takes a declarative approach to visualization design, users need only compose
-the necessary primitives into a specification; Reactive Vega parses it to build
-the corresponding dataflow graph.
+the necessary primitives into a specification; the system parses it to build the
+requisite dataflow graph.
 
 \vspace{-10pt}
 
@@ -303,7 +303,7 @@ are subsequently updated in the second phase. E-FRP has been shown to be viable
 for authoring web applications~\cite{czaplicki:elm, meyerovich:flapjax} and
 visualizations~\cite{cottam:stencil, kelleher:modeljs}.
 
-Reactive Vega's declarative interaction primitives remain grounded in E-FRP
+Reactive Vega's declarative interaction primitives are grounded in E-FRP
 semantics, and they preserve the two-phase update: interdependent signals are
 updated in the order in which they are defined in the specification. However,
 naive applications of E-FRP to visualization tasks can result in wasteful

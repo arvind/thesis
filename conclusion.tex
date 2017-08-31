@@ -80,10 +80,9 @@ browser~\cite{voyager,voyager2,compassql}, and tools for sequencing
 visualizations~\cite{kim:graphscape}, and reverse-engineering them from chart
 images~\cite{poco:reverse}.
 
-Thus, rather than a single monolithic system, the Reactive Vega stack
-facilitates development of applications targeted towards specific tasks, and
-allows users to work at the level of abstraction most suited for the task at
-hand.
+Thus, rather than a single monolithic system, the Reactive Vega stack supports
+the development of applications targeted towards specific tasks, and allows
+users to work at the level of abstraction most suited for the task at hand.
 
 \vspace{-10pt}
 
@@ -93,18 +92,18 @@ hand.
 
 These systems are only an initial exploration of the space of higher-level
 interactive data systems, and there is a fertile ground to study how inference
-procedures can be used to accelerate analysis and design. For example, an
-immediate next step is to study how Lyra can be extended to support interaction
-design by direct manipulation. Analogous to Lyra's existing drag-and-drop
-interactions, perhaps users \emph{demonstrate} a desired interactive behavior. A
-new \emph{interaction inference} architecture will need to be developed, akin to
-Lyra's existing scale inference procedures, to interpret these demonstrations.
-Initially, heuristics may suffice to simply map demonstrations to Vega-Lite
-selections; users would still be responsible for parameterizing visual encodings
-with the inferred selections. For instance, if a user clicked multiple points
-that shared a common data value, Lyra might suggest a \texttt{multi} selection
-with a \texttt{project} transform, which could then be dragged-and-dropped over
-the \texttt{color} dropzone to establish a linking interaction. Over time, Lyra
+procedures can be used to accelerate analysis and design. An immediate next step
+is to study how Lyra can be extended to support interaction design by direct
+manipulation. Analogous to Lyra's existing drag-and-drop interactions, perhaps
+users \emph{demonstrate} a desired interactive behavior. A new \emph{interaction
+inference} architecture will need to be developed, akin to Lyra's existing scale
+inference procedures, to interpret these demonstrations. Initially, heuristics
+may suffice to simply map demonstrations to Vega-Lite selections; users would
+still be responsible for parameterizing visual encodings with the inferred
+selections. For instance, if a user clicked multiple points that shared a common
+data value, Lyra might suggest a \texttt{multi} selection with a
+\texttt{project} transform, which could then be dragged-and-dropped over the
+\texttt{color} dropzone to establish a linking interaction. Over time, Lyra
 would learn from user behavior to improve this inference\,---\,for example,
 suggesting commonly used selections after fewer demonstrations, or even
 recommending fully formed interaction techniques such as the aforementioned
@@ -161,16 +160,16 @@ through example interactive visualizations. A more rigorous analysis of the
 design space, like the morphological analysis of input devices conducted by Card
 et~al.~\cite{card:morphological}, would identify new points (e.g., panning color
 legends as described in~\secref{sec:vl:panzoom}) and highlight opportunities to
-further refine the models. For example, common statistical displays such as
-error bars and box plots can now be constructed by composing several Vega-Lite
-unit specifications. To simplify these common use cases, one could extend
-Vega-Lite's existing mark types with new \emph{composite} types that function
-like macros. However, the semantics of selections against composite mark types
-remains an open question. For instance, what does a single selection of a box
-plot mean? Is the whole box plot itself selected, or the underlying aggregated
-values? How might we specify selecting constituent components of the box plot,
-(e.g., a specific quartile or whisker) when they cannot be addressed with the
-project transform?
+further refine the models. For example, statistical displays such as error bars
+and box plots can now be constructed by composing several Vega-Lite unit
+specifications. To simplify these common use cases, one could extend Vega-Lite's
+existing mark types with new \emph{composite} types that function like macros.
+However, the semantics of selections against composite mark types remains an
+open question. For instance, what does a single selection of a box plot mean? Is
+the whole box plot itself selected, or the underlying aggregated values? How
+might we specify selecting constituent components of the box plot, (e.g., a
+specific quartile or whisker) when they cannot be addressed with the project
+transform?
 
 Similarly, while the Cognitive Dimensions of Notation~\cite{blackwell:cogdim}
 provide a useful set of heuristic to bootstrap evaluating the usability of the
@@ -182,7 +181,7 @@ studies can also lead to the development of new scaffolding to support users.
 For instance, the Reactive Vega dataflow graph offers an execution model that
 can be readily visualized, and new instrumentation to enable inspection and
 stepping through changeset propagation could aid learnability~\cite{guo:tutor}.
-Initial work here has been promising: a ``time-traveling'' debugger, developed
+Initial work here has been encouraging: a ``time-traveling'' debugger, developed
 by Hoffswell et al.~\cite{hoffswell:debugging}, was found to help first-time
 Vega users accurately identify the source of errors, with some event attempting
 to fix them.
@@ -201,14 +200,15 @@ interactions have been conducted largely in an ad-hoc manner. This is due, in
 part, to representations of interaction that have obscured how to isolate
 properties of a behavior as experimental variables.
 
-The Reactive Vega stack offers a promising way forward. For a constant Vega-Lite
-visual encoding, we can systematically generate interaction techniques and vary
-their constituent properties. These alternative designs could then be classified
-using a taxonomy of analytic tasks~\cite{brehmer:taxonomy} and tested with human
-subjects. The results will inform our understanding of the costs and benefits of
-interactive methods\,---\,for example, are specific interactive formulations
-better suited for particular tasks\,---\,and spur the development of design
-guidelines, much as graphical perception studies have done for visual encodings.
+The Reactive Vega stack offers a compelling opportunity here. For a constant
+Vega-Lite visual encoding, we can systematically generate interaction techniques
+and vary their constituent properties. These alternative designs could then be
+classified using a taxonomy of analytic tasks~\cite{brehmer:taxonomy} and tested
+with human subjects. The results will inform our understanding of the costs and
+benefits of interactive methods\,---\,for example, are specific interactive
+formulations better suited for particular tasks\,---\,and spur the development
+of design guidelines, much as graphical perception studies have done for visual
+encodings.
 
 \vspace{-10pt}
 
@@ -223,7 +223,7 @@ Artificial}\\\textsc{Herbert Simon, 1981}}
 
 The lack of unified support for interaction design in declarative visualization
 systems has not only imposed an artificially high technical burden on end-users,
-but it has also hindered researchers' ability to study interaction as a
-first-class citizen of visualization design, and develop interactive data
-systems. This dissertation charts a way forward with the Reactive Vega stack,
-available as open-source software at \url{http://vega.github.io/}.
+but has also hindered researchers' ability to study interaction as a first-class
+citizen of visualization design, and develop interactive data systems. This
+dissertation charts a way forward with the Reactive Vega stack, available as
+open-source software at \url{http://vega.github.io/}.

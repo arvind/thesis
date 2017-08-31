@@ -159,8 +159,8 @@ expressible. Following the precedent of languages such as SQL, we provide
 \emph{user-defined functions}. Such functions must be defined and registered
 with the system at runtime, and can subsequently be invoked declaratively within
 the specification. User-defined functions ensure that the language remains
-concise and domain-specific, while ensuring extensibility to idiosyncratic
-operations.
+concise and domain-specific, while allowing idiosyncratic operations via
+extensions.
 
 \vspace{-10pt}
 
@@ -171,9 +171,9 @@ operations.
 To enable reuse of custom interaction techniques, Reactive Vega's interaction
 primitives can be parameterized and encapsulated as named \emph{interactors}.
 Inspired by Garnet's component of the same name~\cite{myers:garnet}, a Reactive
-Vega's interactor can subsequently be applied to a visualization and functions
-as a mixin. Its specification is merged into the host's and, to prevent
-conflicts, its components are addressable only under its namespace.
-\Cref{fig:vg:splomInteractor,fig:vg:brush} illustrate how a brushing
-interaction (within a single scatterplot) can be extracted to a standalone
-interactor, and reapplied to brush \& link a scatterplot matrix.
+Vega interactor can subsequently be applied to a visualization and functions as
+a mixin. Its specification is merged into the host's and, to prevent conflicts,
+its components are addressable only under its namespace.
+\Cref{fig:vg:splomInteractor,fig:vg:brush} illustrate how a brushing interaction
+(within a single scatterplot) can be extracted to a standalone interactor, and
+reapplied to brush \& link a scatterplot matrix.

@@ -98,22 +98,22 @@ conducted to evaluate Reactive Vega's performance. These studies find that
 Reactive Vega meets or exceeds the performance of D3~\cite{bostock:d3}, the
 current state-of-the-art system.
 
-However, Reactive Vega specifications are verbose, impeding a rapid authoring
-process and hindering exploration of alternative designs. \Cref{sec:vega-lite}
-introduces Vega-Lite: a higher-level grammar that builds on Reactive Vega.
-Vega-Lite extends a traditional grammar of graphics with a \emph{view
-composition algebra} for layered and multi-view displays. A novel \emph{grammar
-of interaction} features \emph{selections}: an abstraction that encapsulates
-input event processing, points of interest, and a predicate function for
-inclusion testing. Selections parameterize visual encodings by serving as input
-data, defining scale extents, or by driving conditional logic. Vega-Lite
-specifications are concise through ambiguity: lower-level details (e.g., the
-events that trigger a selection) can be omitted and are filled in by the
-Vega-Lite compiler. The smaller language surface area also facilitates
-higher-level reasoning tasks, such as systematic enumeration of alternative
-designs. By recreating the examples from \cref{sec:vg:lang}, this chapter
-demonstrates how Vega-Lite enables succinct specification and broader
-exploration of the design space.
+Reactive Vega's primitives, however, are relatively low-level. They yield
+verbose specifications that impede a rapid authoring process and hinder
+exploration of alternative designs. \Cref{sec:vega-lite} introduces Vega-Lite: a
+higher-level grammar that builds on Reactive Vega. Vega-Lite extends a
+traditional grammar of graphics with a \emph{view composition algebra} for
+layered and multi-view displays. A novel \emph{grammar of interaction} features
+\emph{selections}: an abstraction that encapsulates input event processing,
+points of interest, and a predicate function for inclusion testing. Selections
+parameterize visual encodings by serving as input data, defining scale extents,
+or by driving conditional logic. Vega-Lite specifications are concise through
+ambiguity: lower-level details (e.g., the events that trigger a selection) can
+be omitted and are filled in by the Vega-Lite compiler. The smaller language
+surface area also facilitates higher-level reasoning tasks, such as systematic
+enumeration of alternative designs. By recreating the examples from
+\cref{sec:vg:lang}, this chapter demonstrates how Vega-Lite enables succinct
+specification and broader exploration of the design space.
 
 Reactive Vega and Vega-Lite provide \textsc{json} syntaxes to facilitate the
 programmatic generation of visualizations in novel higher-level interactive data

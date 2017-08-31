@@ -5,17 +5,6 @@
 
 \vspace{-30pt}
 
-\begin{figure}[b!]
-  \centering
-  \includegraphics[width=0.85\columnwidth]{barChart}
-  \caption{A \textsc{json} specification for a bar chart, demonstrating Vega's
-  abstractions for visual encoding. Data is imported from a URL. Scales
-  transform data values to visual values. Properties of graphical marks (in this
-  case rectangles) are determined by scale mappings. Guides (here, axes) are
-  instantiated as well.}
-  \label{fig:vg:barChart}
-\end{figure}
-
 Reactive Vega builds on a long-running thread of research on declarative
 visualization design, popularized by the Grammar of
 Graphics~\cite{wilkinson:grammar} and Polaris/Tableau~\cite{stolte:polaris}. In
@@ -32,6 +21,17 @@ legends) are provided as first-class primitives for mapping a domain of data
 values to a range of visual properties. Special \emph{group} marks serve as
 containers to express nested or small multiple displays. Child marks and scales
 can either inherit a group's data or draw from independent datasets.
+
+\begin{figure}[t!]
+  \centering
+  \includegraphics[width=\columnwidth]{barChart}
+  \caption{A \textsc{json} specification for a bar chart, demonstrating Vega's
+  abstractions for visual encoding. Data is imported from a URL. Scales
+  transform data values to visual values. Properties of graphical marks (in this
+  case rectangles) are determined by scale mappings. Guides (here, axes) are
+  instantiated as well.}
+  \label{fig:vg:barChart}
+\end{figure}
 
 Although interaction is a crucial component of effective
 visualization~\cite{liu:mentalmodels, pike:interactionscience}, existing

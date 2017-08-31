@@ -49,7 +49,7 @@ points.
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=0.9\columnwidth]{brush}
+  \includegraphics[width=0.91\columnwidth]{brush}
   \caption{A \textsc{json} snippet for one-dimensional brushing. Signals over
   drag events are inverted through the x-scale to construct a data query over
   the \texttt{Horsepower} field.}
@@ -81,7 +81,7 @@ mark with its own coordinate space. The plotting symbol and spatial scale
 functions are defined within these groups. Had the interactor's predicates
 defined selections over pixel space, the production rule would highlight points
 that fall along the same horizontal and vertical pixel regions\,---\,for
-example, in the inset figure, brushing over red points would highlight no or
+example, as shown in the inset figure, brushing over red points would highlight
 blue points in the other cells. Instead, the interactor uses scale inversions to
 lift the predicate to the data domain, and the production rule correctly links
 brushed points across scatterplots.
@@ -93,7 +93,7 @@ brushed points across scatterplots.
 \vspace{-7pt}
 
 With our brush interactor, we can also create the overview\,+\,detail
-visualization in \cref{fig:vl:scaleInversion}. In this case, brushing is
+visualization in \cref{fig:vg:scaleInversion}. In this case, brushing is
 restricted to the horizontal dimension by overriding the \texttt{height}
 property of the interactor's mark, and ignoring the vertical range predicates it
 populates. We use the horizontal range predicate with a filter transformation,
@@ -127,7 +127,7 @@ This delta is used to offset the scale domains. Similarly, when \texttt{wheel}
 events occur, a \texttt{zoom} signal applies a scale factor to the domains
 depending on the zoom direction.
 
-\begin{figure}[t!]
+\begin{figure}[b!]
   \centering
   \includegraphics[width=\columnwidth]{semanticZoom}
   \caption{Extracting the pan \& zoom interaction from \cref{fig:vg:panzoom}
@@ -184,7 +184,7 @@ normalizes time series to show percentage change based on the current index
 point. To calculate the index point, a signal captures the \texttt{x} coordinate
 of \texttt{mousemove}events, and drives it through a scale inversion. As it is a
 quantitative scale, scale inversion produces a value from a continuous domain
-(i.e., any date/time from Jan 1 2000--Dec 31 2010). However, our dataset only
+(i.e., any date/time from Jan 1, 2000--Dec 31, 2010). However, our dataset only
 contains stock prices for the start of every month. We use a predicate to ``snap
 to'' the closest value for each time series, and use this as our index point.
 Using Vega's data transformations, we join the index point against the original
