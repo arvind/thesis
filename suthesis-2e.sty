@@ -531,7 +531,8 @@ of Doctor of Philosophy.
         \ifonline\setcounter{page}{4}\else
         \ifcopyright\ifthesiscopyright\thesiscopyrightpage\else\tradcopyrightpage\fi\fi
         \signaturepage\fi
-        \cleardoublepage}
+        %\cleardoublepage
+        }
 
 
 \def\prefacesection#1{%
@@ -546,7 +547,7 @@ of Doctor of Philosophy.
         \iffigurespage
                 \listoffigures
         \fi
-        \cleardoublepage
+        \clearpage
         \pagenumbering{arabic}
         \pagestyle{headings}}
 
